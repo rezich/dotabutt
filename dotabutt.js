@@ -11,9 +11,6 @@ function DotaButt(key) {
 	this.checkingRequests = false;
 	
 	this.LoadHeroes();
-	this.LoadHeroes();
-	this.LoadHeroes();
-	this.LoadHeroes();
 }
 
 DotaButt.prototype.CheckRequests = function() {
