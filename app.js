@@ -8,11 +8,13 @@ fs = require('fs'),
 DotaButt = require('./dotabutt.js').DotaButt,
 DotaHero = require('./dotabutt.js').DotaHero;
 
+var DB = null;
+
 fs.exists('api_key', function (exists) {
 	if (exists) {
 		fs.readFile('api_key', function (err, data) {
 			if (err) throw err;
-			var DB = new DotaButt(data);
+			DB = new DotaButt(data);
 		});
 	}
 	else {
@@ -20,10 +22,12 @@ fs.exists('api_key', function (exists) {
 	}
 });
 
+console.log(DB);
+
 var app = express();
 
 app.configure(function() {
-	app.set('port', process.env.PORT || 80);
+	app.set('port', process.env.PORT || 3000);
 	app.set('views', __dirname + '/views');
 	app.set('view engine', 'jade');
 	app.use(express.favicon());
@@ -34,6 +38,7 @@ app.configure(function() {
 	app.use(require('stylus').middleware(__dirname + '/public'));
 	app.use(express.static(path.join(__dirname, 'public')));
 });
+app.locals.DotaButt = function() { return DB; };
 
 app.configure('development', function() {
 	app.use(express.errorHandler());
