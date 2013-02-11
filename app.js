@@ -10,17 +10,27 @@ DotaHero = require('./dotabutt.js').DotaHero;
 
 var DB = null;
 
-fs.exists('api_key', function (exists) {
-	if (exists) {
-		fs.readFile('api_key', function (err, data) {
-			if (err) throw err;
-			DB = new DotaButt(data);
-		});
-	}
-	else {
-		console.log('ERROR: no api_key file found. Make a file called api_key and put your key in it');
-	}
-});
+if (process.env.STEAM_API_KEY != null) {
+	console.log("STEAM_API_KEY environment variable found, initializing DotaButt...");
+	DB = new DotaButt(process.env.STEAM_API_KEY);
+}
+else {
+	console.log("No STEAM_API_KEY environment variable set, checking for api_key file...");
+	fs.exists('api_key', function (exists) {
+		if (exists) {
+			fs.readFile('api_key', function (err, data) {
+				if (err) throw err;
+				else {
+					console.log("Found api_key file, initializing DotaButt...");
+					DB = new DotaButt(data);
+				}
+			});
+		}
+		else {
+			console.log("ERROR: Couldn't find api_key file. No Steam API key to set.");
+		}
+	});
+}
 
 console.log(DB);
 
