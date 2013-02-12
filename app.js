@@ -4,6 +4,7 @@ user = require('./routes/user'),
 http = require('http'),
 path = require('path'),
 fs = require('fs'),
+bignum = require('bignum'),
 //async = require('async'),
 DotaButt = require('./dotabutt.js').DotaButt,
 DotaHero = require('./dotabutt.js').DotaHero;
@@ -32,8 +33,6 @@ else {
 	});
 }
 
-console.log(DB);
-
 var app = express();
 
 app.configure(function() {
@@ -59,16 +58,25 @@ app.configure('development', function() {
 });
 
 app.get('/', routes.index);
-console.log(routes);
 app.get('/match/:id', function (req, res) {
-	DB.GetMatch(req.params.id, function(match) {
+	DB.GetMatchDetails(req.params.id, function(match) {
 		res.locals.heroes = DB.Heroes;
-		res.locals.match = match;
+		var changed_players = [];
+		var lookup_ids = [];
+		for (var i = 0; i < match.players.length; i++) {
+			if (match.players[i].account_id != '4294967295') {
+				changed_players.push(i);
+				lookup_ids.push(bignum(match.players[i].account_id).add('76561197960265728').toString());
+			}
+		}
 		
-		DB.GetPlayerSummaries(match.players, function() {});
-		
-		res.render('match', { title: 'match #' + match.match_id });
-		console.log(match.human_players)
+		DB.GetPlayerSummaries(lookup_ids, function(player_summaries) {
+			for (var i = 0; i < changed_players.length; i++) {
+				match.players[changed_players[i]].summary = player_summaries[i];
+			}
+			res.locals.match = match;
+			res.render('match', { title: 'match #' + match.match_id });
+		});
 	});
 });
 

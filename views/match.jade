@@ -8,4 +8,4 @@ block content
 		p Dire won!
 	
 	for player in match.players
-		p #{heroes[player.hero_id].LocalizedName} (#{player.account_id == 4294967295 ? 'Anonymous' : player.account_id}) had #{player.kills} kills,  #{player.deaths} deaths, and #{player.assists} assists
+		p #{heroes[player.hero_id].LocalizedName} (#{player.account_id == 4294967295 ? 'Anonymous' : player.summary.personaname}) had #{player.kills} kills,  #{player.deaths} deaths, and #{player.assists} assists
