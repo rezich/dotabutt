@@ -1,14 +1,40 @@
 body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background: #eaeaea;
 }
 a {
   color: #00b7ff;
 }
-h1 a {
+#container {
+  width: 960px;
+  margin: 0 auto;
+  background: #fff;
+  padding: 8px;
+}
+#title-container {
+  margin-bottom: 8px;
+  height: 68px;
+}
+#title a {
+  font-size: 48px;
   color: #000;
   text-decoration: none;
 }
-h1 a:hover {
+#title a:hover {
   text-decoration: underline;
+}
+#tagline {
+  font-size: 12px;
+  margin-top: -7px;
+  color: #aaa;
+  margin-left: 4px;
+  float: left;
+}
+#logo {
+  height: 64px;
+  width: 64px;
+  background: url("/images/dotabutt_64.png");
+  border: 2px solid #000;
+  float: left;
 }
