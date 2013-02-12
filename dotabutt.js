@@ -10,7 +10,7 @@ function DotaButt(key) {
 	this.lastAPITime = new Date();
 	this.checkingRequests = false;
 	
-	this.LoadHeroes();
+	this.GetHeroes();
 }
 
 DotaButt.prototype.CheckRequests = function() {
@@ -62,7 +62,7 @@ DotaButt.prototype.MakeAPICall = function (call, callback) {
 	});
 }
 
-DotaButt.prototype.LoadHeroes = function() {
+DotaButt.prototype.GetHeroes = function() {
 	var self = this;
 	
 	this.APICall('/IEconDOTA2_570/GetHeroes/v0001/?key=#APIKEY#&language=en_us', function(data) {
@@ -70,6 +70,15 @@ DotaButt.prototype.LoadHeroes = function() {
 		data.result.heroes.forEach(function(hero) {
 			self.Heroes.push(new DotaHero(hero.name, hero.id, hero.localized_name));
 		});
+	});
+}
+
+DotaButt.prototype.GetMatch = function(match_id, callback) {
+	var self = this;
+	console.log("Getting match data...");
+	this.APICall('/IDOTA2Match_570/GetMatchDetails/V001/?key=#APIKEY#&match_id=' + match_id, function(data) {
+		console.log('  Loaded match successfully!');
+		callback(data.result);
 	});
 }
 

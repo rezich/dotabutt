@@ -37,6 +37,10 @@ console.log(DB);
 var app = express();
 
 app.configure(function() {
+	app.use(function(req, res, next) {
+		res.locals.DotaButt = function() { return DB; };
+		next();
+	});
 	app.set('port', process.env.PORT || 3000);
 	app.set('views', __dirname + '/views');
 	app.set('view engine', 'jade');
@@ -48,14 +52,21 @@ app.configure(function() {
 	app.use(require('stylus').middleware(__dirname + '/public'));
 	app.use(express.static(path.join(__dirname, 'public')));
 });
-app.locals.DotaButt = function() { return DB; };
+
 
 app.configure('development', function() {
 	app.use(express.errorHandler());
 });
 
 app.get('/', routes.index);
-app.get('/users', user.list);
+console.log(routes);
+app.get('/match/:id', function (req, res) {
+	DB.GetMatch(req.params.id, function(match) {
+		res.locals.match = match;
+		res.render('match', { title: 'match #' + match.match_id });
+		console.log(match.human_players)
+	});
+});
 
 http.createServer(app).listen(app.get('port'), function() {
 	console.log("Express server listening on port " + app.get('port'));

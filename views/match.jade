@@ -1,0 +1,8 @@
+extends layout
+
+block content
+	p Match #{match.match_id}
+	if match.radiant_win
+		p Radiant won!
+	else
+		p Dire won!
