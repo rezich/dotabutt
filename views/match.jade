@@ -7,6 +7,22 @@ block content
 	else
 		p Dire won!
 	
-	h2 Players
+	h2 Radiant
 	for player in match.players
-		p #{player.account_id == 4294967295 ? 'Anonymous' : player.summary.personaname} (#{heroes[player.hero_id].LocalizedName}) had #{player.kills} kills,  #{player.deaths} deaths, and #{player.assists} assists
+		if player.player_slot < 127
+			p
+				if player.account_id == 4294967295
+					| Anonymous
+				else
+					a(href='/player/#{player.account_id}') #{player.summary.personaname}
+				|  (#{heroes[player.hero_id].LocalizedName}) had #{player.kills} kills,  #{player.deaths} deaths, and #{player.assists} assists
+	
+	h2 Dire
+	for player in match.players
+		if player.player_slot > 127
+			p
+				if player.account_id == 4294967295
+					| Anonymous
+				else
+					a(href='/player/#{player.account_id}') #{player.summary.personaname}
+				|  (#{heroes[player.hero_id].LocalizedName}) had #{player.kills} kills,  #{player.deaths} deaths, and #{player.assists} assists

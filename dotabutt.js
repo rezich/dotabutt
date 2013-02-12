@@ -1,4 +1,5 @@
-var http = require('http');
+var http = require('http'),
+bignum = require('bignum');
 
 function DotaButt(key) {
 	this.APIKey = key;
@@ -104,6 +105,16 @@ DotaButt.prototype.GetPlayerSummaries = function(players, callback) {
 		console.log('Loaded player summaries successfully!');
 		callback(sorted);
 	});
+}
+
+DotaButt.prototype.GetPlayerSummary = function(player, callback) {
+	this.GetPlayerSummaries([player], function(players) {
+		callback(players[0]);
+	});
+}
+
+DotaButt.prototype.ID64 = function(id) {
+	return bignum(id).add('76561197960265728').toString();
 }
 
 function DotaHero(name, id, localizedName) {

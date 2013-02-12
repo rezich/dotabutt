@@ -4,7 +4,6 @@ user = require('./routes/user'),
 http = require('http'),
 path = require('path'),
 fs = require('fs'),
-bignum = require('bignum'),
 //async = require('async'),
 DotaButt = require('./dotabutt.js').DotaButt,
 DotaHero = require('./dotabutt.js').DotaHero;
@@ -58,14 +57,14 @@ app.configure('development', function() {
 });
 
 app.get('/', routes.index);
-app.get('/match/:id', function (req, res) {
+app.get('/match/:id', function(req, res) {
 	DB.GetMatchDetails(req.params.id, function(match) {
 		var changed_players = [];
 		var lookup_ids = [];
 		for (var i = 0; i < match.players.length; i++) {
 			if (match.players[i].account_id != '4294967295') {
 				changed_players.push(i);
-				lookup_ids.push(bignum(match.players[i].account_id).add('76561197960265728').toString());
+				lookup_ids.push(DB.ID64(match.players[i].account_id));
 			}
 		}
 		console.log(changed_players);
@@ -79,6 +78,12 @@ app.get('/match/:id', function (req, res) {
 			//res.locals.DotaButt = function() { return DB; }
 			res.render('match', { title: 'match #' + match.match_id });
 		});
+	});
+});
+app.get('/player/:id', function(req, res) {
+	DB.GetPlayerSummary(DB.ID64(req.params.id), function(player) {
+		res.locals.player = player;
+		res.render('player', { title: player.personaname });
 	});
 });
 
