@@ -2,7 +2,7 @@ var http = require('http');
 
 function DotaButt(key) {
 	this.APIKey = key;
-	this.Heroes = [];
+	this.Heroes = {};
 	
 	this.APIRequests = [];
 	this.APIInterval = 1000;
@@ -68,7 +68,8 @@ DotaButt.prototype.GetHeroes = function() {
 	this.APICall('/IEconDOTA2_570/GetHeroes/v0001/?key=#APIKEY#&language=en_us', function(data) {
 		console.log('Loaded heroes sucessfully!');
 		data.result.heroes.forEach(function(hero) {
-			self.Heroes.push(new DotaHero(hero.name, hero.id, hero.localized_name));
+			//self.heroes.push(new DotaHero(hero.name, hero.id, hero.localized_name));
+			self.Heroes[hero.id] = new DotaHero(hero.name, hero.id, hero.localized_name);
 		});
 	});
 }
@@ -86,13 +87,22 @@ DotaButt.prototype.GetPlayerSummaries = function(players, callback) {
 	var self = this;
 	console.log("Getting player summaries...");
 	var steamids = '';
-	//players.forEach(function(player) { if (player.account_id != '4294967295') steamids += (steamids != '' ? ',' : '') + bignum(player.account_id).add(76561197960265728).toString() });
 	for (var i = 0; i < players.length; i++) {
 		steamids += (steamids != '' ? ',' : '') + players[i];
 	}
 	this.APICall('/ISteamUser/GetPlayerSummaries/v0002/?key=#APIKEY#&steamids=' + steamids, function(data) {
+		// we have to sort the results to make them the same order that we requested them in because the Steam API is a piece of shit
+		var sorted = [];
+		for (var i = 0; i < players.length; i++) {
+			for (var j = 0; j < data.response.players.length; j++) {
+				if (data.response.players[j].steamid == players[i]) {
+					sorted.push(data.response.players[j]);
+					continue;
+				}
+			}
+		}
 		console.log('Loaded player summaries successfully!');
-		callback(data.response.players);
+		callback(sorted);
 	});
 }
 

@@ -60,7 +60,6 @@ app.configure('development', function() {
 app.get('/', routes.index);
 app.get('/match/:id', function (req, res) {
 	DB.GetMatchDetails(req.params.id, function(match) {
-		res.locals.heroes = DB.Heroes;
 		var changed_players = [];
 		var lookup_ids = [];
 		for (var i = 0; i < match.players.length; i++) {
@@ -69,12 +68,15 @@ app.get('/match/:id', function (req, res) {
 				lookup_ids.push(bignum(match.players[i].account_id).add('76561197960265728').toString());
 			}
 		}
+		console.log(changed_players);
 		
 		DB.GetPlayerSummaries(lookup_ids, function(player_summaries) {
 			for (var i = 0; i < changed_players.length; i++) {
 				match.players[changed_players[i]].summary = player_summaries[i];
 			}
 			res.locals.match = match;
+			res.locals.heroes = DB.Heroes;
+			//res.locals.DotaButt = function() { return DB; }
 			res.render('match', { title: 'match #' + match.match_id });
 		});
 	});
