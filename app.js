@@ -62,7 +62,11 @@ app.get('/', routes.index);
 console.log(routes);
 app.get('/match/:id', function (req, res) {
 	DB.GetMatch(req.params.id, function(match) {
+		res.locals.heroes = DB.Heroes;
 		res.locals.match = match;
+		
+		DB.GetPlayerSummaries(match.players, function() {});
+		
 		res.render('match', { title: 'match #' + match.match_id });
 		console.log(match.human_players)
 	});

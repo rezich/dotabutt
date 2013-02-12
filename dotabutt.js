@@ -1,4 +1,5 @@
-var http = require('http');
+var http = require('http'),
+bignum = require('bignum');
 
 function DotaButt(key) {
 	this.APIKey = key;
@@ -41,7 +42,7 @@ DotaButt.prototype.APICall = function(call, callback) {
 }
 
 DotaButt.prototype.MakeAPICall = function (call, callback) {
-	console.log('Making API call...');
+	console.log('Making API call: ' + call.replace('#APIKEY#', this.APIKey));
 	http.get({
 		host: 'api.steampowered.com',
 		port: 80,
@@ -64,9 +65,9 @@ DotaButt.prototype.MakeAPICall = function (call, callback) {
 
 DotaButt.prototype.GetHeroes = function() {
 	var self = this;
-	
+	console.log("Getting heroes...");
 	this.APICall('/IEconDOTA2_570/GetHeroes/v0001/?key=#APIKEY#&language=en_us', function(data) {
-		console.log('  Loaded heroes sucessfully!');
+		console.log('Loaded heroes sucessfully!');
 		data.result.heroes.forEach(function(hero) {
 			self.Heroes.push(new DotaHero(hero.name, hero.id, hero.localized_name));
 		});
@@ -75,10 +76,21 @@ DotaButt.prototype.GetHeroes = function() {
 
 DotaButt.prototype.GetMatch = function(match_id, callback) {
 	var self = this;
-	console.log("Getting match data...");
+	console.log("Getting match...");
 	this.APICall('/IDOTA2Match_570/GetMatchDetails/V001/?key=#APIKEY#&match_id=' + match_id, function(data) {
-		console.log('  Loaded match successfully!');
+		console.log('Loaded match successfully!');
 		callback(data.result);
+	});
+}
+
+DotaButt.prototype.GetPlayerSummaries = function(players, callback) {
+	var self = this;
+	console.log("Getting player summaries...");
+	var steamids = '';
+	players.forEach(function(player) { if (player.account_id != '4294967295') steamids += (steamids != '' ? ',' : '') + bignum(player.account_id).add(76561197960265728).toString() });
+	this.APICall('/ISteamUser/GetPlayerSummaries/v0002/?key=#APIKEY#&steamids=' + steamids, function(data) {
+		console.log('Loaded player summaries successfully!');
+		callback(data.response.players);
 	});
 }
 
