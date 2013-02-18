@@ -8,11 +8,13 @@ fs = require('fs'),
 DotaButt = require('./dotabutt.js').DotaButt,
 DotaHero = require('./dotabutt.js').DotaHero;
 
-var DB = null;
+var butt = null;
+
+routes.match = require('./routes/match');
 
 if (process.env.STEAM_API_KEY != null) {
 	console.log("STEAM_API_KEY environment variable found, initializing DotaButt...");
-	DB = new DotaButt(process.env.STEAM_API_KEY);
+	butt = new DotaButt(process.env.STEAM_API_KEY);
 }
 else {
 	console.log("No STEAM_API_KEY environment variable set, checking for api_key file...");
@@ -22,7 +24,7 @@ else {
 				if (err) throw err;
 				else {
 					console.log("Found api_key file, initializing DotaButt...");
-					DB = new DotaButt(data);
+					butt = new DotaButt(data);
 				}
 			});
 		}
@@ -36,7 +38,7 @@ var app = express();
 
 app.configure(function() {
 	app.use(function(req, res, next) {
-		res.locals.DotaButt = function() { return DB; };
+		res.locals.DotaButt = function() { return butt; };
 		next();
 	});
 	app.set('port', process.env.PORT || 3000);
@@ -51,37 +53,18 @@ app.configure(function() {
 	app.use(express.static(path.join(__dirname, 'public')));
 });
 
+app.locals({
+	butt: function() { return butt; }
+});
 
 app.configure('development', function() {
 	app.use(express.errorHandler());
 });
 
 app.get('/', routes.index);
-app.get('/match/:id', function(req, res) {
-	DB.GetMatchDetails(req.params.id, function(match) {
-		var changed_players = [];
-		var lookup_ids = [];
-		for (var i = 0; i < match.players.length; i++) {
-			if (match.players[i].account_id != '4294967295') {
-				changed_players.push(i);
-				lookup_ids.push(DB.ID64(match.players[i].account_id));
-			}
-		}
-		console.log(changed_players);
-		
-		DB.GetPlayerSummaries(lookup_ids, function(player_summaries) {
-			for (var i = 0; i < changed_players.length; i++) {
-				match.players[changed_players[i]].summary = player_summaries[i];
-			}
-			res.locals.match = match;
-			res.locals.heroes = DB.Heroes;
-			//res.locals.DotaButt = function() { return DB; }
-			res.render('match', { title: 'match #' + match.match_id });
-		});
-	});
-});
+app.get('/match/:id', routes.match.view);
 app.get('/player/:id', function(req, res) {
-	DB.GetPlayerSummary(DB.ID64(req.params.id), function(player) {
+	butt.GetPlayerSummary(butt.ID64(req.params.id), function(player) {
 		res.locals.player = player;
 		res.render('player', { title: player.personaname });
 	});
