@@ -1,20 +1,19 @@
 var express = require('express'),
+stylus = require('stylus'),
+nib = require('nib'),
 routes = require('./routes'),
-user = require('./routes/user'),
 http = require('http'),
 path = require('path'),
 fs = require('fs'),
-//async = require('async'),
-DotaButt = require('./dotabutt.js').DotaButt,
-DotaHero = require('./dotabutt.js').DotaHero;
-
-var butt = null;
+butt = require('./dotabutt.js');
 
 routes.match = require('./routes/match');
+routes.player = require('./routes/player');
 
+var key = null;
 if (process.env.STEAM_API_KEY != null) {
 	console.log("STEAM_API_KEY environment variable found, initializing DotaButt...");
-	butt = new DotaButt(process.env.STEAM_API_KEY);
+	butt.init(process.env.STEAM_API_KEY);
 }
 else {
 	console.log("No STEAM_API_KEY environment variable set, checking for api_key file...");
@@ -24,7 +23,7 @@ else {
 				if (err) throw err;
 				else {
 					console.log("Found api_key file, initializing DotaButt...");
-					butt = new DotaButt(data);
+					butt.init(data);
 				}
 			});
 		}
@@ -38,7 +37,7 @@ var app = express();
 
 app.configure(function() {
 	app.use(function(req, res, next) {
-		res.locals.DotaButt = function() { return butt; };
+		res.locals.butt = butt;
 		next();
 	});
 	app.set('port', process.env.PORT || 3000);
@@ -49,12 +48,13 @@ app.configure(function() {
 	app.use(express.bodyParser());
 	app.use(express.methodOverride());
 	app.use(app.router);
-	app.use(require('stylus').middleware(__dirname + '/public'));
+	app.use(stylus.middleware({
+		src: __dirname + '/public',
+		compile: function(str, path) {
+			return stylus(str).use(nib());
+		}
+	}));
 	app.use(express.static(path.join(__dirname, 'public')));
-});
-
-app.locals({
-	butt: function() { return butt; }
 });
 
 app.configure('development', function() {
@@ -62,13 +62,8 @@ app.configure('development', function() {
 });
 
 app.get('/', routes.index);
-app.get('/match/:id', routes.match.view);
-app.get('/player/:id', function(req, res) {
-	butt.GetPlayerSummary(butt.ID64(req.params.id), function(player) {
-		res.locals.player = player;
-		res.render('player', { title: player.personaname });
-	});
-});
+app.get('/matchs/:id', routes.match.view);
+app.get('/players/:id', routes.player.view);
 
 http.createServer(app).listen(app.get('port'), function() {
 	console.log("Express server listening on port " + app.get('port'));

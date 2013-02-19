@@ -1,19 +1,33 @@
 body {
-  padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
   background: #eaeaea;
+  margin: 0;
+  padding: 0;
 }
 a {
   color: #00b7ff;
 }
-#container {
-  width: 960px;
-  margin: 0 auto;
-  background: #fff;
+p {
+  margin: 0;
+}
+#header {
+  background: #eae;
+  margin: 0;
+}
+#content {
+  background: #eea;
+  margin: 0;
   padding: 8px;
 }
+#footer {
+  background: #aee;
+  text-align: center;
+}
+#container {
+  margin: 0 auto;
+  background: #fff;
+}
 #title-container {
-  margin-bottom: 8px;
   height: 68px;
 }
 #title a {
@@ -34,7 +48,7 @@ a {
 #logo {
   height: 64px;
   width: 64px;
-  background: url("/images/dotabutt_64.png");
+  background: url("/images/dotabutt_64.png") #fff;
   border: 2px solid #000;
   float: left;
 }

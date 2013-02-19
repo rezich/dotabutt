@@ -5,9 +5,12 @@ html
 		link(rel='stylesheet', href='/stylesheets/style.css')
 	body
 		#container
-			#title-container
-				a#logo(href='/')
-				#title
-					a(href='/') Dotabutt
-				#tagline classy Dota 2 statistics
-			block content
+			#header
+				#title-container
+					a#logo(href='/')
+					#title
+						a(href='/') Dotabutt
+					#tagline classy Dota 2 statistics
+			#content
+				block content
+			#footer Copyright 2012 Adam Rezich. Dota 2 is a registered trademark of Valve Corporation.

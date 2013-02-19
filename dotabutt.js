@@ -1,6 +1,12 @@
 var http = require('http'),
 bignum = require('bignum');
 
+function DotaHero(name, id, localizedName) {
+	this.Name = name;
+	this.ID = id;
+	this.LocalizedName = localizedName;
+}
+
 function DotaButt(key) {
 	this.APIKey = key;
 	this.Heroes = {};
@@ -117,11 +123,25 @@ DotaButt.prototype.ID64 = function(id) {
 	return bignum(id).add('76561197960265728').toString();
 }
 
-function DotaHero(name, id, localizedName) {
-	this.Name = name;
-	this.ID = id;
-	this.LocalizedName = localizedName;
+var butt = null;
+module.exports = {
+	init: function(key) {
+		butt = new DotaButt(key);
+	},
+	heroes: function() {
+		return butt.Heroes;
+	},
+	convertIDTo64: function(id) {
+		return butt.ID64(id);
+	},
+	getMatchDetails: function(match_id, callback) {
+		return butt.GetMatchDetails(match_id, callback);
+	},
+	getPlayerSummaries: function(players, callback) {
+		return butt.GetPlayerSummaries(players, callback);
+	},
+	getPlayerSummary: function(player, callback) {
+		return butt.GetPlayerSummary(player, callback);
+	}
 }
-
-exports.DotaButt = DotaButt;
-exports.DotaHero = DotaHero;
+	
