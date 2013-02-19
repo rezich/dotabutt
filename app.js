@@ -7,8 +7,11 @@ path = require('path'),
 fs = require('fs'),
 butt = require('./dotabutt.js');
 
-routes.match = require('./routes/match');
-routes.player = require('./routes/player');
+routes.matches = require('./routes/matches');
+routes.players = require('./routes/players');
+routes.items = require('./routes/items');
+routes.heroes = require('./routes/heroes');
+routes.teams = require('./routes/teams');
 
 var key = null;
 if (process.env.STEAM_API_KEY != null) {
@@ -62,8 +65,18 @@ app.configure('development', function() {
 });
 
 app.get('/', routes.index);
-app.get('/matchs/:id', routes.match.view);
-app.get('/players/:id', routes.player.view);
+
+app.get('/matches', routes.matches.index);
+app.get('/matches/:id', routes.matches.view);
+
+app.get('/players', routes.players.index);
+app.get('/players/:id', routes.players.view);
+
+app.get('/heroes', routes.heroes.index);
+
+app.get('/items', routes.items.index);
+
+app.get('/teams', routes.teams.index);
 
 http.createServer(app).listen(app.get('port'), function() {
 	console.log("Express server listening on port " + app.get('port'));

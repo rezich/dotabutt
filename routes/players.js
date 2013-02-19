@@ -1,7 +1,7 @@
-
-/*
- * GET match results page.
- */
+exports.index = function(req, res) {
+	var butt = res.locals.butt;
+	res.render('players', { title: 'matches' });
+};
 
 exports.view = function(req, res) {
 	var butt = res.locals.butt;

@@ -11,6 +11,21 @@ html
 					#title
 						a(href='/') Dotabutt
 					#tagline classy Dota 2 statistics
+				#nav-container
+					ul#nav
+						li: a(href='/heroes/') Heroes
+						li: a(href='/items/') Items
+						li: a(href='/matches/') Matches
+						li: a(href='/players/') Players
+						li: a(href='/teams/') Teams
+				#user-container
+					#user-info
+						#user-name: a(href='/') [OB] takua108
+						#user-controls
+							a(href='/') Settings
+							|  | 
+							a(href='/') Sign Out
+					img#avatar(src='http://media.steampowered.com/steamcommunity/public/images/avatars/fc/fc9f0ca1085c3d92214960f09b364608a537d33d_medium.jpg')
 			#content
 				block content
 			#footer Copyright 2012 Adam Rezich. Dota 2 is a registered trademark of Valve Corporation.

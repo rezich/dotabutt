@@ -1,8 +1,3 @@
-
-/*
- * GET home page.
- */
-
 exports.index = function(req, res) {
-	res.render('index', { title: 'Dotabutt' });
+	res.render('index', { title: 'classy Dota 2 statistics' });
 };
