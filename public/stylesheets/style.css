@@ -76,7 +76,7 @@ h1 {
   text-decoration: underline;
 }
 #tagline {
-  margin-top: -7px;
+  margin-top: -8px;
   color: #aaa;
   margin-left: 4px;
   float: left;
@@ -126,6 +126,7 @@ ul#nav-large li a:hover {
   height: 36px;
   margin: 0;
   padding: 0;
+  background: #ddd;
 }
 ul#nav-med {
   margin: 0;
@@ -164,7 +165,8 @@ img#avatar {
   float: left;
 }
 #user-info {
-  width: 212px;
+  width: 200px;
+/* not 212 because firefox flips its shit at you */
   height: 100%;
   float: left;
   text-align: right;
@@ -262,6 +264,17 @@ img#avatar {
     font-size: 12px;
   }
 }
+@media (max-width: 230px) {
+  #nav-container-med {
+    height: 22px;
+  }
+  ul#nav-med {
+    height: 22px;
+  }
+  ul#nav-med li a {
+    font-size: 10px;
+  }
+}
 @media (min-width: 560px) {
   #title-container {
     width: 212px;
@@ -275,7 +288,7 @@ img#avatar {
     text-align: left;
   }
 }
-@media (max-width: 560px) {
+@media (max-width: 559px) {
   #title-container {
     width: 212px;
   }
@@ -291,13 +304,40 @@ img#avatar {
 }
 @media (max-width: 360px) {
   #title-container {
-    width: 150px;
+    width: 180px;
   }
   #title a {
-    padding-top: 18px;
-    font-size: 28px;
+    padding-top: 12px;
+    font-size: 38px;
   }
   #tagline {
     display: none;
+  }
+}
+@media (max-width: 316px) {
+  #title-container {
+    width: 110px;
+  }
+  #title a {
+    padding-top: 21px;
+    font-size: 24px;
+  }
+}
+@media (max-width: 250px) {
+  #title-container {
+    width: 80px;
+  }
+  #title a {
+    padding-top: 24px;
+    font-size: 18px;
+  }
+}
+@media (max-width: 240px) {
+  #title-container {
+    width: 58px;
+  }
+  #title a {
+    padding-top: 26px;
+    font-size: 14px;
   }
 }
