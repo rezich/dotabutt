@@ -57,6 +57,7 @@ h1 {
 }
 #container {
   margin: 0 auto;
+  box-sizing: border-box;
 }
 #title-container {
   height: 68px;
@@ -162,13 +163,13 @@ ul#nav-med li a:hover {
 }
 img#avatar {
   border: 2px solid #999;
-  float: left;
+  float: right;
 }
 #user-info {
   width: 200px;
 /* not 212 because firefox flips its shit at you */
   height: 100%;
-  float: left;
+  float: right;
   text-align: right;
   box-sizing: border-box;
   padding-right: 8px;
@@ -198,7 +199,7 @@ img#avatar {
 #user-controls a:hover {
   text-decoration: underline;
 }
-@media (min-width: 1010px) {
+@media (min-width: 1008px) {
   #nav-container-large {
     display: block;
   }
@@ -207,6 +208,9 @@ img#avatar {
   }
   #content-container {
     margin-top: 16px;
+  }
+  #container {
+    padding-top: 16px;
   }
 }
 @media (min-width: 560px) {
