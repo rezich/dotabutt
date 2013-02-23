@@ -44,6 +44,9 @@ h1 {
   max-width: 960px;
   background: #fff;
 }
+#footer-container {
+  width: 100%;
+}
 #footer {
   text-align: center;
   padding: 8px 0;
@@ -57,27 +60,31 @@ h1 {
 }
 #title-container {
   height: 68px;
-  width: 68px;
-  float: left;
+  margin: 0 auto;
+  width: 212px;
 }
 #title {
-  display: none;
+  width: 100%;
 }
 #title a {
-  font-size: 48px;
   color: #333;
   text-decoration: none;
+  margin: 0 auto;
+  display: block;
 }
 #title a:hover {
   text-decoration: underline;
 }
 #tagline {
-  font-size: 12px;
   margin-top: -7px;
   color: #aaa;
   margin-left: 4px;
   float: left;
-  display: none;
+  width: 100%;
+}
+#logo-container {
+  float: left;
+  width: 68px;
 }
 #logo {
   height: 64px;
@@ -207,6 +214,9 @@ img#avatar {
   #user-info {
     display: block;
   }
+  #title-container {
+    float: left;
+  }
 }
 @media (max-width: 560px) {
   #nav-container-med {
@@ -252,14 +262,42 @@ img#avatar {
     font-size: 12px;
   }
 }
-@media (min-width: 348px) {
+@media (min-width: 560px) {
   #title-container {
-    width: 280px;
+    width: 212px;
   }
-  #title {
-    display: block;
+  #title a {
+    font-size: 48px;
+    text-align: left;
   }
   #tagline {
+    font-size: 12px;
+    text-align: left;
+  }
+}
+@media (max-width: 560px) {
+  #title-container {
+    width: 212px;
+  }
+  #title a {
+    font-size: 48px;
+    text-align: center;
+  }
+  #tagline {
+    font-size: 12px;
+    text-align: center;
     display: block;
+  }
+}
+@media (max-width: 360px) {
+  #title-container {
+    width: 150px;
+  }
+  #title a {
+    padding-top: 18px;
+    font-size: 28px;
+  }
+  #tagline {
+    display: none;
   }
 }
