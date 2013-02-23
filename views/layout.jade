@@ -4,6 +4,7 @@ html
 		title Dotabutt - #{title}
 		link(rel='stylesheet', href='/stylesheets/style.css')
 		meta(name='viewport', content='width=device-width, initial-scale=1.0')
+		link(href='http://fonts.googleapis.com/css?family=Droid+Sans:400,700',rel='stylesheet',type='text/css')
 	body
 		#container
 			#header-container
@@ -36,8 +37,13 @@ html
 					li: a(href='/matches/') Matches
 					li: a(href='/players/') Players
 					li: a(href='/teams/') Teams
-			#content-container
-				#content
-					block content
+			#main-container
+				#main
+					#content
+						block content
 			#footer-container
-				#footer Copyright 2013 Adam Rezich. Dota 2 is a registered trademark of Valve Corporation.
+				#footer Copyright 2013 
+					a(href='http://rezich.com') Adam Rezich
+					| . Dota 2 is a registered trademark of 
+					a(href='http://www.valvesoftware.com/') Valve Corporation
+					| .
