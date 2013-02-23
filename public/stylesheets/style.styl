@@ -1,3 +1,4 @@
+@import 'nib'
 global-reset()
 
 
@@ -9,6 +10,7 @@ body
 	background: #eaeaea
 	margin: 0
 	padding: 0
+	/*overflow-y: scroll*/
 a
 	color: #00B7FF
 	cursor: pointer
@@ -20,8 +22,77 @@ p:last-child
 	margin-bottom: 0
 h1
 	margin: 0
+a img
+	cursor: pointer
+.centered
+	text-align: center
 
 
+search-height = 20px
+search-width = 460px
+#home
+	width: 100%
+	height: 200px
+@css {
+	#home {
+		background: #dddddd; /* Old browsers */
+		background: -moz-radial-gradient(center, ellipse cover, #dddddd 0%, #ffffff 75%); /* FF3.6+ */
+		background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,#dddddd), color-stop(75%,#ffffff)); /* Chrome,Safari4+ */
+		background: -webkit-radial-gradient(center, ellipse cover, #dddddd 0%,#ffffff 75%); /* Chrome10+,Safari5.1+ */
+		background: -o-radial-gradient(center, ellipse cover, #dddddd 0%,#ffffff 75%); /* Opera 12+ */
+		background: -ms-radial-gradient(center, ellipse cover, #dddddd 0%,#ffffff 75%); /* IE10+ */
+		background: radial-gradient(ellipse at center, #dddddd 0%,#ffffff 75%); /* W3C */
+		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#dddddd', endColorstr='#ffffff',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+	}
+}
+#search-container
+	margin: 0 auto
+	height: 100%
+	position: relative
+#search
+	position: absolute
+	top: 50%
+	width: 100%
+	box-sizing: border-box
+	background: white
+
+@media (max-width: 300px)
+	#search-container
+		width: 200px
+	#search
+		margin-top: search-height / 2 * 0.5
+		font-size: 18px
+@media (min-width: 301px)
+	#search-container
+		width: 280px
+	#search
+		margin-top: search-height / 2 * 0.75
+		font-size: 20px
+@media (min-width: 520px)
+	#search-container
+		width: search-width
+	#search
+		margin-top: search-height / 2
+		font-size: 24px
+
+@media (min-height: 510px)
+	#home
+		height: 300px
+@media (min-height: 610px)
+	#home
+		height: 400px
+@media (min-height: 710px)
+	#home
+		height: 500px
+@media (min-height: 810px)
+	#home
+		height: 600px
+@media (min-height: 910px)
+	#home
+		height: 700px
+@media (min-height: 1100px)
+	#home
+		height: 800px
 
 #header-container
 	width: 100%
@@ -68,7 +139,7 @@ h1
 	margin: 0 auto
 	display: block
 #title a:hover
-	text-decoration: underline
+	color: #00B7FF
 #tagline
 	margin-top: -8px
 	color: #aaa
@@ -94,7 +165,7 @@ h1
 ul#nav-large
 	margin: 0 auto
 	padding: 0
-	width: 450px
+	width: 464px
 ul#nav-large li
 	display: inline
 	list-style: none outside none
@@ -109,7 +180,7 @@ ul#nav-large li a
 	width: 90px
 	text-align: center
 ul#nav-large li a:hover
-	background: #ccc
+	color: #00B7FF
 
 
 
@@ -172,13 +243,15 @@ img#avatar
 	color: black
 	text-decoration: none
 	display: block
+#user-name a:hover
+	color: #00B7FF
 #user-controls
 	font-size: 12px
 #user-controls a
 	color: black
 	text-decoration: none
 #user-controls a:hover
-	text-decoration: underline
+	color: #00B7FF
 
 
 

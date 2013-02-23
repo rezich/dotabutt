@@ -37,7 +37,25 @@ else {
 }
 
 var app = express();
-
+app.configure('development', function() {
+	var stylusMiddleware = stylus.middleware({
+		src: __dirname + '/public/',
+		/*dest: __dirname + '/public/',*/
+		debug: true,
+		compile: function(str, path) {
+		return stylus(str)
+			.set('filename', path)
+			.set('warn', true)
+			.set('compress', true)
+			.use(nib());
+		}
+	});
+	app.use(stylusMiddleware);  
+	app.use(express.errorHandler({ dumpExceptions: true, showStack: true })); 
+});
+app.configure('production', function(){
+	app.use(express.errorHandler());
+});
 app.configure(function() {
 	app.use(function(req, res, next) {
 		res.locals.butt = butt;
@@ -51,12 +69,12 @@ app.configure(function() {
 	app.use(express.bodyParser());
 	app.use(express.methodOverride());
 	app.use(app.router);
-	app.use(stylus.middleware({
+	/*app.use(stylus.middleware({
 		src: __dirname + '/public',
 		compile: function(str, path) {
 			return stylus(str).use(nib());
 		}
-	}));
+	}));*/
 	app.use(express.static(path.join(__dirname, 'public')));
 });
 
