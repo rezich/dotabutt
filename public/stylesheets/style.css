@@ -93,24 +93,37 @@ ul#nav-large li a {
 ul#nav-large li a:hover {
   background: #eaa;
 }
-#nav-container-med:display: block {
-  background: #f00;
+#nav-container-med {
+  display: block;
+  height: 36px;
+  margin: 0;
+  padding: 0;
 }
 ul#nav-med {
-  margin: 0 auto;
-  padding: 8px 0;
+  margin: 0;
+  padding: 0;
   text-align: center;
   background: #eee;
+  height: 36px;
+  position: absolute;
+  width: 100%;
 }
 ul#nav-med li {
-  display: inline;
   list-style: none outside none;
+  display: block;
+  float: left;
+  height: 100%;
+  width: 20%;
+  position: relative;
 }
 ul#nav-med li a {
   text-decoration: none;
-  font-size: 20px;
-  padding: 8px 12px;
+  font-size: 24px;
+  height: 36px;
   color: #000;
+  display: block;
+  padding: 4px 0;
+  box-sizing: border-box;
 }
 ul#nav-med li a:hover {
   background: #ccc;
@@ -169,5 +182,28 @@ img#avatar {
   }
   #user-info {
     display: block;
+  }
+}
+@media (max-width: 560px) {
+  #nav-container-med {
+    height: 32px;
+  }
+  ul#nav-med {
+    height: 32px;
+  }
+  ul#nav-med li a {
+    font-size: 20px;
+  }
+}
+@media (max-width: 400px) {
+  ul#nav-med li a,
+  #nav-container-med {
+    height: 28px;
+  }
+  ul#nav-med {
+    height: 28px;
+  }
+  ul#nav-med li a {
+    font-size: 16px;
   }
 }
