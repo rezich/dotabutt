@@ -95,6 +95,7 @@ app.get('/heroes', routes.heroes.index);
 app.get('/items', routes.items.index);
 
 app.get('/teams', routes.teams.index);
+app.get('/teams/:id', routes.teams.view);
 
 http.createServer(app).listen(app.get('port'), function() {
 	console.log("Express server listening on port " + app.get('port'));

@@ -90,6 +90,15 @@ DotaButt.prototype.GetMatchDetails = function(match_id, callback) {
 	});
 }
 
+DotaButt.prototype.GetTeamInfoByTeamID = function(team_id, teams_requested, callback) {
+	var self = this;
+	console.log('Getting team details...');
+	this.APICall('/IDOTA2Match_570/GetTeamInfoByTeamID/v001/?key=#APIKEY#&start_at_team_id=' + team_id + '&teams_requested=1', function(data) {
+		console.log('Loaded team info successfully.');
+		callback(data.result.teams);
+	});
+}
+
 DotaButt.prototype.GetPlayerSummaries = function(players, callback) {
 	var self = this;
 	console.log("Getting player summaries...");
@@ -136,6 +145,9 @@ module.exports = {
 	},
 	getMatchDetails: function(match_id, callback) {
 		return butt.GetMatchDetails(match_id, callback);
+	},
+	getTeamInfoByTeamID: function(team_id, teams_requested, callback) {
+		return butt.GetTeamInfoByTeamID(team_id, teams_requested, callback);
 	},
 	getPlayerSummaries: function(players, callback) {
 		return butt.GetPlayerSummaries(players, callback);

@@ -1,0 +1,11 @@
+extends layout
+
+block content
+	h1 #{team.tag} - #{team.name}
+	p Rating: #{team.rating}
+	h2 Roster
+	ul
+		each player in team.players
+			li
+				a(href='/players/#{player.account_id}') #{player.personaname}
+				| #{team.admin_account_id == player.account_id ? ' Admin' : ''}
