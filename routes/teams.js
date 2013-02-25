@@ -22,7 +22,7 @@ exports.view = function(req, res) {
 			team.players[3].account_id = team.player_3_account_id;
 			team.players[4].account_id = team.player_4_account_id;
 			res.locals.team = team;
-			res.render('team', { title: 'Team - ' + team.name });
+			res.render('team', { title: team.tag + ' - ' + team.name });
 		});
 	});
 };

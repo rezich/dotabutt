@@ -3,6 +3,10 @@ extends layout
 block content
 	h1 #{team.tag} - #{team.name}
 	p Rating: #{team.rating}
+	p Founded #{moment(team.time_created.toString(), 'X').fromNow()}
+	if team.url != ''
+		p Website: 
+			a(href=team.url)=team.url
 	h2 Roster
 	ul
 		each player in team.players

@@ -2,9 +2,9 @@ var http = require('http'),
 bignum = require('bignum');
 
 function DotaHero(name, id, localizedName) {
-	this.Name = name;
-	this.ID = id;
-	this.LocalizedName = localizedName;
+	this.name = name;
+	this.id = id;
+	this.localizedName = localizedName;
 }
 
 function DotaButt(key) {

@@ -15,7 +15,7 @@ block content
 					| Anonymous
 				else
 					a(href='/players/#{player.account_id}') #{player.summary.personaname}
-				|  (#{heroes[player.hero_id].LocalizedName}) had #{player.kills} kills,  #{player.deaths} deaths, and #{player.assists} assists
+				|  (#{heroes[player.hero_id].localizedName}) had #{player.kills} kills,  #{player.deaths} deaths, and #{player.assists} assists
 	
 	h2 Dire
 	for player in match.players
@@ -25,4 +25,4 @@ block content
 					| Anonymous
 				else
 					a(href='/players/#{player.account_id}') #{player.summary.personaname}
-				|  (#{heroes[player.hero_id].LocalizedName}) had #{player.kills} kills,  #{player.deaths} deaths, and #{player.assists} assists
+				|  (#{heroes[player.hero_id].localizedName}) had #{player.kills} kills,  #{player.deaths} deaths, and #{player.assists} assists

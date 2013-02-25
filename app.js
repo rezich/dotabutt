@@ -5,7 +5,10 @@ routes = require('./routes'),
 http = require('http'),
 path = require('path'),
 fs = require('fs'),
+moment = require('moment'),
 butt = require('./dotabutt.js');
+
+moment().format();
 
 routes.matches = require('./routes/matches');
 routes.players = require('./routes/players');
@@ -59,6 +62,7 @@ app.configure('production', function(){
 app.configure(function() {
 	app.use(function(req, res, next) {
 		res.locals.butt = butt;
+		res.locals.moment = moment;
 		next();
 	});
 	app.set('port', process.env.PORT || 3000);

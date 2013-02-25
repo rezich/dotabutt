@@ -2,4 +2,6 @@ extends layout
 
 block content
 	h1 Heroes
-	p TODO: List heroes or something cool like that here
+	ul
+		each hero in heroes
+			li #{hero.id} #{hero.localizedName}
