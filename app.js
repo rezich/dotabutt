@@ -6,7 +6,15 @@ http = require('http'),
 path = require('path'),
 fs = require('fs'),
 moment = require('moment'),
+//mongo = require('mongodb'),
 butt = require('./dotabutt.js');
+
+//var mongoUri = process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || 'mongodb://localhost/mydb';
+
+var db = require('mongojs').connect(
+	process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || 'dotabutt',
+	['players', 'matches', 'teams']
+);
 
 moment().format();
 

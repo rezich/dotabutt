@@ -1,5 +1,13 @@
 extends layout
 
+mixin player_block(player)
+	li
+		if player.account_id == 4294967295
+			| Anonymous
+		else
+			a(href='/players/#{player.account_id}') #{player.summary.personaname}
+		|  (#{heroes[player.hero_id].localizedName}) had #{player.kills} kills,  #{player.deaths} deaths, and #{player.assists} assists
+
 block content
 	h1 Match #{match.match_id}
 	if match.radiant_win
@@ -8,21 +16,13 @@ block content
 		p Dire won!
 	
 	h2 Radiant
-	for player in match.players
-		if player.player_slot < 127
-			p
-				if player.account_id == 4294967295
-					| Anonymous
-				else
-					a(href='/players/#{player.account_id}') #{player.summary.personaname}
-				|  (#{heroes[player.hero_id].localizedName}) had #{player.kills} kills,  #{player.deaths} deaths, and #{player.assists} assists
+	ul
+		for player in match.players
+			if player.player_slot < 127
+				mixin player_block(player)
 	
 	h2 Dire
-	for player in match.players
-		if player.player_slot > 127
-			p
-				if player.account_id == 4294967295
-					| Anonymous
-				else
-					a(href='/players/#{player.account_id}') #{player.summary.personaname}
-				|  (#{heroes[player.hero_id].localizedName}) had #{player.kills} kills,  #{player.deaths} deaths, and #{player.assists} assists
+	ul
+		for player in match.players
+			if player.player_slot > 127
+				mixin player_block(player)
