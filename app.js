@@ -7,6 +7,7 @@ path = require('path'),
 fs = require('fs'),
 moment = require('moment'),
 //mongo = require('mongodb'),
+steamapi = require('./steamapi.js'),
 butt = require('./dotabutt.js');
 
 //var mongoUri = process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || 'mongodb://localhost/mydb';
