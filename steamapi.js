@@ -123,6 +123,7 @@ module.exports = {
 			});
 		},
 		getTeamInfoByTeamID: function(options, callback) {
+			// start_at_team_id, teams_requested
 			this._api._call('/IDOTA2Match_570/GetTeamInfoByTeamID/v001/', options, function(data) {
 				if (callback) callback(data.result.teams, data.result.status);
 			});
@@ -139,7 +140,7 @@ module.exports = {
 		for (var i = 0; i < players.length; i++) {
 			steamids += (steamids != '' ? ',' : '') + players[i];
 		}
-		this._call('/ISteamUser/GetPlayerSummaries/v0002/?key=API_KEY&steamids=' + steamids, function(data) {
+		this._call('/ISteamUser/GetPlayerSummaries/v0002/', { steamids: steamids }, function(data) {
 			// we have to sort the results to make them the same order that we requested them in because the Steam API is a piece of shit
 			var sorted = [];
 			for (var i = 0; i < players.length; i++) {
@@ -151,12 +152,6 @@ module.exports = {
 				}
 			}
 			if (callback) callback(sorted);
-		});
-	},
-	getPlayerSummary: function(player, callback) {
-		// convenience function to just get one player's summary
-		this.getPlayerSummaries([player], function(players) {
-			if (callback) callback(players[0]);
 		});
 	},
 	convertIDTo64Bit: function(id) {

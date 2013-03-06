@@ -5,7 +5,7 @@ exports.index = function(req, res) {
 
 exports.view = function(req, res) {
 	var butt = res.locals.butt;
-	butt.getPlayerSummary(butt.convertIDTo64(req.params.id), function(player) {
+	butt.getPlayer(req.params.id, function(player) {
 		res.locals.player = player;
 		res.render('player', { title: player.personaname });
 	});
