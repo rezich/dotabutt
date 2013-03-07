@@ -53,6 +53,10 @@ module.exports = {
 			port: 80,
 			path: call
 		}, function(response) {
+			// TODO: Error checking, using response.statusCode
+			if (response.statusCode != 200) {
+				console.log('aw shit son!');
+			}
 			var data = '';
 			response.on('data', function(chunk) {
 				data += chunk;
@@ -160,6 +164,6 @@ module.exports = {
 	},
 	convertIDTo32Bit: function(id) {
 		// convert a 64-bit Steam ID into a 32-bit one
-		return parseInt(bignum(id).subtract('76561197960265728'));
+		return parseInt(bignum(id.toString()).sub('76561197960265728'));
 	}
 }

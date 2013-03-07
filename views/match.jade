@@ -2,7 +2,7 @@ extends layout
 
 mixin player_block(player)
 	li
-		if player.account_id == 4294967295
+		if player.account_id == butt.anon
 			| Anonymous
 		else
 			a(href='/players/#{player.account_id}') #{player.summary.personaname}
