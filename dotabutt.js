@@ -3,6 +3,7 @@ var fs = require('fs');
 var mongojs = require('mongojs');
 var moment = require('moment');
 module.exports = {
+	_player_update_interval: 60 * 60,
 	db: null,
 	ready: false,
 	anon: '4294967295',
@@ -71,54 +72,75 @@ module.exports = {
 	},
 	getPlayers: function(ids, callback) {
 		var self = this;
-		this.db.players.find({ account_id: { $in: ids } }, function(err, db_players) {
-			var lookup_ids = [];
-			for (var i = 0; i < ids.length; i++) {
+		for (var i = 0; i < ids.length; i++) ids[i] = parseInt(ids[i]);
+		
+		// make a map of the requested players
+		var players = {};
+		for (var i = 0; i < ids.length; i++) {
+			players[ids[i]] = {};
+		}
+		
+		// look the ids up in the database
+		this.db.players.find( { account_id: { $in: ids } }, function(err, db_players) {
+			var api_ids = [];
+			for (var key in players) {
 				var found = false;
-				for (var j = 0; j < db_players.length; j++) {
-					if (db_players[j].account_id == ids[i]) {
-						console.log('Player %s found in db', db_players[j].account_id);
+				for (var i = 0; i < db_players.length; i++) {
+					if (db_players[i].account_id == key) {
+						console.log('Player %s found in db', key);
+						players[key] = db_players[i];
 						found = true;
-						break;
 					}
 				}
-				if (!found) lookup_ids.push(steamapi.convertIDTo64Bit(ids[i]));
+				if (!found) api_ids.push(steamapi.convertIDTo64Bit(key));
 			}
-			if (lookup_ids.length == 0) {
-				callback(db_players);
+			if (api_ids.length == 0) {
+				var return_players = [];
+				for (var i = 0; i < ids.length; i++) {
+					for (var key in players) {
+						if (key == ids[i]) {
+							return_players.push(players[key]);
+							break;
+						}
+					}
+				}
+				callback(return_players);
 			}
 			else {
-				steamapi.getPlayerSummaries(lookup_ids, function(api_players) {
+				steamapi.getPlayerSummaries(api_ids, function(api_players) {
+					// save these new players
 					for (var i = 0; i < api_players.length; i++) {
-						var new_player = api_players[i];
-						new_player.account_id = steamapi.convertIDTo32Bit(lookup_ids[i]);
-						new_player.updated = moment().unix();
-						self.db.players.save(new_player, function(err, saved) {
+						api_players[i].account_id = steamapi.convertIDTo32Bit(api_ids[i]);
+						api_players[i].updated = moment().unix();
+						self.db.players.save(api_players[i], function(err, saved) {
 							if (saved) console.log('Saved player!');
 							else console.log('Saving player failed!');
 						});
 					}
-					var players = [];
+					for (var key in players) {
+						for (var i = 0; i < api_players.length; i++) {
+							if (key == api_players[i].account_id) {
+								players[key] = api_players[i];
+								break;
+							}
+						}
+					}
+					var return_players = [];
 					for (var i = 0; i < ids.length; i++) {
-						for (var j = 0; j < db_players.length; j++) {
-							if (ids[i] == db_players[j].account_id) players.push(db_players[j]);
-						}
-						for (var j = 0; j < api_players.length; j++) {
-							if (steamapi.convertIDTo64Bit(ids[i]) == api_players[j].steamid) players.push(api_players[j]);
+						for (var key in players) {
+							if (key == ids[i]) {
+								return_players.push(players[key]);
+								break;
+							}
 						}
 					}
-					for (var i = 0; i < players.length; i++) {
-						console.log(players[i].personaname + '|' + players[i].account_id);
-					}
-					callback(players);
+					callback(return_players);
 				});
 			}
 		});
-		/*for (var i = 0; i < ids.length; i++) ids[i] = steamapi.convertIDTo64Bit(ids[i]);
-		steamapi.getPlayerSummaries(ids, callback);*/
 	},
 	getPlayer: function(id, callback) {
-		this.getPlayers([id], function(players) { callback(players[0]) });
+		this.getPlayers([parseInt(id)], function(players) { callback(players[0]) });
 	},
 	getTeam: function(id, callback) {
 		steamapi.dota2.getTeamInfoByTeamID({ start_at_team_id: id, teams_requested: 1 }, callback);
