@@ -1,28 +1,47 @@
 extends layout
 
+mixin players_header(side)
+	thead
+		tr
+			th(colspan=2) Player
+			th(colspan=2) Hero
+			th Kills
+			th Deaths
+			th Assists
+
 mixin player_block(player)
-	li
+	tr
 		if player.account_id == butt.anon
-			| Anonymous
+			td &nbsp;
+			td: em Anonymous
 		else
-			a(href='/players/#{player.account_id}') #{player.summary.personaname}
-		|  (#{heroes[player.hero_id].localized_name}) had #{player.kills} kills,  #{player.deaths} deaths, and #{player.assists} assists
+			td: img(src='#{player.summary.avatar}')
+			td: a(href='/players/#{player.account_id}') #{player.summary.personaname}
+		td: img(src='http://media.steampowered.com/apps/dota2/images/heroes/#{heroes[player.hero_id].short_name}_sb.png')
+		td= heroes[player.hero_id].localized_name
+		td= player.kills
+		td= player.deaths
+		td= player.assists
 
 block content
 	h1 Match #{match.match_id}
 	if match.radiant_win
-		p Radiant won!
+		p Radiant victory
 	else
-		p Dire won!
+		p Dire victory
 	
 	h2 Radiant
-	ul
-		for player in match.players
-			if player.player_slot < 127
-				mixin player_block(player)
+	table
+		mixin players_header('Radiant')
+		tbody
+			for player in match.players
+				if player.player_slot < 127
+					mixin player_block(player)
 	
 	h2 Dire
-	ul
-		for player in match.players
-			if player.player_slot > 127
-				mixin player_block(player)
+	table
+		mixin players_header('Dire')
+		tbody
+			for player in match.players
+				if player.player_slot > 127
+					mixin player_block(player)

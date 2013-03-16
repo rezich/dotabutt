@@ -5,7 +5,9 @@ table{border-collapse:separate;border-spacing:0;vertical-align:middle}
 caption,th,td{text-align:left;font-weight:normal;vertical-align:middle}
 a img{border:none}
 *{cursor:default}
-body{font-family:'Droid Sans',sans-serif;font-size:11pt;background:#eaeaea;margin:0;padding:0;}
+em{font-style:italic}
+strong{font-weight:bold}
+body{font-family:'Droid Sans',sans-serif;font-size:11pt;background:url("/images/grid_noise.png") #eaeaea;margin:0;padding:0;}
 input{cursor:text}
 a{color:#00b7ff;cursor:pointer;text-decoration:none}
 a:hover{text-decoration:underline}
@@ -45,14 +47,14 @@ a img{cursor:pointer}
 #header{height:68px;max-width:1024px;margin:0 auto;padding:0;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box}
 #header>div{height:68px}
 #main{margin:0 auto;padding:10px;max-width:960px;background:#fff;-webkit-border-radius:3px;border-radius:3px}
-#footer-container{width:100%}
+#footer-container{width:100%;margin-top:16px}
 #footer{text-align:center;padding:8px 0;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;max-width:960px;margin:0 auto;color:#999}
 #footer a{color:#999}
 #footer a:hover{color:#00b7ff;text-decoration:none}
 #container{margin:0 auto;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box}
 #title-container{height:68px;margin:0 auto;width:212px}
 #title{width:100%;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;padding-top:3px}
-#title a{color:#333;text-decoration:none;margin:0 auto;display:block}
+#title a{color:#333;text-decoration:none;margin:0 auto;display:block;font-family:'Amaranth',sans-serif;color:#616161}
 #title a:hover{color:#00b7ff}
 #tagline{margin-top:-3px;color:#aaa;margin-left:4px;float:left;width:100%;font-size:11pt}
 #logo-container{float:left;width:68px}

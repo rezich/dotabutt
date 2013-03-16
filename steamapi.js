@@ -111,6 +111,7 @@ module.exports = {
 			var self = this;
 			this._api._call('/IEconDOTA2_570/GetHeroes/v0001/', {}, function(data) {
 				data.result.heroes.forEach(function(hero) {
+					hero.short_name = hero.name.replace('npc_dota_hero_', '');
 					self.heroes[hero.id] = hero;
 				});
 				if (callback) callback(data.result.heroes);
