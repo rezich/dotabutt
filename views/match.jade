@@ -25,6 +25,7 @@ mixin player_block(player)
 
 block content
 	h1 Match #{match.match_id}
+	p: a(href='dota2://matchid=#{match.match_id}') Watch replay
 	if match.radiant_win
 		p Radiant victory
 	else
