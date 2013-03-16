@@ -139,6 +139,11 @@ module.exports = {
 			}
 		});
 	},
+	getPlayerMatches: function(id, callback) {
+		this.db.matches.find({ players: { $elemMatch: { account_id: parseInt(id) } } }, function(matches) {
+			callback(matches);
+		});
+	},
 	getPlayer: function(id, callback) {
 		this.getPlayers([parseInt(id)], function(players) { callback(players[0]) });
 	},

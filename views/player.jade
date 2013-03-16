@@ -2,3 +2,10 @@ extends layout
 
 block content
 	h1 #{player.personaname}
+	h2 Matches
+	if player.matches && player.matches.length > 0
+		ul
+			each match in player.matches
+				li Match!
+	else
+		p No matches!
