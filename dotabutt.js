@@ -140,7 +140,7 @@ module.exports = {
 		});
 	},
 	getPlayerMatches: function(id, callback) {
-		this.db.matches.find({ players: { $elemMatch: { account_id: parseInt(id) } } }, function(matches) {
+		this.db.matches.find({ players: { $elemMatch: { account_id: parseInt(id) } } }, function(err, matches) {
 			callback(matches);
 		});
 	},

@@ -6,6 +6,6 @@ block content
 	if player.matches && player.matches.length > 0
 		ul
 			each match in player.matches
-				li Match!
+				li: a(href='/matches/#{match.match_id}') #{match.match_id}
 	else
 		p No matches!
