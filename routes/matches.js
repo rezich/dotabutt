@@ -15,6 +15,7 @@ exports.view = function(req, res) {
 				lookup_ids.push(match.players[i].account_id);
 			}
 		}
+		match.duration = res.locals.moment.duration(match.duration, 'seconds');
 		
 		butt.getPlayers(lookup_ids, function(player_summaries) {
 			for (var i = 0; i < changed_players.length; i++) {

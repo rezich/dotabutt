@@ -19,13 +19,13 @@ mixin players_header(side)
 mixin player_block(player)
 	tr
 		if player.account_id == butt.anon
-			td &nbsp;
-			td: em Anonymous
+			td.playericon &nbsp;
+			td.playername: em Anonymous
 		else
-			td: img(src='#{player.summary.avatar}')
-			td: a(href='/players/#{player.account_id}') #{player.summary.personaname}
-		td: img(src='http://media.steampowered.com/apps/dota2/images/heroes/#{heroes[player.hero_id].short_name}_sb.png')
-		td= heroes[player.hero_id].localized_name
+			td.playericon: a(href='/players/#{player.account_id}'): img(src='#{player.summary.avatar}')
+			td.playername: a(href='/players/#{player.account_id}') #{player.summary.personaname}
+		td.heroicon: img(src='http://media.steampowered.com/apps/dota2/images/heroes/#{heroes[player.hero_id].short_name}_sb.png')
+		td.heroname= heroes[player.hero_id].localized_name
 		td= player.level
 		td= player.kills
 		td= player.deaths
@@ -37,10 +37,8 @@ mixin player_block(player)
 		td= player.xp_per_min
 		td - - - - - -
 
-block content
-	h1 Match #{match.match_id}
-	p: a(href='dota2://matchid=#{match.match_id}') Watch replay
-	div.towermap
+mixin towermap(match)
+	td.towermap
 		if match.radiant_win
 			div.radiant-ancient &nbsp;
 		if match.tower_status_radiant & steamapi.dota2.tower.ancient.top
@@ -113,21 +111,37 @@ block content
 			div.dire-tower-tier3-middle &nbsp;
 		if match.tower_status_dire & steamapi.dota2.tower.tier3.bottom
 			div.dire-tower-tier3-bottom &nbsp;
-	if match.radiant_win
-		p Radiant victory
-	else
-		p Dire victory
-	
-	h2 Radiant
-	table
+
+block content
+	table.fullwidth
+		tbody
+			tr
+				td.matchinfo
+					h1 Match #{match.match_id}
+					p: a(href='dota2://matchid=#{match.match_id}') Watch replay
+					if match.radiant_win
+						p Radiant victory
+					else
+						p Dire victory
+					p= (match.duration.hours() > 0 ? match.duration.hours() + ':' : '') + (match.duration.minutes().toString().length < 2 ? '0' : '') + match.duration.minutes() + ':' + (match.duration.seconds().toString().length < 2 ? '0' : '') + match.duration.seconds() + ' (' + moment(match.start_time.toString(), 'X').fromNow() + ')'
+				mixin towermap(match)
+	h2
+		if match.radiant_name
+			| #{match.radiant_name}
+		else
+			| Radiant
+	table.fullwidth.padded
 		mixin players_header('Radiant')
 		tbody
 			for player in match.players
 				if player.player_slot < 127
 					mixin player_block(player)
-	
-	h2 Dire
-	table
+	h2
+		if match.dire_name
+			| #{match.dire_name}
+		else
+			| Dire
+	table.fullwidth.padded
 		mixin players_header('Dire')
 		tbody
 			for player in match.players

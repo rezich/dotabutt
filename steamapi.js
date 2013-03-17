@@ -194,6 +194,14 @@ module.exports = {
 			if (callback) callback(sorted);
 		});
 	},
+	getUGCFileDetails: function(ugcid, appid, callback) {
+		this._call('/ISteamRemoteStorage/GetUGCFileDetails/v1/', { ugcid: ugcid, appid: appid }, function (data) {
+			callback(data);
+		});
+	},
+	appID: {
+		dota2: 570
+	},
 	convertIDTo64Bit: function(id) {
 		// convert a 32-bit Steam ID into a 64-bit one
 		return bignum(id).add('76561197960265728').toString();
