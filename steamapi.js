@@ -88,19 +88,19 @@ module.exports = {
 		},
 		tower: {
 			tier1: {
-				bottom: 1,
+				bottom: 64,
 				middle: 8,
-				top: 64
+				top: 1
 			},
 			tier2: {
-				bottom: 2,
+				bottom: 128,
 				middle: 16,
-				top: 128
+				top: 2
 			},
 			tier3: {
-				bottom: 4,
+				bottom: 256,
 				middle: 32,
-				top: 256
+				top: 4
 			},
 			ancient: {
 				bottom: 512,
