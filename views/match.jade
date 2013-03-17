@@ -118,12 +118,12 @@ block content
 			tr
 				td.matchinfo
 					h1 Match #{match.match_id}
-					p: a(href='dota2://matchid=#{match.match_id}') Watch replay
 					if match.radiant_win
 						p Radiant victory
 					else
 						p Dire victory
 					p= (match.duration.hours() > 0 ? match.duration.hours() + ':' : '') + (match.duration.minutes().toString().length < 2 ? '0' : '') + match.duration.minutes() + ':' + (match.duration.seconds().toString().length < 2 ? '0' : '') + match.duration.seconds() + ' (' + moment(match.start_time.toString(), 'X').fromNow() + ')'
+					p: a(href='dota2://matchid=#{match.match_id}') Watch replay
 				mixin towermap(match)
 	h2
 		if match.radiant_name

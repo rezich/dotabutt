@@ -2,4 +2,9 @@ extends layout
 
 block content
 	h1 Matches
-	p TODO: List matches or something cool like that here
+	if matches && matches.length > 0
+		ul
+			each match in matches
+				li: a(href='/matches/#{match.match_id}') #{match.match_id}
+	else
+		p No matches!

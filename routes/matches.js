@@ -1,6 +1,9 @@
 exports.index = function(req, res) {
 	var butt = res.locals.butt;
-	res.render('matches', { title: 'matches' });
+	butt.getRecentMatches(function(matches) {
+		res.locals.matches = matches;
+		res.render('matches', { title: 'matches' });
+	});
 };
 
 exports.view = function(req, res) {
