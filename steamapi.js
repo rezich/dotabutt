@@ -86,6 +86,41 @@ module.exports = {
 			leastPlayed: 12,
 			newPlayerPool: 13
 		},
+		tower: {
+			tier1: {
+				bottom: 1,
+				middle: 8,
+				top: 64
+			},
+			tier2: {
+				bottom: 2,
+				middle: 16,
+				top: 128
+			},
+			tier3: {
+				bottom: 4,
+				middle: 32,
+				top: 256
+			},
+			ancient: {
+				bottom: 512,
+				top: 1024
+			}
+		},
+		barracks: {
+			bottom: {
+				melee: 1,
+				ranged: 2
+			},
+			middle: {
+				melee: 4,
+				ranged: 8
+			},
+			top: {
+				melee: 16,
+				ranged: 32
+			}
+		},
 		heroes: {},
 		items: {},
 		getMatchHistory: function(options, callback) {
