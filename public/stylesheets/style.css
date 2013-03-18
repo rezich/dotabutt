@@ -128,8 +128,9 @@ td.heroicon{width:59px}
 .clearfix:after{clear:both}
 .matchinfo{vertical-align:top;padding-right:4px}
 .fullwidth{width:100%}
-.towermap{width:128px;height:128px;border:4px solid #000;position:relative;background:url("/images/towermap_background.png")}
-.towermap > div{width:128px;height:128px;position:absolute;top:0;left:0}
+.towermap{width:128px;height:128px;border:4px solid #000;background:url("/images/towermap_background.png")}
+.towermap > div{position:relative}
+.towermap > div > div{width:128px;height:128px;position:absolute;top:0;left:0}
 .radiant-ancient{background:url("/images/towermap_radiant_ancient.png")}
 .radiant-tower-ancient-top{background:url("/images/towermap_radiant_tower_ancient_top.png")}
 .radiant-tower-ancient-bottom{background:url("/images/towermap_radiant_tower_ancient_bottom.png")}

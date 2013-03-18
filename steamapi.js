@@ -109,16 +109,16 @@ module.exports = {
 		},
 		barracks: {
 			bottom: {
-				melee: 1,
-				ranged: 2
+				melee: 16,
+				ranged: 32
 			},
 			middle: {
 				melee: 4,
 				ranged: 8
 			},
 			top: {
-				melee: 16,
-				ranged: 32
+				melee: 1,
+				ranged: 2
 			}
 		},
 		heroes: {},
