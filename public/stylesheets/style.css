@@ -70,7 +70,7 @@ ul#nav-med{margin:0;padding:0;text-align:center;height:36px;position:absolute;wi
 ul#nav-med li{list-style:none outside none;display:block;float:left;height:100%;width:20%;position:relative}
 ul#nav-med li a{text-decoration:none;font-size:24px;height:36px;color:#666;display:block;padding:6px 0 2px 0;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box}
 ul#nav-med li a:hover{background:#ccc}
-#user-container{float:right;width:68px}
+#user-container{float:right;width:68px;display:none}
 img#avatar{border:2px solid #999;float:right}
 a:hover img#avatar{border-color:#00b7ff}
 #user-info{width:200px;height:100%;float:right;text-align:right;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;padding-right:8px;display:none}
@@ -117,7 +117,9 @@ ul#nav-med li a{font-size:10px}
 #title a{padding-top:24px;font-size:18px}
 }@media (max-width: 240px){#title-container{width:58px}
 #title a{padding-top:26px;font-size:14px}
-}th{color:#bbb}
+}ul#bottomlinks{margin-top:4px}
+ul#bottomlinks > li{display:inline;margin:0 6px}
+th{color:#bbb}
 table.padded td,table.padded th{padding:0 4px}
 td.playername{width:150px}
 td.heroname{width:100px}
