@@ -1,0 +1,1260 @@
+{
+	"1": {
+		"name": "blink",
+		"localized_name": "Blink Dagger",
+		"cost": 2150,
+		"side_shop": 1,
+		"invalid_heroes": [
+			14, 20
+		]
+	},
+	"2": {
+		"name": "blades_of_attack",
+		"localized_name": "Blades of Attack",
+		"cost": 450,
+		"side_shop": 1
+	},
+	"3": {
+		"name": "broadsword",
+		"localized_name": "Broadsword",
+		"cost": 1200
+	},
+	"4": {
+		"name": "chainmail",
+		"localized_name": "Chainmail",
+		"cost": 550,
+		"side_shop": 1
+	},
+	"5": {
+		"name": "claymore",
+		"localized_name": "Claymore",
+		"cost": 1400
+	},
+	"6": {
+		"name": "helm_of_iron_will",
+		"localized_name": "Helm of Iron Will",
+		"cost": 950,
+		"side_shop": 1
+	},
+	"7": {
+		"name": "javelin",
+		"localized_name": "Javelin",
+		"cost": 1500
+	},
+	"8": {
+		"name": "mithril_hammer",
+		"localized_name": "Mithril Hammer",
+		"cost": 1600
+	},
+	"9": {
+		"name": "platemail",
+		"localized_name": "Platemail",
+		"cost": 1400
+	},
+	"10": {
+		"name": "quarterstaff",
+		"localized_name": "Quarterstaff",
+		"cost": 900,
+		"side_shop": 1
+	},
+	"11": {
+		"name": "quelling_blade",
+		"localized_name": "Quelling Blade",
+		"cost": 225,
+		"side_shop": 1
+	},
+	"12": {
+		"name": "ring_of_protection",
+		"localized_name": "Ring of Protection",
+		"cost": 1750,
+		"aliases": [ "rop" ]
+	},
+	"182": {
+		"name": "stout_shield",
+		"localized_name": "Stout Shield",
+		"cost": 250,
+		"side_shop": 1
+	},
+	"13": {
+		"name": "gauntlets",
+		"localized_name": "Gauntlets of Strength",
+		"cost": 150
+	},
+	"14": {
+		"name": "slippers",
+		"localized_name": "Slippers of Agility",
+		"cost": 150,
+		"side_shop": 1
+	},
+	"15": {
+		"name": "mantle",
+		"localized_name": "Mantle of Intelligence",
+		"cost": 150
+	},
+	"16": {
+		"name": "branches",
+		"localized_name": "Iron Branch",
+		"cost": 53,
+		"aliases": [ "gg branch" ]
+	},
+	"17": {
+		"name": "belt_of_strength",
+		"localized_name": "Belt of Strength",
+		"cost": 450,
+		"side_shop": 1
+	},
+	"18": {
+		"name": "boots_of_elves",
+		"localized_name": "Band of Elvenskin",
+		"cost": 450,
+		"side_shop": 1
+	},
+	"19": {
+		"name": "robe",
+		"localized_name": "Robe of the Magi",
+		"cost": 450,
+		"side_shop": 1
+	},
+	"20": {
+		"name": "circlet",
+		"localized_name": "Circlet",
+		"cost": 185
+	},
+	"21": {
+		"name": "ogre_axe",
+		"localized_name": "Ogre Club",
+		"cost": 1000
+	},
+	"22": {
+		"name": "blade_of_alacrity",
+		"localized_name": "Blade of Alacrity",
+		"cost": 1000
+	},
+	"23": {
+		"name": "staff_of_wizardry",
+		"localized_name": "Staff of Wizardry",
+		"cost": 1000
+	},
+	"24": {
+		"name": "ultimate_orb",
+		"localized_name": "Ultimate Orb",
+		"cost": 2100,
+		"side_shop": 1
+	},
+	"25": {
+		"name": "gloves",
+		"localized_name": "Gloves of Haste",
+		"cost": 500,
+		"side_shop": 1
+	},
+	"26": {
+		"name": "lifesteal",
+		"localized_name": "Morbid Mask",
+		"cost": 900,
+		"side_shop": 1
+	},
+	"27": {
+		"name": "ring_of_regen",
+		"localized_name": "Ring of Regen",
+		"cost": 350,
+		"aliases": [ "ror" ],
+		"side_shop": 1,
+		"shareable": 1
+	},
+	"28": {
+		"name": "sobi_mask",
+		"localized_name": "Sage's Mask",
+		"cost": 325,
+		"side_shop": 1,
+		"shareable": 1
+	},
+	"29": {
+		"name": "boots",
+		"localized_name": "Boots of Speed",
+		"cost": 450,
+		"side_shop": 1
+	},
+	"30": {
+		"name": "gem",
+		"localized_name": "Gem of True Sight",
+		"cost": 700,
+		"shareable": 1
+	},
+	"31": {
+		"name": "cloak",
+		"localized_name": "Cloak",
+		"cost": 550,
+		"side_shop": 1
+	},
+	"32": {
+		"name": "talisman_of_evasion",
+		"localized_name": "Talisman of Evasion",
+		"cost": 1800,
+		"side_shop": 1
+	},
+	"33": {
+		"name": "cheese",
+		"localized_name": "Cheese",
+		"cost": 1000,
+		"shareable": 1,
+		"stackable": 1
+	},
+	"34": {
+		"name": "magic_stick",
+		"localized_name": "Magic Stick",
+		"cost": 200,
+		"side_shop": 1
+	},
+	"35": {
+		"name": "recipe_magic_wand",
+		"localized_name": "Recipe: Magic Wand",
+		"cost": 150,
+		"recipe": 1
+	},
+	"36": {
+		"name": "magic_wand",
+		"localized_name": "Magic Wand",
+		"cost": 509,
+		"aliases": [ "ghost" ]
+	},
+	"37": {
+		"name": "ghost",
+		"localized_name": "Ghost Scepter",
+		"cost": 1600
+	},
+	"38": {
+		"name": "clarity",
+		"localized_name": "Clarity",
+		"cost": 50,
+		"shareable": 1,
+		"stackable": 1,
+		"consumable": 1
+	},
+	"39": {
+		"name": "flask",
+		"localized_name": "Salve",
+		"cost": 100,
+		"shareable": 1,
+		"stackable": 1,
+		"consumable": 1
+	},
+	"40": {
+		"name": "dust",
+		"localized_name": "Dust of Appearance",
+		"cost": 180,
+		"shareable": 1,
+		"stackable": 1,
+		"consumable": 1
+	},
+	"41": {
+		"name": "bottle",
+		"localized_name": "Bottle",
+		"cost": 600,
+		"shareable": 1,
+		"consumable": 1
+	},
+	"42": {
+		"name": "ward_observer",
+		"localized_name": "Observer Ward",
+		"cost": 150,
+		"shareable": 1,
+		"stackable": 1
+	},
+	"43": {
+		"name": "ward_sentry",
+		"localized_name": "Sentry Ward",
+		"cost": 200,
+		"shareable": 1,
+		"stackable": 1
+	},
+	"44": {
+		"name": "tango",
+		"localized_name": "Tango",
+		"cost": 90,
+		"shareable": 1,
+		"stackable": 1,
+		"consumable": 1
+	},
+	"45": {
+		"name": "courier",
+		"localized_name": "",
+		"cost": 150,
+		"aliases": [ "donkey", "chicken" ],
+		"shareable": 1
+	},
+	"46": {
+		"name": "tpscroll",
+		"localized_name": "Town Portal Scroll",
+		"cost": 135,
+		"aliases": [ "tp" ],
+		"shareable": 1,
+		"stackable": 1,
+		"consumable": 1
+	},
+	"47": {
+		"name": "recipe_travel_boots",
+		"localized_name": "Recipe: Boots of Travel",
+		"cost": 2000,
+		"recipe": 1
+	},
+	"48": {
+		"name": "travel_boots",
+		"localized_name": "Boots of Travel",
+		"cost": 2450,
+		"aliases": [ "bot" ]
+	},
+	"49": {
+		"name": "recipe_phase_boots",
+		"localized_name": "Recipe: Phase Boots",
+		"cost": 0,
+		"recipe": 1
+	},
+	"50": {
+		"name": "phase_boots",
+		"localized_name": "Phase Boots",
+		"cost": 1350
+	},
+	"51": {
+		"name": "demon_edge",
+		"localized_name": "Demon Edge",
+		"cost": 2400,
+		"secret_shop": 1
+	},
+	"52": {
+		"name": "eagle",
+		"localized_name": "Eaglesong",
+		"cost": 3300,
+		"secret_shop": 1
+	},
+	"53": {
+		"name": "reaver",
+		"localized_name": "Reaver",
+		"cost": 3200,
+		"secret_shop": 1
+	},
+	"54": {
+		"name": "relic",
+		"localized_name": "Sacred Relic",
+		"cost": 3800,
+		"secret_shop": 1
+	},
+	"55": {
+		"name": "hyperstone",
+		"localized_name": "Hyperstone",
+		"cost": 2100,
+		"secret_shop": 1
+	},
+	"56": {
+		"name": "ring_of_health",
+		"localized_name": "Ring of Health",
+		"cost": 875,
+		"shareable": 1,
+		"side_shop": 1,
+		"secret_shop": 1,
+		"aliases": [ "roh" ]
+	},
+	"57": {
+		"name": "void_stone",
+		"localized_name": "Void Stone",
+		"cost": 875,
+		"shareable": 1,
+		"secret_shop": 1
+	},
+	"58": {
+		"name": "item_mystic_staff",
+		"localized_name": "Mystic Staff",
+		"cost": 2700,
+		"secret_shop": 1
+	},
+	"59": {
+		"name": "energy_booster",
+		"localized_name": "Energy Booster",
+		"cost": 1000,
+		"side_shop": 1,
+		"secret_shop": 1
+	},
+	"60": {
+		"name": "point_booster",
+		"localized_name": "Point Booster",
+		"cost": 1200,
+		"secret_shop": 1
+	},
+	"61": {
+		"name": "vitality_booster",
+		"localized_name": "Vitality Booster",
+		"cost": 1100,
+		"secret_shop": 1
+	},
+	"62": {
+		"name": "recipe_power_treads",
+		"localized_name": "Recipe: Power Treads",
+		"cost": 0,
+		"recipe": 1
+	},
+	"63": {
+		"name": "power_treads",
+		"localized_name": "Power Treads",
+		"cost": 1400
+	},
+	"64": {
+		"name": "recipe_hand_of_midas",
+		"localized_name": "Recipe: Hand of Midas",
+		"cost": 1400,
+		"aliases": [ "hom" ],
+		"recipe": 1
+	},
+	"65": {
+		"name": "hand_of_midas",
+		"localized_name": "Hand of Midas",
+		"cost": 1900
+	},
+	"66": {
+		"name": "recipe_oblivion_staff",
+		"localized_name": "Recipe: Oblivion Staff",
+		"cost": 0,
+		"recipe": 1
+	},
+	"67": {
+		"name": "oblivion_staff",
+		"localized_name": "Oblivion Staff",
+		"cost": 1675
+	},
+	"68": {
+		"name": "recipe_pers",
+		"localized_name": "Recipe: Perseverence",
+		"cost": 0,
+		"recipe": 1
+	},
+	"69": {
+		"name": "pers",
+		"localized_name": "Perseverence",
+		"cost": 1750,
+		"disassemblable": 1,
+		"shareable": 1
+	},
+	"70": {
+		"name": "recipe_poor_mans_shield",
+		"localized_name": "Recipe: Poor Man's Shield",
+		"cost": 0,
+		"recipe": 1
+	},
+	"71": {
+		"name": "poor_mans_shield",
+		"localized_name": "Poor Man's Shield",
+		"cost": 550,
+		"aliases": [ "pms" ]
+	},
+	"72": {
+		"name": "recipe_bracer",
+		"localized_name": "Recipe: Bracer",
+		"cost": 190,
+		"recipe": 1
+	},
+	"73": {
+		"name": "bracer",
+		"localized_name": "Bracer",
+		"cost": 525
+	},
+	"74": {
+		"name": "recipe_wraith_band",
+		"localized_name": "Recipe: Wraith Band",
+		"cost": 150,
+		"recipe": 1
+	},
+	"75": {
+		"name": "wraith_band",
+		"localized_name": "Wraith Band",
+		"cost": 485
+	},
+	"76": {
+		"name": "recipe_null_talisman",
+		"localized_name": "Recipe: Null Talisman",
+		"cost": 145,
+		"recipe": 1
+	},
+	"77": {
+		"name": "null_talisman",
+		"localized_name": "Null Talisman",
+		"cost": 480
+	},
+	"78": {
+		"name": "recipe_mekansm",
+		"localized_name": "Recipe: Mekansm",
+		"cost": 900,
+		"recipe": 1
+	},
+	"79": {
+		"name": "mekansm",
+		"localized_name": "Mekansm",
+		"cost": 2306,
+		"aliases": [ "mechanism" ]
+	},
+	"80": {
+		"name": "recipe_vladmir",
+		"localized_name": "Recipe: Vladmir's Offering",
+		"cost": 300,
+		"recipe": 1
+	},
+	"81": {
+		"name": "vladmir",
+		"localized_name": "Vladmir's Offering",
+		"cost": 2050
+	},
+	"84": {
+		"name": "flying_courier",
+		"localized_name": "Flying Courier",
+		"cost": 220,
+		"aliases": [ "crow" ],
+		"shareable": 1,
+		"consumable": 1
+	},
+	"85": {
+		"name": "recipe_buckler",
+		"localized_name": "Recipe: Buckler",
+		"cost": 200,
+		"recipe": 1
+	},
+	"86": {
+		"name": "buckler",
+		"localized_name": "Buckler",
+		"cost": 803
+	},
+	"87": {
+		"name": "recipe_ring_of_basilius",
+		"localized_name": "Recipe: Ring of Basilius",
+		"cost": 0,
+		"recipe": 1
+	},
+	"88": {
+		"name": "ring_of_basilius",
+		"localized_name": "Ring of Basilius",
+		"cost": 500,
+		"aliases": [ "rob" ],
+		"disassemblable": 1
+	},
+	"89": {
+		"name": "recipe_pipe",
+		"localized_name": "",
+		"cost": 900,
+		"recipe": 1
+	},
+	"90": {
+		"name": "pipe",
+		"localized_name": "Pipe of Insight",
+		"cost": 3628
+	},
+	"91": {
+		"name": "recipe_urn_of_shadows",
+		"localized_name": "Recipe: Urn of Shadows",
+		"cost": 250,
+		"recipe": 1
+	},
+	"92": {
+		"name": "urn_of_shadows",
+		"localized_name": "Urn of Shadows",
+		"cost": 200
+	},
+	"93": {
+		"name": "recipe_headdress",
+		"localized_name": "Recipe: Headdress",
+		"cost": 200,
+		"recipe": 1
+	},
+	"94": {
+		"name": "headdress",
+		"localized_name": "Headdress",
+		"cost": 603
+	},
+	"95": {
+		"name": "recipe_sheepstick",
+		"localized_name": "Recipe: Sythe of Vyse",
+		"cost": 0,
+		"recipe": 1
+	},
+	"96": {
+		"name": "sheepstick",
+		"localized_name": "Sythe of Vyse",
+		"cost": 5675,
+		"aliases": [ "hex", "sheepstick" ]
+	},
+	"97": {
+		"name": "recipe_orchid",
+		"localized_name": "Recipe: Orchid Malevolence",
+		"cost": 775,
+		"recipe": 1
+	},
+	"98": {
+		"name": "orchid",
+		"localized_name": "Orchid Malevolence",
+		"cost": 5025
+	},
+	"99": {
+		"name": "recipe_cyclone",
+		"localized_name": "Eul's Scepter of Divinity",
+		"cost": 500,
+		"recipe": 1
+	},
+	"100": {
+		"name": "cyclone",
+		"localized_name": "Eul's Scepter of Divinity",
+		"cost": 2800,
+		"aliases": ["cyclone", "euls"]
+	},
+	"101": {
+		"name": "recipe_force_staff",
+		"localized_name": "Recipe: Force Staff",
+		"cost": 1000,
+		"recipe": 1
+	},
+	"102": {
+		"name": "force_staff",
+		"localized_name": "Force Staff",
+		"cost": 2350,
+		"aliases": [ "fs" ]
+	},
+	"103": {
+		"name": "recipe_dagon",
+		"localized_name": "Recipe: Dagon",
+		"cost": 1300,
+		"recipe": 1
+	},
+	"197": {
+		"name": "recipe_dagon_2",
+		"localized_name": "Recipe: Dagon (2)",
+		"cost": 0,
+		"recipe": 1
+	},
+	"198": {
+		"name": "recipe_dagon_3",
+		"localized_name": "Recipe: Dagon (3)",
+		"cost": 0,
+		"recipe": 1
+	},
+	"199": {
+		"name": "recipe_dagon_4",
+		"localized_name": "Recipe: Dagon (4)",
+		"cost": 0,
+		"recipe": 1
+	},
+	"200": {
+		"name": "recipe_dagon_5",
+		"localized_name": "Recipe: Dagon (5)",
+		"cost": 0,
+		"recipe": 1
+	},
+	"104": {
+		"name": "dagon",
+		"localized_name": "Dagon",
+		"cost": 2850
+	},
+	"201": {
+		"name": "dagon_2",
+		"localized_name": "Dagon (2)",
+		"cost": 2850
+	},
+	"202": {
+		"name": "dagon_3",
+		"localized_name": "Dagon (3)",
+		"cost": 2850
+	},
+	"203": {
+		"name": "dagon_4",
+		"localized_name": "Dagon (4)",
+		"cost": 2850
+	},
+	"204": {
+		"name": "dagon_5",
+		"localized_name": "Dagon (5)",
+		"cost": 2850
+	},
+	"105": {
+		"name": "recipe_necronomicon",
+		"localized_name": "Recipe: Necronomicon",
+		"cost": 1250,
+		"recipe": 1
+	},
+	"191": {
+		"name": "recipe_necronomicon_2",
+		"localized_name": "Recipe: Necronomicon (2)",
+		"cost": 0,
+		"recipe": 1
+	},
+	"192": {
+		"name": "recipe_necronomicon_3",
+		"localized_name": "Recipe: Necronomicon (3)",
+		"cost": 0,
+		"recipe": 1
+	},
+	"106": {
+		"name": "necronomicon",
+		"localized_name": "Necronomicon",
+		"cost": 2700
+	},
+	"193": {
+		"name": "necronomicon_2",
+		"localized_name": "Necronomicon (2)",
+		"cost": 2700
+	},
+	"194": {
+		"name": "necronomicon_3",
+		"localized_name": "Necronomicon (3)",
+		"cost": 2700
+	},
+	"107": {
+		"name": "recipe_ultimate_scepter",
+		"localized_name": "Recipe: Aghanim's Scepter",
+		"cost": 0,
+		"recipe": 1
+	},
+	"108": {
+		"name": "ultimate_scepter",
+		"localized_name": "Aghanim's Scepter",
+		"cost": 4200,
+		"aliases": [ "ultimate" ]
+	},
+	"109": {
+		"name": "recipe_refresher",
+		"localized_name": "Recipe: Refresher Orb",
+		"cost": 1875,
+		"recipe": 1
+	},
+	"110": {
+		"name": "refresher",
+		"localized_name": "Refresher Orb",
+		"cost": 5300
+	},
+	"111": {
+		"name": "recipe_assault",
+		"localized_name": "Recipe: Assault Cuirass",
+		"cost": 1300,
+		"recipe": 1
+	},
+	"112": {
+		"name": "assault",
+		"localized_name": "Assault Cuirass",
+		"cost": 0
+	},
+	"113": {
+		"name": "recipe_heart",
+		"localized_name": "Recipe: Heart of Tarrasque",
+		"cost": 1200,
+		"recipe": 1
+	},
+	"114": {
+		"name": "heart",
+		"localized_name": "Heart of Tarrasque",
+		"cost": 5500,
+		"aliases": [ "hot" ]
+	},
+	"115": {
+		"name": "recipe_black_king_bar",
+		"localized_name": "Recipe: Black King Bar",
+		"cost": 1300,
+		"recipe": 1
+	},
+	"116": {
+		"name": "black_king_bar",
+		"localized_name": "Black King Bar",
+		"cost": 0,
+		"aliases": [ "bkb" ]
+	},
+	"117": {
+		"name": "aegis",
+		"localized_name": "Aegis of the Immortal",
+		"cost": 0,
+		"consumable": 1
+	},
+	"118": {
+		"name": "recipe_shivas_guard",
+		"localized_name": "Recipe: Shiva's Guard",
+		"cost": 600,
+		"recipe": 1
+	},
+	"119": {
+		"name": "shivas_guard",
+		"localized_name": "4700",
+		"cost": 0,
+		"disassemblable": 1
+	},
+	"120": {
+		"name": "recipe_bloodstone",
+		"localized_name": "Bloodstone",
+		"cost": 0,
+		"recipe": 1
+	},
+	"121": {
+		"name": "bloodstone",
+		"localized_name": "Bloodstone",
+		"cost": 5050,
+		"aliases": [ "bs" ]
+	},
+	"122": {
+		"name": "recipe_sphere",
+		"localized_name": "Recipe: Linken's Sphere",
+		"cost": 1325,
+		"recipe": 1
+	},
+	"123": {
+		"name": "sphere",
+		"localized_name": "Linken's Sphere",
+		"cost": 5175,
+		"aliases": [ "ls" ]
+	},
+	"124": {
+		"name": "recipe_vanguard",
+		"localized_name": "Recipe: Vanguard",
+		"cost": 0,
+		"recipe": 1
+	},
+	"125": {
+		"name": "vanguard",
+		"localized_name": "Vanguard",
+		"cost": 2225
+	},
+	"126": {
+		"name": "recipe_blade_mail",
+		"localized_name": "Recipe: Blade Mail",
+		"cost": 0,
+		"recipe": 1
+	},
+	"127": {
+		"name": "blade_mail",
+		"localized_name": "Blade Mail",
+		"cost": 2200
+	},
+	"128": {
+		"name": "recipe_soul_booster",
+		"localized_name": "Recipe: Soul Booster",
+		"cost": 0,
+		"recipe": 1
+	},
+	"129": {
+		"name": "recipe_soul_booster",
+		"localized_name": "Soul Booster",
+		"cost": 3300
+	},
+	"130": {
+		"name": "recipe_hood_of_defiance",
+		"localized_name": "Recipe: Hood of Defiance",
+		"cost": 0,
+		"recipe": 1
+	},
+	"131": {
+		"name": "hood_of_defiance",
+		"localized_name": "Hood of Defiance",
+		"cost": 2125
+	},
+	"132": {
+		"name": "recipe_rapier",
+		"localized_name": "Recipe: Divine Rapier",
+		"cost": 0,
+		"recipe": 1
+	},
+	"133": {
+		"name": "rapier",
+		"localized_name": "Divine Rapier",
+		"cost": 6200
+	},
+	"134": {
+		"name": "recipe_monkey_king_bar",
+		"localized_name": "Recipe: Monkey King Bar",
+		"cost": 0,
+		"recipe": 1
+	},
+	"135": {
+		"name": "monkey_king_bar",
+		"localized_name": "Monkey King Bar",
+		"cost": 5400,
+		"aliases": [ "mkb" ]
+	},
+	"136": {
+		"name": "recipe_radiance",
+		"localized_name": "Recipe: Radiance",
+		"cost": 1350,
+		"recipe": 1
+	},
+	"137": {
+		"name": "radiance",
+		"localized_name": "Radiance",
+		"cost": 0
+	},
+	"138": {
+		"name": "recipe_butterfly",
+		"localized_name": "Recipe: Butterfly",
+		"cost": 0,
+		"recipe": 1
+	},
+	"139": {
+		"name": "butterfly",
+		"localized_name": "Butterfly",
+		"cost": 6000,
+		"aliases": [ "bfly" ]
+	},
+	"140": {
+		"name": "recipe_greater_crit",
+		"localized_name": "Recipe: Daedalus",
+		"cost": 1000,
+		"recipe": 1
+	},
+	"141": {
+		"name": "greater_crit",
+		"localized_name": "Daedalus",
+		"cost": 5550
+	},
+	"142": {
+		"name": "recipe_basher",
+		"localized_name": "Recipe: Skull Basher",
+		"cost": 1000,
+		"recipe": 1,
+		"invalid_heroes": [ 28, 41, 71, 95 ]
+	},
+	"143": {
+		"name": "basher",
+		"localized_name": "Skull Basher",
+		"cost": 2950
+	},
+	"144": {
+		"name": "recipe_bfury",
+		"localized_name": "Recipe: Battle Fury",
+		"cost": 0,
+		"recipe": 1
+	},
+	"145": {
+		"name": "bfury",
+		"localized_name": "Battle Fury",
+		"cost": 4350,
+		"aliases": [ "bf" ]
+	},
+	"146": {
+		"name": "recipe_manta",
+		"localized_name": "Recipe: Manta Style",
+		"cost": 900,
+		"recipe": 1
+	},
+	"147": {
+		"name": "manta",
+		"localized_name": "Manta Style",
+		"cost": 5050,
+		"disassemblable": 1
+	},
+	"148": {
+		"name": "recipe_lesser_crit",
+		"localized_name": "Recipe: Crystalys",
+		"cost": 0,
+		"recipe": 1
+	},
+	"149": {
+		"name": "lesser_crit",
+		"localized_name": "Crystalys",
+		"cost": 2150
+	},
+	"150": {
+		"name": "recipe_armlet",
+		"localized_name": "Recipe: Armlet of Mordiggian",
+		"cost": 700,
+		"recipe": 1
+	},
+	"151": {
+		"name": "armlet",
+		"localized_name": "Armlet of Mordiggian",
+		"cost": 2600
+	},
+	"183": {
+		"name": "recipe_invis_sword",
+		"localized_name": "Recipe: Shadow Blade",
+		"cost": 0,
+		"recipe": 1
+	},
+	"152": {
+		"name": "invis_sword",
+		"localized_name": "Shadow Blade",
+		"cost": 3000,
+		"aliases": [ "sb", "invis" ]
+	},
+	"153": {
+		"name": "recipe_sange_and_yasha",
+		"localized_name": "Recipe: Sange and Yasha",
+		"cost": 0,
+		"recipe": 1
+	},
+	"154": {
+		"name": "sange_and_yasha",
+		"localized_name": "Sange and Yasha",
+		"cost": 4100,
+		"aliases": [ "sny", "s&y", "sy" ]
+	},
+	"155": {
+		"name": "recipe_satanic",
+		"localized_name": "Recipe: Satanic",
+		"cost": 1100,
+		"recipe": 1
+	},
+	"156": {
+		"name": "satanic",
+		"localized_name": "Satanic",
+		"cost": 6150
+	},
+	"157": {
+		"name": "recipe_mjollnir",
+		"localized_name": "Recipe: Mjollnir",
+		"cost": 600,
+		"recipe": 1
+	},
+	"158": {
+		"name": "mjollnir",
+		"localized_name": "Mjollnir",
+		"cost": 5400,
+		"disassemblable": 1
+	},
+	"159": {
+		"name": "recipe_skadi",
+		"localized_name": "Recipe: Eye of Skadi",
+		"cost": 0,
+		"recipe": 1
+	},
+	"160": {
+		"name": "skadi",
+		"localized_name": "Eye of Skadi",
+		"cost": 5675,
+		"aliases": [ "eos" ]
+	},
+	"161": {
+		"name": "recipe_sange",
+		"localized_name": "Recipe: Sange",
+		"cost": 600,
+		"recipe": 1
+	},
+	"162": {
+		"name": "sange",
+		"localized_name": "Sange",
+		"cost": 2050
+	},
+	"163": {
+		"name": "recipe_helm_of_the_dominator",
+		"localized_name": "Recipe: Helm of the Dominator",
+		"cost": 0,
+		"recipe": 1
+	},
+	"164": {
+		"name": "helm_of_the_dominator",
+		"localized_name": "Helm of the Dominator",
+		"cost": 1850,
+		"aliases": [ "hotd" ]
+	},
+	"165": {
+		"name": "recipe_maelstrom",
+		"localized_name": "Recipe: Maelstrom",
+		"cost": 600,
+		"recipe": 1
+	},
+	"166": {
+		"name": "maelstrom",
+		"localized_name": "Maelstrom",
+		"cost": 2700
+	},
+	"167": {
+		"name": "recipe_desolator",
+		"localized_name": "Recipe: Desolator",
+		"cost": 900,
+		"recipe": 1
+	},
+	"168": {
+		"name": "desolator",
+		"localized_name": "Desolator",
+		"cost": 4100
+	},
+	"169": {
+		"name": "recipe_yasha",
+		"localized_name": "Recipe: Yasha",
+		"cost": 600,
+		"recipe": 1
+	},
+	"170": {
+		"name": "yasha",
+		"localized_name": "Yasha",
+		"cost": 2050
+	},
+	"171": {
+		"name": "recipe_mask_of_madness",
+		"localized_name": "Recipe: Mask of Madness",
+		"cost": 1000,
+		"recipe": 1
+	},
+	"172": {
+		"name": "mask_of_madness",
+		"localized_name": "Mask of Madness",
+		"cost": 1900,
+		"aliases": [ "mom" ]
+	},
+	"173": {
+		"name": "recipe_diffusal_blade",
+		"localized_name": "Recipe: Diffusal Blade",
+		"cost": 850,
+		"recipe": 1
+	},
+	"195": {
+		"name": "recipe_diffusal_blade_2",
+		"localized_name": "Recipe: Diffusal Blade (2)",
+		"cost": 0,
+		"recipe": 1
+	},
+	"174": {
+		"name": "diffusal_blade",
+		"localized_name": "Diffusal Blade",
+		"cost": 3300
+	},
+	"196": {
+		"name": "diffusal_blade",
+		"localized_name": "",
+		"cost": 3300
+	},
+	"175": {
+		"name": "recipe_ethereal_blade",
+		"localized_name": "Recipe: Ethereal Blade",
+		"cost": 0,
+		"recipe": 1
+	},
+	"176": {
+		"name": "ethereal_blade",
+		"localized_name": "Ethereal Blade",
+		"cost": 4900,
+		"aliases": [ "eb" ],
+		"disassemblable": 1
+	},
+	"177": {
+		"name": "recipe_soul_ring",
+		"localized_name": "Recipe: Soul Ring",
+		"cost": 125,
+		"recipe": 1
+	},
+	"178": {
+		"name": "soul_ring",
+		"localized_name": "Soul Ring",
+		"cost": 800
+	},
+	"179": {
+		"name": "recipe_arcane_boots",
+		"localized_name": "Recipe: Arcane Boots",
+		"cost": 0,
+		"recipe": 1
+	},
+	"180": {
+		"name": "arcane_boots",
+		"localized_name": "Arcane Boots",
+		"cost": 1450,
+		"aliases": [ "mana", "mb" ]
+	},
+	"181": {
+		"name": "orb_of_venom",
+		"localized_name": "Orb of Venom",
+		"cost": 275,
+		"side_shop": 1,
+		"secret_shop": 1
+	},
+	"184": {
+		"name": "recipe_ancient_janggo",
+		"localized_name": "Recipe: Drum of Endurance",
+		"cost": 750,
+		"recipe": 1
+	},
+	"185": {
+		"name": "ancient_janggo",
+		"localized_name": "Drum of Endurance",
+		"cost": 1725
+	},
+	"186": {
+		"name": "recipe_medallion_of_courage",
+		"localized_name": "Medallion of Courage",
+		"cost": 200,
+		"recipe": 1
+	},
+	"187": {
+		"name": "medallion_of_courage",
+		"localized_name": "Medallion of Courage",
+		"cost": 1075
+	},
+	"188": {
+		"name": "smoke_of_deceit",
+		"localized_name": "Smoke of Deceit",
+		"cost": 0,
+		"shareable": 1,
+		"stackable": 1
+	},
+	"189": {
+		"name": "recipe_veil_of_discord",
+		"localized_name": "Recipe: Veil of Discord",
+		"cost": 1250,
+		"recipe": 1
+	},
+	"190": {
+		"name": "veil_of_discord",
+		"localized_name": "Veil of Discord",
+		"cost": 2650,
+		"aliases": [ "vod" ]
+	},
+	"205": {
+		"name": "recipe_rod_of_atos",
+		"localized_name": "Recipe: Rod of Atos",
+		"cost": 0,
+		"recipe": 1
+	},
+	"206": {
+		"name": "rod_of_atos",
+		"localized_name": "Rod of Atos",
+		"cost": 3100
+	},
+	"207": {
+		"name": "recipe_abyssal_blade",
+		"localized_name": "Recipe: Abyssal Blade",
+		"cost": 0,
+		"recipe": 1
+	},
+	"208": {
+		"name": "abyssal_blade",
+		"localized_name": "Abyssal Blade",
+		"cost": 6750,
+		"disassemblable": 1
+	},
+	"209": {
+		"name": "recipe_heavens_halberd",
+		"localized_name": "Recipe: Heaven's Halberd",
+		"cost": 0,
+		"recipe": 1
+	},
+	"210": {
+		"name": "heavens_halberd",
+		"localized_name": "Heaven's Halberd",
+		"cost": 3850
+	},
+	"211": {
+		"name": "recipe_ring_of_aquila",
+		"localized_name": "Recipe: Ring of Aquila",
+		"cost": 0,
+		"recipe": 1
+	},
+	"212": {
+		"name": "ring_of_aquila",
+		"localized_name": "Ring of Aquila",
+		"cost": 985,
+		"aliases": [ "roa" ],
+		"shareable": 1,
+		"disassemblable": 1
+	},
+	"213": {
+		"name": "recipe_tranquil_boots",
+		"localized_name": "Recipe: Tranquil Boots",
+		"cost": 0,
+		"recipe": 1
+	},
+	"214": {
+		"name": "tranquil_boots",
+		"localized_name": "Tranquil Boots",
+		"cost": 975,
+		"disassemblable": 1
+	},
+	"215": {
+		"name": "shadow_amulet",
+		"localized_name": "Shadow Amulet",
+		"cost": 1600
+	}
+}
