@@ -2,4 +2,9 @@ extends layout
 
 block content
 	h1 Players
-	p TODO: List players or something cool like that here
+	if players && players.length > 0
+		ul
+			each player in players
+				li: a(href='/players/#{player.account_id}') #{player.personaname}
+	else
+		p No players!

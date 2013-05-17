@@ -1,14 +1,17 @@
 exports.index = function(req, res) {
 	var butt = res.locals.butt;
-	res.render('players', { title: 'matches' });
+	butt.getAllPlayers(function(players) {
+		res.locals.players = players;
+		res.render('players', { title: 'players' });
+	});
 };
 
 exports.view = function(req, res) {
 	var butt = res.locals.butt;
 	butt.getPlayer(req.params.id, function(player) {
-		butt.getPlayerMatches(player.account_id, function(matches) {
-			console.log(matches);
-			player.matches = matches;
+		butt.getPlayerMatches(player.account_id, function(players) {
+			console.log(players);
+			player.players = players;
 			res.locals.player = player;
 			res.render('player', { title: player.personaname });
 		});

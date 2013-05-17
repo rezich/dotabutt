@@ -154,5 +154,10 @@ module.exports = {
 		this.db.matches.find({}, function(err, matches) {
 			callback(matches);
 		});
+	},
+	getAllPlayers: function(callback) {
+		this.db.players.find({}, function(err, players) {
+			callback(players);
+		});
 	}
 }

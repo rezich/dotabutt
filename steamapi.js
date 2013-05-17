@@ -200,7 +200,32 @@ module.exports = {
 		});
 	},
 	appID: {
-		dota2: 570
+		CounterStrike: 10,
+		TeamFortressClassic: 20,
+		DayOfDefeat: 30,
+		DeathmatchClassic: 40,
+		OpposingForce: 50,
+		Ricochet: 60, //lol
+		HalfLife: 70,
+		ConditionZero: 80,
+		ConditionZeroDeletedScenes: 100,
+		HalfLifeBlueShift: 130,
+		HalfLife2: 220,
+		CounterStrikeSource: 240,
+		HalfLifeSource: 280,
+		DayOfDefeatSource: 300,
+		HalfLife2Deathmatch: 320,
+		HalfLife2LostCoast: 340,
+		HalfLifeDeathmatchSource: 360,
+		HalfLife2EpisodeOne: 380,
+		Portal: 400,
+		HalfLife2EpisodeTwo: 420,
+		TeamFortress2: 440,
+		Left4Dead: 500,
+		Left4Dead2: 550,
+		Dota2: 570,
+		Portal2: 620,
+		AlienSwarm: 630
 	},
 	convertIDTo64Bit: function(id) {
 		// convert a 32-bit Steam ID into a 64-bit one
