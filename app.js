@@ -18,6 +18,7 @@ routes.players = require('./routes/players');
 routes.items = require('./routes/items');
 routes.heroes = require('./routes/heroes');
 routes.teams = require('./routes/teams');
+routes.pages = require('./routes/pages');
 
 var app = express();
 app.configure('development', function() {
@@ -81,6 +82,11 @@ app.get('/items', routes.items.index);
 
 app.get('/teams', routes.teams.index);
 app.get('/teams/:id', routes.teams.view);
+
+app.get('/about', routes.pages.about);
+app.get('/privacy', routes.pages.privacy);
+app.get('/faq', routes.pages.faq);
+app.get('/donate', routes.pages.donate);
 
 http.createServer(app).listen(app.get('port'), function() {
 	console.log("Express server listening on port " + app.get('port'));
