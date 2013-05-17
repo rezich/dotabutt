@@ -2,7 +2,7 @@ exports.index = function(req, res) {
 	var butt = res.locals.butt;
 	butt.getAllPlayers(function(players) {
 		res.locals.players = players;
-		res.render('players', { title: 'players' });
+		res.render('players', { title: 'Players' });
 	});
 };
 

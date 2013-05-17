@@ -4,6 +4,7 @@ var mongojs = require('mongojs');
 var moment = require('moment');
 module.exports = {
 	_player_update_interval: 60 * 60,
+	_items: {},
 	db: null,
 	ready: false,
 	anon: '4294967295',
@@ -20,6 +21,10 @@ module.exports = {
 			process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || 'test',
 			['players', 'matches', 'teams']
 		);
+		fs.readFile('data/items.json', function(err, data) {
+			if (err) console.log('!!! ITEM FILE WAS MISSING OR CORRUPT !!!');
+			this._items = JSON.parse(data);
+		});
 	},
 	_getKey: function(callback) {
 		var key = null;
@@ -47,6 +52,9 @@ module.exports = {
 	},
 	heroes: function() {
 		return steamapi.dota2.heroes;
+	},
+	items: function() {
+		return this._items;
 	},
 	getMatch: function(id, callback) {
 		var self = this;

@@ -1,12 +1,12 @@
 exports.about = function(req, res) {
-	res.render('about', { title: 'about' });
+	res.render('about', { title: 'About' });
 };
 exports.privacy = function(req, res) {
-	res.render('privacy', { title: 'privacy' });
+	res.render('privacy', { title: 'Privacy Policy' });
 };
 exports.faq = function(req, res) {
-	res.render('faq', { title: 'faq' });
+	res.render('faq', { title: 'FAQ' });
 };
 exports.donate = function(req, res) {
-	res.render('donate', { title: 'donate' });
+	res.render('donate', { title: 'Donate' });
 };
