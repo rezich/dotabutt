@@ -1,4 +1,4 @@
 exports.index = function(req, res) {
-	console.log(req.user);
+	if (req.user) console.log(req.user.player.personaname);
 	res.render('index', { title: 'classy Dota 2 statistics', user: req.user });
 };

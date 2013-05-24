@@ -15,6 +15,9 @@ butt.init();
 
 moment().format();
 
+baseUrl = 'http://nukle.us:3000';
+if (process.env.DOMAIN) baseUrl = process.env.DOMAIN
+
 routes.matches = require('./routes/matches');
 routes.players = require('./routes/players');
 routes.items = require('./routes/items');
@@ -25,21 +28,32 @@ routes.pages = require('./routes/pages');
 var app = express();
 
 passport.serializeUser(function(user, done) {
-  done(null, user);
+	done(null, user);
 });
 
 passport.deserializeUser(function(obj, done) {
-  done(null, obj);
+	//butt.getPlayer(
+	if (obj.identifier && !obj.id) obj.id = parseInt(steamapi.convertIDTo32Bit(obj.identifier.match(/\b[0-9]+\b/)[0]));
+	if (!obj.player) {
+		butt.getPlayer(obj.id, function(player) {
+			obj.player = player;
+			console.log(obj);
+			console.log(player);
+			done(null, obj);
+		});
+	}
+	else done(null, obj);
 });
 
 passport.use(
 	new steamstrat({
-		returnURL: 'http://nukle.us:3000/auth/return',
-		realm: 'http://nukle.us:3000/'
+		returnURL: baseUrl + '/auth/return',
+		realm: baseUrl + '/'
 	},
 	function(identifier, profile, done) {
 		process.nextTick(function () {
 		profile.identifier = identifier;
+		//profile.id = identifier.match(/\b[0-9]+\b/)[1];
 		return done(null, profile);
 	});
 	}

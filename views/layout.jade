@@ -14,9 +14,10 @@ html
 						a#logo(href='/')
 					#user-container
 						if user
-							a(href='/players/69379089'): img#avatar(src='http://media.steampowered.com/steamcommunity/public/images/avatars/fc/fc9f0ca1085c3d92214960f09b364608a537d33d_medium.jpg')
+							a(href='/players/' + user.player.account_id): img#avatar(src=user.player.avatarmedium)
 							#user-info
-								#user-name: a(href='/players/69379089') SDI`takua108
+								#user-name: a(href='/players/' + user.player.account_id) 
+									=user.player.personaname
 								#user-controls
 									a(href='/') Settings
 									|  | 
