@@ -2,7 +2,7 @@ exports.index = function(req, res) {
 	var butt = res.locals.butt;
 	butt.getRecentMatches(function(matches) {
 		res.locals.matches = matches;
-		res.render('matches', { title: 'Matches' });
+		res.render('matches', { title: 'Matches', user: req.user });
 	});
 };
 
@@ -26,7 +26,7 @@ exports.view = function(req, res) {
 			}
 			res.locals.match = match;
 			res.locals.heroes = butt.heroes();
-			res.render('match', { title: 'Match #' + match.match_id });
+			res.render('match', { title: 'Match #' + match.match_id, user: req.user });
 		});
 	});
 };

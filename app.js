@@ -6,6 +6,8 @@ http = require('http'),
 path = require('path'),
 fs = require('fs'),
 moment = require('moment'),
+passport = require('passport'),
+steamstrat = require('passport-steam').Strategy,
 steamapi = require('./steamapi.js'),
 butt = require('./dotabutt.js');
 
@@ -21,6 +23,28 @@ routes.teams = require('./routes/teams');
 routes.pages = require('./routes/pages');
 
 var app = express();
+
+passport.serializeUser(function(user, done) {
+  done(null, user);
+});
+
+passport.deserializeUser(function(obj, done) {
+  done(null, obj);
+});
+
+passport.use(
+	new steamstrat({
+		returnURL: 'http://nukle.us:3000/auth/return',
+		realm: 'http://nukle.us:3000/'
+	},
+	function(identifier, profile, done) {
+		process.nextTick(function () {
+		profile.identifier = identifier;
+		return done(null, profile);
+	});
+	}
+));
+
 app.configure('development', function() {
 	var stylusMiddleware = stylus.middleware({
 		src: __dirname + '/public/',
@@ -54,6 +78,10 @@ app.configure(function() {
 	app.use(express.logger('dev'));
 	app.use(express.bodyParser());
 	app.use(express.methodOverride());
+	app.use (express.cookieParser());
+	app.use(express.session({ secret: 'asdfasdfasdfasdf' }));
+	app.use(passport.initialize());
+	app.use(passport.session());
 	app.use(app.router);
 	/*app.use(stylus.middleware({
 		src: __dirname + '/public',
@@ -62,10 +90,6 @@ app.configure(function() {
 		}
 	}));*/
 	app.use(express.static(path.join(__dirname, 'public')));
-});
-
-app.configure('development', function() {
-	app.use(express.errorHandler());
 });
 
 app.get('/', routes.index);
@@ -87,6 +111,30 @@ app.get('/about', routes.pages.about);
 app.get('/privacy', routes.pages.privacy);
 app.get('/faq', routes.pages.faq);
 app.get('/donate', routes.pages.donate);
+
+app.get('/auth',
+	passport.authenticate('steam', {failureRedirect: '/login' }),
+	function(req, res) {
+		res.redirect('/');
+	}
+);
+
+app.get('/auth/return',
+	passport.authenticate('steam', {failureRedirect: '/login' }),
+	function(req, res) {
+		res.redirect('/');
+	}
+);
+
+app.get('/logout', function(req, res) {
+	req.logout();
+	res.redirect('/');
+});
+
+function ensureAuthenticated(req, res, next) {
+	if (req.isAuthenticated()) { return next(); }
+	res.redirect('/login')
+}
 
 http.createServer(app).listen(app.get('port'), function() {
 	console.log("Express server listening on port " + app.get('port'));

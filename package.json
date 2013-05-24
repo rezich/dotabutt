@@ -17,6 +17,8 @@
 		"nib": "*",
 		"moment": "*",
 		"mongodb": "*",
-		"mongojs": "*"
+		"mongojs": "*",
+		"passport": "*",
+		"passport-steam": "*"
 	}
 }
