@@ -22,8 +22,14 @@ module.exports = {
 			['players', 'matches', 'teams']
 		);
 		fs.readFile('data/items.json', function(err, data) {
-			if (err) console.log('!!! ITEM FILE WAS MISSING OR CORRUPT !!!');
-			this._items = JSON.parse(data);
+			if (err) console.log('!!! ITEM FILE WAS MISSING OR CORRUPT !!!')
+			else {
+				console.log('Loaded items successfully.');
+				var parsedItems = JSON.parse(data);
+				Object.keys(parsedItems).forEach(function(key) {
+					self._items[parseInt(key)] = parsedItems[key];
+				});
+			}
 		});
 	},
 	_getKey: function(callback) {

@@ -13,6 +13,7 @@ exports.view = function(req, res) {
 		var changed_players = [];
 		var lookup_ids = [];
 		for (var i = 0; i < match.players.length; i++) {
+			console.log(match.players[i]);
 			if (match.players[i].account_id != butt.anon) {
 				changed_players.push(i);
 				lookup_ids.push(match.players[i].account_id);
@@ -26,6 +27,7 @@ exports.view = function(req, res) {
 			}
 			res.locals.match = match;
 			res.locals.heroes = butt.heroes();
+			res.locals.items = butt.items();
 			res.render('match', { title: 'Match #' + match.match_id, user: req.user });
 		});
 	});

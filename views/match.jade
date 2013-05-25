@@ -35,7 +35,13 @@ mixin player_block(player)
 		td= player.denies
 		td= player.gold_per_min
 		td= player.xp_per_min
-		td - - - - - -
+		td
+			mixin item(player.item_0)
+			mixin item(player.item_1)
+			mixin item(player.item_2)
+			mixin item(player.item_3)
+			mixin item(player.item_4)
+			mixin item(player.item_5)
 
 mixin towermap(match)
 	td.towermap
@@ -112,6 +118,10 @@ mixin towermap(match)
 				div.dire-tower-tier3-middle &nbsp;
 			if match.tower_status_dire & steamapi.dota2.tower.tier3.bottom
 				div.dire-tower-tier3-bottom &nbsp;
+
+mixin item(id)
+	if items[id] != undefined
+		a(href='/items/#{id}/'): img(src='http://media.steampowered.com/apps/dota2/images/items/#{items[id].name}_eg.png')
 
 block content
 	table.fullwidth
