@@ -9,9 +9,8 @@ exports.index = function(req, res) {
 exports.view = function(req, res) {
 	var butt = res.locals.butt;
 	butt.getPlayer(req.params.id, function(player) {
-		butt.getPlayerMatches(player.account_id, function(players) {
-			console.log(players);
-			player.players = players;
+		butt.getPlayerMatches(player.account_id, function(matches) {
+			player.matches = matches
 			res.locals.player = player;
 			res.render('player', { title: player.personaname, user: req.user });
 		});
