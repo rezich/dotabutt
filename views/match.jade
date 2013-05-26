@@ -121,7 +121,7 @@ mixin towermap(match)
 
 mixin item(id)
 	if items[id] != undefined
-		a(href='/items/#{id}/', title='#{items[id].localized_name}'): img(src='http://media.steampowered.com/apps/dota2/images/items/#{items[id].name}_eg.png', alt='#{items[id].localized_name})
+		a(href='/items/#{id}/', title='#{items[id].localized_name}'): img(src='http://media.steampowered.com/apps/dota2/images/items/#{items[id].name}_eg.png', alt='#{items[id].localized_name}')
 
 block content
 	table.fullwidth
