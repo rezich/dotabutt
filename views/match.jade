@@ -6,14 +6,14 @@ mixin players_header(side)
 			th(colspan=2) Player
 			th(colspan=2) Hero
 			th Level
-			th K
-			th D
-			th A
+			th: abbr(title='Kills') K
+			th: abbr(title='Deaths') D
+			th: abbr(title='Assists') A
 			th Gold
-			th LH
-			th DN
-			th XPM
-			th GPM
+			th: abbr(title='Last hits') LH
+			th: abbr(title='Denies') DN
+			th: abbr(title='XP per minute') XPM
+			th: abbr(title='Gold per minute') GPM
 			th Items
 
 mixin player_block(player)
@@ -121,7 +121,7 @@ mixin towermap(match)
 
 mixin item(id)
 	if items[id] != undefined
-		a(href='/items/#{id}/'): img(src='http://media.steampowered.com/apps/dota2/images/items/#{items[id].name}_eg.png')
+		a(href='/items/#{id}/', title='#{items[id].localized_name}'): img(src='http://media.steampowered.com/apps/dota2/images/items/#{items[id].name}_eg.png', alt='#{items[id].localized_name})
 
 block content
 	table.fullwidth
