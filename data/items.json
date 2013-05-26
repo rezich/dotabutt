@@ -424,9 +424,9 @@
 				"type": "no_target",
 				"affects": "self",
 				"description": "Gains charges (max 10) based on enemies using abilities in a nearby area. When activated, it restores health and mana based on the number of charges stored.",
-				"attributes": [
+				"attributes": {
 					"Health and Mana Restored per Charge": 15
-				]
+				}
 			}
 		]
 	},
@@ -453,9 +453,9 @@
 				"type": "no_target",
 				"affects": "self",
 				"description": "Gains charges (max 15) based on enemies using abilities in a nearby area. When activated, it restores health and mana based on the number of charges stored.",
-				"attributes": [
+				"attributes": {
 					"Health and Mana Restored per Charge": 15
-				]
+				}
 			}
 		]
 	},
@@ -475,9 +475,10 @@
 				"type": "no_target",
 				"affects": "self",
 				"description": "Enter ghost form, unable to attack or be attacked, but take 40% extra damage from spells. Using a Teleport Scroll dispels Ghost Form. Boots of Travel do not dispel Ghost Form.",
-				"attributes": [
+				"attributes": {
 					"Duration": 4
-				]
+				},
+				"cooldown": 30
 			}
 		]
 	},
@@ -495,10 +496,10 @@
 				"type": "target_unit",
 				"affects": "allies",
 				"description": "Restores mana over time. If the user is attacked, the effect is lost.",
-				"attributes": [
+				"attributes": {
 					"Duration": 30,
 					"Mana restored": 100
-				]
+				}
 			}
 		]
 	},
@@ -508,7 +509,20 @@
 		"cost": 100,
 		"shareable": 1,
 		"stackable": 1,
-		"consumable": 1
+		"consumable": 1,
+		"description": "A magical salve that can quickly mend even the deepest of wounds.",
+		"abilities": [
+			{
+				"name": "Regenerate Health",
+				"type": "target_unit",
+				"affects": "allies",
+				"description": "Restores HP over time. If the user is attacked, the effect is lost.",
+				"attributes": {
+					"Duration": 10,
+					"Mana restored": 400
+				}
+			}
+		]
 	},
 	"40": {
 		"name": "dust",
@@ -516,28 +530,69 @@
 		"cost": 180,
 		"shareable": 1,
 		"stackable": 1,
-		"consumable": 1
+		"consumable": 1,
+		"abilities": [
+			{
+				"name": "Reveal",
+				"type": "no_target",
+				"affects": "enemies",
+				"description": "Reveals invisible heroes in a nearby area.",
+				"attributes": {
+					"Duration": 12,
+					"Radius": 1050
+				}
+			}
+		]
 	},
 	"41": {
 		"name": "bottle",
 		"localized_name": "Bottle",
 		"cost": 600,
 		"shareable": 1,
-		"consumable": 1
+		"consumable": 1,
+		"description": "An old bottle that survived the ages, the contents placed inside become enchanted.",
+		"abilities": [
+			{
+				"name": "Regenerate",
+				"type": "no_target",
+				"affects": "self",
+				"description": "Restores HP and Mana over time. Effect is lost if unit is attacked. Empty Bottle refills near town fountain. You can also store runes in the bottle, to save for later use. After 2 minutes, stored Runes will be activated.",
+				"attributes": {
+					"Health Restored": 135,
+					"Mana Restored": 70,
+					"Duration": 3
+				},
+				"cooldown": 0.5
+			}
+		]
 	},
 	"42": {
 		"name": "ward_observer",
 		"localized_name": "Observer Ward",
 		"cost": 150,
 		"shareable": 1,
-		"stackable": 1
+		"stackable": 1,
+		"abilities": [
+			{
+				"name": "Place Ward",
+				"type": "target_point",
+				"description": "Places an Observer Ward to give sight of the surrounding area. Lasts 6 minutes."
+			}
+		]
 	},
 	"43": {
 		"name": "ward_sentry",
 		"localized_name": "Sentry Ward",
 		"cost": 200,
 		"shareable": 1,
-		"stackable": 1
+		"stackable": 1,
+		"abilities": [
+			{
+				"name": "Place Ward",
+				"type": "target_point",
+				"description": "Places an Sentry Ward to give True Sight of the surrounding area. Lasts 3 minutes."
+			}
+		]
 	},
 	"44": {
 		"name": "tango",
@@ -545,7 +600,20 @@
 		"cost": 90,
 		"shareable": 1,
 		"stackable": 1,
-		"consumable": 1
+		"consumable": 1,
+		"description": "Forage to survive on the battlefield.",
+		"abilities": [
+			{
+				"name": "Eat Tree",
+				"type": "trees",
+				"affects": "self",
+				"description": "Consume a tree to restore HP over time. Comes with 3 charges.",
+				"attributes": {
+					"Duration": 16,
+					"Health restored": 115
+				}
+			}
+		]
 	},
 	"45": {
 		"name": "courier",
