@@ -10,8 +10,25 @@ block content
 		ul
 			each value,key in item.bonuses
 				li #{key}: #{value}
+		p &nbsp;
 	if item.abilities
 		h2 Abilities
 		ul
 			each ability in item.abilities
-				li #{ability.name} - #{ability.description}
+				h3 #{ability.name}
+				if ability.type
+					p: em Target: #{ability.type}
+				if ability.affects
+					p: em Affects: #{ability.affects}
+				p #{ability.description}
+				if ability.attributes
+					ul
+						each value,key in ability.attributes
+							li #{key}: #{value}
+				if ability.cooldown || ability.mana
+					ul
+						if ability.cooldown
+							li Cooldown: #{ability.cooldown}
+						if ability.mana
+							li Mana: #{ability.mana}
+				p &nbsp;

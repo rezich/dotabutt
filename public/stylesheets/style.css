@@ -15,6 +15,7 @@ p{margin:0;cursor:text;margin-bottom:8px}
 p:last-child{margin-bottom:0}
 h1{font-size:30px;border-bottom:2px solid #ddd;line-height:80%;color:#111;margin-bottom:8px}
 h2{font-size:22px}
+h3{font-size:18px}
 abbr{cursor:help}
 a img{cursor:pointer}
 .centered{text-align:center}

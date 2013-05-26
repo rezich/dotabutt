@@ -617,10 +617,18 @@
 	},
 	"45": {
 		"name": "courier",
-		"localized_name": "Courier",
+		"localized_name": "Animal Courier",
 		"cost": 150,
 		"aliases": [ "donkey", "chicken" ],
-		"shareable": 1
+		"shareable": 1,
+		"description": "Losing the donkey is punishable by death.",
+		"abilities": [
+			{
+				"name": "Summon Animal Courier",
+				"type": "no_target",
+				"description": "Summons an Animal Courier to carry items for you. [CHECK DOTA TO MAKE SURE THIS IS CORRECT]"
+			}
+		]
 	},
 	"46": {
 		"name": "tpscroll",
@@ -629,7 +637,21 @@
 		"aliases": [ "tp" ],
 		"shareable": 1,
 		"stackable": 1,
-		"consumable": 1
+		"consumable": 1,
+		"abilities": [
+			{
+				"name": "Teleport",
+				"type": "channeled",
+				"affects": "self",
+				"description": "Teleports you to within 525 range of a target friendly building. While channeling, gives 200 range vision on the target and pings your allies' minimaps. Teleporting to a non-fountain building takes additional time if any allies have also teleported within a 1100 radius of your target within 25 seconds.",
+				"attributes": {
+					"Range": "Global",
+					"Casting time": "3 (5/6/7/8 for 1/2/3/4 recent allied teleports)"
+				},
+				"mana": 75,
+				"cooldown": 65
+			}
+		]
 	},
 	"47": {
 		"name": "recipe_travel_boots",
@@ -641,7 +663,25 @@
 		"name": "travel_boots",
 		"localized_name": "Boots of Travel",
 		"cost": 2450,
-		"aliases": [ "bot" ]
+		"aliases": [ "bot" ],
+		"description": "Winged boots that grant omnipresence.",
+		"bonuses": {
+			"movement_speed": 100
+		},
+		"abilities": [
+			{
+				"name": "Teleport",
+				"type": "channeled",
+				"affects": "self",
+				"description": "Teleports you to an allied non-hero unit or structure. While channeling, gives 200 range vision on the target and pings your allies' minimaps. Teleporting to a non-fountain building takes additional time if any allies have also teleported within a 1100 radius of your target within 25 seconds.",
+				"attributes": {
+					"Range": "Global",
+					"Casting time": "3 (this value is not affected by the increase timer nor does it affect other allies' TP timers.)"
+				},
+				"mana": 75,
+				"cooldown": 60
+			}
+		]
 	},
 	"49": {
 		"name": "recipe_phase_boots",
@@ -652,37 +692,75 @@
 	"50": {
 		"name": "phase_boots",
 		"localized_name": "Phase Boots",
-		"cost": 1350
+		"cost": 1350,
+		"description": "Boots that allow the wearer to travel between the ether.",
+		"bonuses": {
+			"damage": 24,
+			"movement_speed": 55
+		},
+		"abilities": [
+			{
+				"name": "Phase",
+				"type": "no_target",
+				"affects": "self",
+				"description": "Gives increased movement speed and lets you move through units. Phase is cancelled upon using another item or ability.",
+				"attributes": {
+					"Bonus Movement Speed": "16%",
+					"Duration": 4
+				},
+				"cooldown": 8
+			}
+		]
 	},
 	"51": {
 		"name": "demon_edge",
 		"localized_name": "Demon Edge",
 		"cost": 2400,
-		"secret_shop": 1
+		"secret_shop": 1,
+		"description": "One of the oldest weapons forged by the Demon-Smith Abzidian, it killed its maker when he tested its edge.",
+		"bonuses": {
+			"damage": 46
+		}
 	},
 	"52": {
 		"name": "eagle",
 		"localized_name": "Eaglesong",
 		"cost": 3300,
-		"secret_shop": 1
+		"secret_shop": 1,
+		"description": "Capturing the majestic call of an eagle, this mystical horn brings limitless dexterity to those who hear it.",
+		"bonuses": {
+			"agility": 25
+		}
 	},
 	"53": {
 		"name": "reaver",
 		"localized_name": "Reaver",
 		"cost": 3200,
-		"secret_shop": 1
+		"secret_shop": 1,
+		"description": "A massive axe capable of tearing whole mountains down.",
+		"bonuses": {
+			"strength": 25
+		}
 	},
 	"54": {
 		"name": "relic",
 		"localized_name": "Sacred Relic",
 		"cost": 3800,
-		"secret_shop": 1
+		"secret_shop": 1,
+		"description": "An ancient weapon that often turns the tides of war.",
+		"bonuses": {
+			"damage": 60
+		}
 	},
 	"55": {
 		"name": "hyperstone",
 		"localized_name": "Hyperstone",
 		"cost": 2100,
-		"secret_shop": 1
+		"secret_shop": 1,
+		"description": "A mystical, carved stone that boosts the fervor of the holder.",
+		"bonuses": {
+			"attack_speed": 55
+		}
 	},
 	"56": {
 		"name": "ring_of_health",
@@ -691,39 +769,64 @@
 		"shareable": 1,
 		"side_shop": 1,
 		"secret_shop": 1,
-		"aliases": [ "roh" ]
+		"aliases": [ "roh" ],
+		"description": "A shiny ring found beneath a fat halfling's corpse.",
+		"bonuses": {
+			"hp_regen": 5
+		}
 	},
 	"57": {
 		"name": "void_stone",
 		"localized_name": "Void Stone",
 		"cost": 875,
 		"shareable": 1,
-		"secret_shop": 1
+		"secret_shop": 1,
+		"description": "Jewelry that was once used to channel nether realm magic, this ring pulses with energy.",
+		"bonuses": {
+			"mana_regen": "100%"
+		}
 	},
 	"58": {
 		"name": "mystic_staff",
 		"localized_name": "Mystic Staff",
 		"cost": 2700,
-		"secret_shop": 1
+		"secret_shop": 1,
+		"description": "Enigmatic staff made of only the most expensive crystals.",
+		"bonuses": {
+			"intelligence": 25
+		}
 	},
 	"59": {
 		"name": "energy_booster",
 		"localized_name": "Energy Booster",
 		"cost": 1000,
 		"side_shop": 1,
-		"secret_shop": 1
+		"secret_shop": 1,
+		"description": "This lapis gemstone is commonly added to the collection of wizards seeking to improve their presence in combat.",
+		"bonuses": {
+			"mana": 250
+		}
 	},
 	"60": {
 		"name": "point_booster",
 		"localized_name": "Point Booster",
 		"cost": 1200,
-		"secret_shop": 1
+		"secret_shop": 1,
+		"description": "A perfectly formed amethyst that nourishes body and mind when held.",
+		"bonuses": {
+			"hp": "200",
+			"mana": "150"
+		}
 	},
 	"61": {
 		"name": "vitality_booster",
 		"localized_name": "Vitality Booster",
 		"cost": 1100,
-		"secret_shop": 1
+		"secret_shop": 1,
+		"description": "A ruby gemstone that has been passed down through generations of warrior kin.",
+		"bonuses": {
+			"hp": 250
+		}
 	},
 	"62": {
 		"name": "recipe_power_treads",
@@ -734,7 +837,20 @@
 	"63": {
 		"name": "power_treads",
 		"localized_name": "Power Treads",
-		"cost": 1400
+		"cost": 1400,
+		"description": "A pair of tough-skinned boots that change to meet the demands of the wearer.",
+		"bonuses": {
+			"selected_attribute": 8,
+			"attack_speed": 30,
+			"movement_speed": 55
+		},
+		"abilities": [
+			{
+				"name": "Switch Attribute",
+				"type": "no_target",
+				"description": "Changes selected attribute between Strength, Agility, and Intelligence"
+			}
+		]
 	},
 	"64": {
 		"name": "recipe_hand_of_midas",
@@ -746,7 +862,20 @@
 	"65": {
 		"name": "hand_of_midas",
 		"localized_name": "Hand of Midas",
-		"cost": 1900
+		"cost": 1900,
+		"description": "Preserved through unknown magical means, the Hand of Midas is a weapon of greed, sacrificing animals to line the owner's pockets.",
+		"bonuses": {
+			"attack_speed": 30
+		},
+		"abilities": [
+			{
+				"name": "Transmute",
+				"type": "target_unit",
+				"affects": "units",
+				"description": "Kills a non-hero target for 190 gold and 2.5&times; experience. Cannot be used on Ancients.",
+				"cooldown": 100
+			}
+		]
 	},
 	"66": {
 		"name": "recipe_oblivion_staff",
@@ -757,7 +886,14 @@
 	"67": {
 		"name": "oblivion_staff",
 		"localized_name": "Oblivion Staff",
-		"cost": 1675
+		"cost": 1675,
+		"description": "Deceptively hidden as an ordinary quarterstaff, it is actually very powerful, much like the Eldritch who originally possessed it.",
+		"bonuses": {
+			"intelligence": 6,
+			"mana_regen": "75%",
+			"damage", 15,
+			"attack_speed": 10
+		}
 	},
 	"68": {
 		"name": "recipe_pers",
@@ -767,10 +903,16 @@
 	},
 	"69": {
 		"name": "pers",
-		"localized_name": "Perseverence",
+		"localized_name": "Perseverance",
 		"cost": 1750,
 		"disassemblable": 1,
-		"shareable": 1
+		"shareable": 1,
+		"description": "A gem that grants heart to the bearer.",
+		"bonuses": {
+			"hp_regen": 5,
+			"mana_regen": "125%",
+			"damage": 10
+		}
 	},
 	"70": {
 		"name": "recipe_poor_mans_shield",
@@ -782,7 +924,21 @@
 		"name": "poor_mans_shield",
 		"localized_name": "Poor Man's Shield",
 		"cost": 550,
-		"aliases": [ "pms" ]
+		"aliases": [ "pms" ],
+		"description": "A busted old shield that seems to block more than it should.",
+		"bonuses": {
+			"agility": 6
+		},
+		"abilities": [
+			{
+				"name": "Damage Block",
+				"type": "passive",
+				"description": "Blocks physical attack damage, depending on the type of hero you are. Poor Man's Shield will always block attacks from enemy Heroes, but has a chance to block damage from creeps.",
+				"Chance to Block Non-Hero Damage": "60%"
+				"Damage Blocked (melee wielder)": 20
+				"Damage Blocked (ranged wielder)": 10
+			}
+		]
 	},
 	"72": {
 		"name": "recipe_bracer",
@@ -793,7 +949,14 @@
 	"73": {
 		"name": "bracer",
 		"localized_name": "Bracer",
-		"cost": 525
+		"cost": 525,
+		"description": "The bracer is a common choice to toughen up defenses and increase longevity.",
+		"bonuses": {
+			"strength": 6,
+			"agility": 3,
+			"intelligence": 3,
+			"damage": 3
+		}
 	},
 	"74": {
 		"name": "recipe_wraith_band",
@@ -804,7 +967,14 @@
 	"75": {
 		"name": "wraith_band",
 		"localized_name": "Wraith Band",
-		"cost": 485
+		"cost": 485,
+		"description": "A circlet with fait whispers echoing about it.",
+		"bonuses": {
+			"strength": 3,
+			"agility": 6,
+			"intelligence": 3,
+			"damage": 3
+		}
 	},
 	"76": {
 		"name": "recipe_null_talisman",
@@ -815,7 +985,14 @@
 	"77": {
 		"name": "null_talisman",
 		"localized_name": "Null Talisman",
-		"cost": 480
+		"cost": 480,
+		"description": "A small gemstone attached to several chains.",
+		"bonuses": {
+			"strength": 3,
+			"agility": 3,
+			"intelligence": 6,
+			"damage": 3
+		}
 	},
 	"78": {
 		"name": "recipe_mekansm",
@@ -827,7 +1004,38 @@
 		"name": "mekansm",
 		"localized_name": "Mekansm",
 		"cost": 2306,
-		"aliases": [ "mechanism" ]
+		"aliases": [ "mechanism" ],
+		"description": "A glowing jewel formed out of assorted parts that somehow fit together perfectly.",
+		"bonuses": {
+			"strength": 5,
+			"agility": 5,
+			"intelligence": 5,
+			"armor": 5
+		},
+		"abilities": [
+			{
+				"name": "Mekansm Aura",
+				"type": "passive",
+				"affects": "allies",
+				"description": "Bonus HP Regen in an area. Multiple instances of Mekansm Aura do not stack.",
+				"attributes": {
+					"Bonus Health Regeneration": 4,
+					"Radius": 500
+				}
+			},
+			{
+				"name": "Restore",
+				"type": "no_target",
+				"affects": "allies",
+				"description": "Heals 250 HP and gives +2 armor in an area.",
+				"attributes": {
+					"Radius": 750,
+					"Duration": 25
+				},
+				"mana": 150
+				"cooldown": 45
+			}
+		]
 	},
 	"80": {
 		"name": "recipe_vladmir",
@@ -838,7 +1046,26 @@
 	"81": {
 		"name": "vladmir",
 		"localized_name": "Vladmir's Offering",
-		"cost": 2050
+		"cost": 2050,
+		"description": "An eerie mask that is haunted with the malice of a fallen vampire.",
+		"bonuses": {
+			"hp_regen": 2
+		},
+		"abilities": [
+			{
+				"name": "Vladmir's Aura",
+				"type": "aura",
+				"affects": "allies",
+				"description": "Grants a variety of bonuses to nearby allies. Lifesteal bonuses from Vladmir's Aura only affect melee units. Multiple instances of Vladmir's Aura do not stack.",
+				"attributes": {
+					"Radius": 900,
+					"Lifesteal": "16%",
+					"Bonus Damage": "15%",
+					"Bonus Armor": 5,
+					"Bonus Mana Regeneration": 0.8
+				}
+			}
+		]
 	},
 	"84": {
 		"name": "flying_courier",
@@ -846,7 +1073,8 @@
 		"cost": 220,
 		"aliases": [ "crow" ],
 		"shareable": 1,
-		"consumable": 1
+		"consumable": 1,
+		"description": "Losing the donkey is punishable by death."
 	},
 	"85": {
 		"name": "recipe_buckler",
@@ -857,7 +1085,27 @@
 	"86": {
 		"name": "buckler",
 		"localized_name": "Buckler",
-		"cost": 803
+		"cost": 803,
+		"description": "A powerful shield that imbues the bearer with the strength of heroes past, it is capable of protecting entire armies in battle.",
+		"bonuses": {
+			"strength": 2,
+			"agility": 2,
+			"intelligence": 2,
+			"armor": 5
+		},
+		"abilities": [
+			{
+				"name": "Armor Bonus",
+				"type": "no_target",
+				"affects": "allies",
+				"description": "Gives +2 armor to all nearby allied units. Lasts 25 seconds on heroes, 30 seconds on units.",
+				"attributes": {
+					"Radius:" 700
+				},
+				"mana": 10,
+				"duration": 25
+			}
+		]
 	},
 	"87": {
 		"name": "recipe_ring_of_basilius",
@@ -870,7 +1118,24 @@
 		"localized_name": "Ring of Basilius",
 		"cost": 500,
 		"aliases": [ "rob" ],
-		"disassemblable": 1
+		"disassemblable": 1,
+		"description": "Ring given as a reward to the greatest mages.",
+		"bonuses": {
+			"damage": 6,
+			"armor": 1
+		},
+		"abilities": [
+			{
+				"name": "Basilius Aura",
+				"type": "toggle",
+				"affects": "allies",
+				"description": "Grants mana regeneration and armor in a 900 radius.",
+				"attributes": {
+					"Bonus Mana Regeneration": 0.65
+					"Bonus Armor": 2
+				}
+			}
+		]
 	},
 	"89": {
 		"name": "recipe_pipe",
@@ -881,7 +1146,26 @@
 	"90": {
 		"name": "pipe",
 		"localized_name": "Pipe of Insight",
-		"cost": 3628
+		"cost": 3628,
+		"description": "A powerful artifact of mysterious origin, it creates barriers against magical forces.",
+		"bonuses": {
+			"hp_regen": 11,
+			"magic_resistance": "30%"
+		},
+		"abilities": [
+			{
+				"name": "Barrier",
+				"type": "no_target",
+				"affects": "allies",
+				"description": "Give nearby friendly unites a shield that blocks 400 magical damage.",
+				"attributes": {
+					"Radius": 500,
+					"Duration": 10
+				},
+				"mana": 100,
+				"cooldown": 60
+			}
+		]
 	},
 	"91": {
 		"name": "recipe_urn_of_shadows",
@@ -892,7 +1176,28 @@
 	"92": {
 		"name": "urn_of_shadows",
 		"localized_name": "Urn of Shadows",
-		"cost": 200
+		"cost": 200,
+		"description": "Contains the ashes of powerful demons.",
+		"bonuses": {
+			"strength": 6,
+			"mana_regen": "50%"
+		},
+		"abilities": [
+			{
+				"name": "Soul Release",
+				"type": "target_unit",
+				"affects": "heroes",
+				"damage": "hp_removal",
+				"description": "Heals HP over time for friendly units, but deals damage over time for enemy units. The healing effect is lost if the affected unit takes damage from an enemy hero or tower.",
+				"attributes": {
+					"Allied Heal (Total)": 400
+					"Enemy Damage (Total)": 150
+					"Heal/Damage Duration": 8
+					"Range": 950
+				},
+				"cooldown": 10
+			}
+		]
 	},
 	"93": {
 		"name": "recipe_headdress",
@@ -903,7 +1208,24 @@
 	"94": {
 		"name": "headdress",
 		"localized_name": "Headdress",
-		"cost": 603
+		"cost": 603,
+		"description": "Creates a soothing aura that restores allies in battle.",
+		"bonuses": {
+			"strength": 2,
+			"agility": 2,
+			"intelligence": 2
+		},
+		"abilities": [
+			{
+				"name": "Regeneration Aura",
+				"type": "passive",
+				"affects": "allies",
+				"description": "Restores HP to allies in a 500 unit radius. Multiple instances of Regeneration Aura do not stack.",
+				"attributes": {
+					"Bonus Health Regeneration": 3
+				}
+			}
+		]
 	},
 	"95": {
 		"name": "recipe_sheepstick",
@@ -915,7 +1237,27 @@
 		"name": "sheepstick",
 		"localized_name": "Sythe of Vyse",
 		"cost": 5675,
-		"aliases": [ "hex", "sheepstick" ]
+		"aliases": [ "hex", "sheepstick" ],
+		"description": "The most guarded relic among the cult of Vyse, it is the most coveted weapon among magi.",
+		"bonuses": {
+			"strength": 10,
+			"agility": 10,
+			"intelligence": 35,
+			"mana_regen": "150%"
+		},
+		"abilities": [
+			{
+				"name": "Hex",
+				"type": "target_unit",
+				"affects": "enemies",
+				"description": "Turns a target unit into a harmless critter for 3.5 seconds. Destroys illusions.",
+				"attributes": {
+					"Range": 800
+				},
+				"mana": 100,
+				"cooldown": 35
+			}
+		]
 	},
 	"97": {
 		"name": "recipe_orchid",
@@ -926,7 +1268,28 @@
 	"98": {
 		"name": "orchid",
 		"localized_name": "Orchid Malevolence",
-		"cost": 5025
+		"cost": 5025,
+		"description": "A garnet rod constructed from the essence of a fire demon.",
+		"bonuses": {
+			"intelligence": 25,
+			"mana_regen": "150%",
+			"damage": 30,
+			"attack_speed": 30
+		},
+		"abilities": [
+			{
+				"name": "Soul Burn",
+				"type": "target_unit",
+				"affects": "enemies",
+				"damage": "magical",
+				"description": "Silences target unit for 5 seconds and amplifies the damage it takes by 30%.",
+				"attributes": {
+					"Range": 900
+				},
+				"mana": 100,
+				"cooldown": 18
+			}
+		]
 	},
 	"99": {
 		"name": "recipe_cyclone",
@@ -938,7 +1301,26 @@
 		"name": "cyclone",
 		"localized_name": "Eul's Scepter of Divinity",
 		"cost": 2800,
-		"aliases": ["cyclone", "euls"]
+		"aliases": ["cyclone", "euls"],
+		"description": "A mysterious scepter passed down through the ages, its disruptive winds can be used for good or evil.",
+		"bonuses": {
+			"intelligence": 10,
+			"mana_regen": "150%",
+			"movement_speed": 30
+		},
+		"abilities": [
+			{
+				"name": "Cyclone",
+				"type": "target_unit",
+				"affects": "units",
+				"description": "Target unit is swept up in a cyclone for 2.5 seconds, and is invulnerable.",
+				"attributes": {
+					"Range": 700
+				},
+				"mana": 75,
+				"cooldown": 30
+			}
+		]
 	},
 	"101": {
 		"name": "recipe_force_staff",
