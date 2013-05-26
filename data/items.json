@@ -891,7 +891,7 @@
 		"bonuses": {
 			"intelligence": 6,
 			"mana_regen": "75%",
-			"damage", 15,
+			"damage": 15,
 			"attack_speed": 10
 		}
 	},
@@ -934,9 +934,11 @@
 				"name": "Damage Block",
 				"type": "passive",
 				"description": "Blocks physical attack damage, depending on the type of hero you are. Poor Man's Shield will always block attacks from enemy Heroes, but has a chance to block damage from creeps.",
-				"Chance to Block Non-Hero Damage": "60%"
-				"Damage Blocked (melee wielder)": 20
-				"Damage Blocked (ranged wielder)": 10
+				"attributes": {
+					"Chance to Block Non-Hero Damage": "60%",
+					"Damage Blocked (melee wielder)": 20,
+					"Damage Blocked (ranged wielder)": 10
+				}
 			}
 		]
 	},
@@ -1032,7 +1034,7 @@
 					"Radius": 750,
 					"Duration": 25
 				},
-				"mana": 150
+				"mana": 150,
 				"cooldown": 45
 			}
 		]
@@ -1100,7 +1102,7 @@
 				"affects": "allies",
 				"description": "Gives +2 armor to all nearby allied units. Lasts 25 seconds on heroes, 30 seconds on units.",
 				"attributes": {
-					"Radius:" 700
+					"Radius": 700
 				},
 				"mana": 10,
 				"duration": 25
@@ -1131,7 +1133,7 @@
 				"affects": "allies",
 				"description": "Grants mana regeneration and armor in a 900 radius.",
 				"attributes": {
-					"Bonus Mana Regeneration": 0.65
+					"Bonus Mana Regeneration": 0.65,
 					"Bonus Armor": 2
 				}
 			}
@@ -1190,9 +1192,9 @@
 				"damage": "hp_removal",
 				"description": "Heals HP over time for friendly units, but deals damage over time for enemy units. The healing effect is lost if the affected unit takes damage from an enemy hero or tower.",
 				"attributes": {
-					"Allied Heal (Total)": 400
-					"Enemy Damage (Total)": 150
-					"Heal/Damage Duration": 8
+					"Allied Heal (Total)": 400,
+					"Enemy Damage (Total)": 150,
+					"Heal/Damage Duration": 8,
 					"Range": 950
 				},
 				"cooldown": 10
