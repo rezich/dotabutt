@@ -6,152 +6,322 @@
 		"side_shop": 1,
 		"invalid_heroes": [
 			14, 20
+		],
+		"description": "The fabled dagger used by the fastest assassin ever to walk the lands.",
+		"abilities": [
+			{
+				"name": "Blink",
+				"type": "target_point",
+				"affects": "self",
+				"mana": "75",
+				"cooldown": "14",
+				"description": "Teleport to a target point up to 1200 units away. If damage is taken from an enemy hero, Blink Dagger cannot be used for 3 seconds."
+			}
 		]
 	},
 	"2": {
 		"name": "blades_of_attack",
 		"localized_name": "Blades of Attack",
 		"cost": 450,
-		"side_shop": 1
+		"side_shop": 1,
+		"description": "The damage of these small, concealable blades should not be underestimated.",
+		"bonuses": {
+			"damage": 9
+		}
 	},
 	"3": {
 		"name": "broadsword",
 		"localized_name": "Broadsword",
-		"cost": 1200
+		"cost": 1200,
+		"description": "The classic weapon of choice for knights, this blade is sturdy and reliable for slaying enemies.",
+		"bonuses": {
+			"damage": 9
+		}
 	},
 	"4": {
 		"name": "chainmail",
 		"localized_name": "Chainmail",
 		"cost": 550,
-		"side_shop": 1
+		"side_shop": 1,
+		"description": "A medium weave of metal chains.",
+		"bonuses": {
+			"armor": 5
+		}
 	},
 	"5": {
 		"name": "claymore",
 		"localized_name": "Claymore",
-		"cost": 1400
+		"cost": 1400,
+		"description": "A sword that can cut through armor, it's a commonly chosen first weapon for budding swordsmen.",
+		"bonuses": {
+			"damage": 21
+		}
 	},
 	"6": {
 		"name": "helm_of_iron_will",
 		"localized_name": "Helm of Iron Will",
 		"cost": 950,
-		"side_shop": 1
+		"side_shop": 1,
+		"description": "The helmet of a mighty warrior who fell in battle.",
+		"bonuses": {
+			"hp_regen": 3,
+			"armor": 5
+		}
 	},
 	"7": {
 		"name": "javelin",
 		"localized_name": "Javelin",
-		"cost": 1500
+		"cost": 1500,
+		"description": "A rather typical spear that can sometimes pierce through an enemy's armor when used to attack.",
+		"bonuses": {
+			"damage": 21
+		},
+		"abilities": [
+			{
+				"name": "Pierce",
+				"type": "passive",
+				"affects": "enemies",
+				"damage": "physical",
+				"description": "Grants a chance to deal bonus damage.",
+				"attributes": {
+					"Damage Chance": "20%",
+					"Bonus Damage": 40
+				}
+			}
+		]
 	},
 	"8": {
 		"name": "mithril_hammer",
 		"localized_name": "Mithril Hammer",
-		"cost": 1600
+		"cost": 1600,
+		"description": "A hammer forged of pure mithril.",
+		"bonuses": {
+			"damage": 24
+		}
 	},
 	"9": {
 		"name": "platemail",
 		"localized_name": "Platemail",
-		"cost": 1400
+		"cost": 1400,
+		"description": "Thick metal plates that protect the entire upper body. Avoid dropping on feet.",
+		"bonuses": {
+			"armor": 10
+		}
 	},
 	"10": {
 		"name": "quarterstaff",
 		"localized_name": "Quarterstaff",
 		"cost": 900,
-		"side_shop": 1
+		"side_shop": 1,
+		"description": "A basic staff that allows you to strike quickly.",
+		"bonuses": {
+			"damage": 10,
+			"attack_speed": 10
+		}
 	},
 	"11": {
 		"name": "quelling_blade",
 		"localized_name": "Quelling Blade",
 		"cost": 225,
-		"side_shop": 1
+		"side_shop": 1,
+		"description": "The axe of a fallen gnome, it allows you to effectively maneuver the forest.",
+		"abilities": [
+			{
+				"name": "Destroy Tree",
+				"type": "target_unit",
+				"affects": "trees",
+				"description": "Destroy a target tree.",
+				"range": 100,
+				"cooldown": 5
+			},
+			{
+				"name": "Quell",
+				"type": "passive",
+				"affects": "units",
+				"description": "Gives bonus attack damage against non-hero units, depending on the type of hero you are.",
+				"attributes": {
+					"Bonus Damage (melee)": "32%",
+					"Bonus Damage (ranged)": "12%"
+				}
+			}
+		]
 	},
 	"12": {
 		"name": "ring_of_protection",
 		"localized_name": "Ring of Protection",
 		"cost": 1750,
-		"aliases": [ "rop" ]
+		"aliases": [ "rop" ],
+		"description": "A glimmering ring that defends its bearer.",
+		"bonuses": {
+			"armor": 2
+		}
 	},
 	"182": {
 		"name": "stout_shield",
 		"localized_name": "Stout Shield",
 		"cost": 250,
-		"side_shop": 1
+		"side_shop": 1,
+		"description": "One man's wine barrel bottem is another man's shield.",
+		"abilities": [
+			{
+				"name": "Damage Block",
+				"type": "passive",
+				"description": "Gives a chance to block damage, depending on the type of hero you are.",
+				"attributes": {
+					"Chance to Block": "60%",
+					"Damage Blocked (melee wielder)": 20,
+					"Damage Blocked (ranged wielder)": 10
+				}
+			}
+		]
 	},
 	"13": {
 		"name": "gauntlets",
 		"localized_name": "Gauntlets of Strength",
-		"cost": 150
+		"cost": 150,
+		"description": "Studded leather gloves that add brute strength.",
+		"bonuses": {
+			"strength": 3
+		}
 	},
 	"14": {
 		"name": "slippers",
 		"localized_name": "Slippers of Agility",
 		"cost": 150,
-		"side_shop": 1
+		"side_shop": 1,
+		"description": "Light boots made from spider skin that tingles your senses.",
+		"bonuses": {
+			"agility": 3
+		}
 	},
 	"15": {
 		"name": "mantle",
 		"localized_name": "Mantle of Intelligence",
-		"cost": 150
+		"cost": 150,
+		"description": "A beautiful sapphire mantle worn by generations of queens.",
+		"bonuses": {
+			"intelligence": 3
+		}
 	},
 	"16": {
 		"name": "branches",
 		"localized_name": "Iron Branch",
 		"cost": 53,
-		"aliases": [ "gg branch" ]
+		"aliases": [ "gg branch" ],
+		"description": "A seemingly ordinary branch, its ironlike qualities are bestowed upon the bearer.",
+		"bonuses": {
+			"strength": 1,
+			"agility": 1,
+			"intelligence": 1
+		}
 	},
 	"17": {
 		"name": "belt_of_strength",
 		"localized_name": "Belt of Strength",
 		"cost": 450,
-		"side_shop": 1
+		"side_shop": 1,
+		"description": "A valued accessory for improving vitality.",
+		"bonuses": {
+			"strength": 6
+		}
 	},
 	"18": {
 		"name": "boots_of_elves",
 		"localized_name": "Band of Elvenskin",
 		"cost": 450,
-		"side_shop": 1
+		"side_shop": 1,
+		"description": "A tensile fabric often used for its light weight and ease of movement.",
+		"bonuses": {
+			"agility": 6
+		}
 	},
 	"19": {
 		"name": "robe",
 		"localized_name": "Robe of the Magi",
 		"cost": 450,
-		"side_shop": 1
+		"side_shop": 1,
+		"description": "This robe corrupts the soul of the user, but provides wisdom in return.",
+		"bonuses": {
+			"intelligence": 6
+		}
 	},
 	"20": {
 		"name": "circlet",
 		"localized_name": "Circlet",
-		"cost": 185
+		"cost": 185,
+		"description": "An elegant circlet designed for human princesses.",
+		"bonuses": {
+			"strength": 2,
+			"agility": 2,
+			"intelligence": 2
+		}
 	},
 	"21": {
 		"name": "ogre_axe",
 		"localized_name": "Ogre Club",
-		"cost": 1000
+		"cost": 1000,
+		"description": "You grow stronger just by holding it.",
+		"bonuses": {
+			"strength": 10
+		}
 	},
 	"22": {
 		"name": "blade_of_alacrity",
 		"localized_name": "Blade of Alacrity",
-		"cost": 1000
+		"cost": 1000,
+		"description": "A long blade imbued with time magic.",
+		"bonuses": {
+			"agility": 10
+		}
 	},
 	"23": {
 		"name": "staff_of_wizardry",
 		"localized_name": "Staff of Wizardry",
-		"cost": 1000
+		"cost": 1000,
+		"description": "A staff of magical powers passed down from the eldest mages.",
+		"bonuses": {
+			"intelligence": 10
+		}
 	},
 	"24": {
 		"name": "ultimate_orb",
 		"localized_name": "Ultimate Orb",
 		"cost": 2100,
-		"side_shop": 1
+		"side_shop": 1,
+		"description": "A mystical orb containing the essence of life.",
+		"bonuses": {
+			"strength": 10,
+			"agility": 10,
+			"intelligence": 10
+		}
 	},
 	"25": {
 		"name": "gloves",
 		"localized_name": "Gloves of Haste",
 		"cost": 500,
-		"side_shop": 1
+		"side_shop": 1,
+		"description": "A pair of magical gloves that seems to render weapons weightless.",
+		"bonuses": {
+			"attack_speed": 15
+		}
 	},
 	"26": {
 		"name": "lifesteal",
 		"localized_name": "Morbid Mask",
 		"cost": 900,
-		"side_shop": 1
+		"side_shop": 1,
+		"description": "A mask that drains the energy of those caught in its gaze.",
+		"abilities": [
+			{
+				"name": "Lifesteal",
+				"type": "passive",
+				"description": "Gives lifesteal on attacks.",
+				"uam": 1,
+				"attributes": {
+					"Lifesteal": "15%"
+				}
+			}
+		]
 	},
 	"27": {
 		"name": "ring_of_regen",
@@ -159,51 +329,106 @@
 		"cost": 350,
 		"aliases": [ "ror" ],
 		"side_shop": 1,
-		"shareable": 1
+		"shareable": 1,
+		"description": "This ring is considered a good luck charm among the Gnomes.",
+		"bonuses": {
+			"hp_regen": 2
+		}
 	},
 	"28": {
 		"name": "sobi_mask",
 		"localized_name": "Sage's Mask",
 		"cost": 325,
 		"side_shop": 1,
-		"shareable": 1
+		"shareable": 1,
+		"description": "A mask commonly used by mages and warlocks for various rituals.",
+		"bonuses": {
+			"mana_regen": "50%"
+		}
 	},
 	"29": {
 		"name": "boots",
 		"localized_name": "Boots of Speed",
 		"cost": 450,
-		"side_shop": 1
+		"side_shop": 1,
+		"description": "Fleet footwear, increasing movement.",
+		"bonuses": {
+			"movement_speed": 50
+		}
 	},
 	"30": {
 		"name": "gem",
 		"localized_name": "Gem of True Sight",
 		"cost": 700,
-		"shareable": 1
+		"shareable": 1,
+		"abilities": [
+			{
+				"name": "True Sight",
+				"type": "passive",
+				"description": "Gives the ability to see invisible units and wards. Drops on death.",
+				"attributes": {
+					"Radius": 1100
+				}
+			}
+		]
 	},
 	"31": {
 		"name": "cloak",
 		"localized_name": "Cloak",
 		"cost": 550,
-		"side_shop": 1
+		"side_shop": 1,
+		"description": "A cloak made of magical material that works to dispel any magic cast on it.",
+		"bonuses": {
+			"magic_resistance": "15%"
+		}
 	},
 	"32": {
 		"name": "talisman_of_evasion",
 		"localized_name": "Talisman of Evasion",
 		"cost": 1800,
-		"side_shop": 1
+		"side_shop": 1,
+		"description": "A necklace that allows you to anticipate enemy attacks.",
+		"bonuses": {
+			"evasion": "25%"
+		}
 	},
 	"33": {
 		"name": "cheese",
 		"localized_name": "Cheese",
 		"cost": 1000,
 		"shareable": 1,
-		"stackable": 1
+		"stackable": 1,
+		"description": "Made from the milk of a long lost Furbolg vendor, it restores the vitality of those who taste it.",
+		"abilities": [
+			{
+				"name": "Restore",
+				"type": "target_unit",
+				"affects": "allies",
+				"description": "Instantly restores health and mana",
+				"attributes": {
+					"Health Restored": 2500,
+					"Mana Restored": 1000
+				}
+			}
+		]
 	},
 	"34": {
 		"name": "magic_stick",
 		"localized_name": "Magic Stick",
 		"cost": 200,
-		"side_shop": 1
+		"side_shop": 1,
+		"description": "A simple wand used to channel magic energies, it is favored by apprentice wizards and great warlocks alike.",
+		"abilities": [
+			{
+				"name": "Energy Charge",
+				"type": "no_target",
+				"affects": "self",
+				"description": "Gains charges (max 10) based on enemies using abilities in a nearby area. When activated, it restores health and mana based on the number of charges stored.",
+				"attributes": [
+					"Health and Mana Restored per Charge": 15
+				]
+			}
+		]
 	},
 	"35": {
 		"name": "recipe_magic_wand",
@@ -215,12 +440,46 @@
 		"name": "magic_wand",
 		"localized_name": "Magic Wand",
 		"cost": 509,
-		"aliases": [ "ghost" ]
+		"aliases": [ "ghost" ],
+		"description": "A simple wand used to channel magic energies, it is favored by apprentice wizards and great warlocks alike.",
+		"bonuses": {
+			"strength": 3,
+			"agility": 3,
+			"intelligence": 3
+		},
+		"abilities": [
+			{
+				"name": "Energy Charge",
+				"type": "no_target",
+				"affects": "self",
+				"description": "Gains charges (max 15) based on enemies using abilities in a nearby area. When activated, it restores health and mana based on the number of charges stored.",
+				"attributes": [
+					"Health and Mana Restored per Charge": 15
+				]
+			}
+		]
 	},
 	"37": {
 		"name": "ghost",
 		"localized_name": "Ghost Scepter",
-		"cost": 1600
+		"cost": 1600,
+		"description": "Imbues the wielder with a ghostly presence, allowing them to evade physical damage.",
+		"bonuses": {
+			"strength": 7,
+			"agility": 7,
+			"intelligence": 7
+		},
+		"abilities": [
+			{
+				"name": "Ghost Form",
+				"type": "no_target",
+				"affects": "self",
+				"description": "Enter ghost form, unable to attack or be attacked, but take 40% extra damage from spells. Using a Teleport Scroll dispels Ghost Form. Boots of Travel do not dispel Ghost Form.",
+				"attributes": [
+					"Duration": 4
+				]
+			}
+		]
 	},
 	"38": {
 		"name": "clarity",
@@ -228,7 +487,20 @@
 		"cost": 50,
 		"shareable": 1,
 		"stackable": 1,
-		"consumable": 1
+		"consumable": 1,
+		"description": "Clear water that enhances the ability to meditate.",
+		"abilities": [
+			{
+				"name": "Regenerate Mana",
+				"type": "target_unit",
+				"affects": "allies",
+				"description": "Restores mana over time. If the user is attacked, the effect is lost.",
+				"attributes": [
+					"Duration": 30,
+					"Mana restored": 100
+				]
+			}
+		]
 	},
 	"39": {
 		"name": "flask",
@@ -277,7 +549,7 @@
 	},
 	"45": {
 		"name": "courier",
-		"localized_name": "",
+		"localized_name": "Courier",
 		"cost": 150,
 		"aliases": [ "donkey", "chicken" ],
 		"shareable": 1
@@ -361,7 +633,7 @@
 		"secret_shop": 1
 	},
 	"58": {
-		"name": "item_mystic_staff",
+		"name": "mystic_staff",
 		"localized_name": "Mystic Staff",
 		"cost": 2700,
 		"secret_shop": 1
@@ -772,8 +1044,8 @@
 	},
 	"119": {
 		"name": "shivas_guard",
-		"localized_name": "4700",
-		"cost": 0,
+		"localized_name": "Shiva's Guard",
+		"cost": 4700,
 		"disassemblable": 1
 	},
 	"120": {

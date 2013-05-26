@@ -2,4 +2,8 @@ extends layout
 
 block content
 	h1 Items
-	p TODO: List items or something cool like that here
+	ul
+		each item,id in items
+			li: a(href='/items/#{id}/', title='#{item.localized_name}')
+				img(src='http://media.steampowered.com/apps/dota2/images/items/#{item.name}_eg.png', alt='#{item.localized_name}') 
+				=item.localized_name

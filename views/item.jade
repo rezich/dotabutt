@@ -1,4 +1,17 @@
 extends layout
 
 block content
+	img.item-big(src='http://media.steampowered.com/apps/dota2/images/items/#{item.name}_lg.png', alt='#{item.localized_name}')
 	h1 #{item.localized_name}
+	if item.description
+		p: em #{item.description}
+	if item.bonuses
+		h2 Bonuses
+		ul
+			each value,key in item.bonuses
+				li #{key}: #{value}
+	if item.abilities
+		h2 Abilities
+		ul
+			each ability in item.abilities
+				li #{ability.name} - #{ability.description}
