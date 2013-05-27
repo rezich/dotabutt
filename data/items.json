@@ -1990,7 +1990,33 @@
 		"name": "manta",
 		"localized_name": "Manta Style",
 		"cost": 5050,
-		"disassemblable": 1
+		"disassemblable": 1,
+		"description": "An axe made of reflective materials that causes confusion amongst enemy ranks.",
+		"bonuses": {
+			"strength": 10,
+			"agility": 26,
+			"intelligence": 10,
+			"attack_speed": 15,
+			"movement_speed": "10%"
+		},
+		"abilities": [
+			{
+				"name": "Mirror Image (melee)",
+				"type": "no_target",
+				"affects": "self",
+				"description": "Creates 2 illusions of your hero that last 20 seconds. Melee illusions deal 33% damage and take 350% damage.",
+				"mana": "165",
+				"cooldown": 35
+			},
+			{
+				"name": "Mirror Image (ranged)",
+				"type": "no_target",
+				"affects": "self",
+				"description": "Creates 2 illusions of your hero that last 20 seconds. Melee illusions deal 28% damage and take 400% damage.",
+				"mana": "165",
+				"cooldown": 50
+			}
+		]
 	},
 	"148": {
 		"name": "recipe_lesser_crit",
@@ -2001,7 +2027,23 @@
 	"149": {
 		"name": "lesser_crit",
 		"localized_name": "Crystalys",
-		"cost": 2150
+		"cost": 2150,
+		"description": "A blade forged from rare crystals, it seeks weak points in enemy armor.",
+		"bonuses": {
+			"damage": 30
+		},
+		"abilities": [
+			{
+				"name": "Critical Strike",
+				"type": "passive",
+				"affects": "enemies",
+				"description": "Grants a chance to deal critical damage on an attack.",
+				"attributes": {
+					"Critical Chance": "20%",
+					"Critical Damage": "1.75&times;"
+				}
+			}
+		]
 	},
 	"150": {
 		"name": "recipe_armlet",
@@ -2012,7 +2054,23 @@
 	"151": {
 		"name": "armlet",
 		"localized_name": "Armlet of Mordiggian",
-		"cost": 2600
+		"cost": 2600,
+		"description": "Weapon of choice among brutes, the bearer sacrifices his life energy to gain immense strength and power.",
+		"bonuses": {
+			"hp_regen": 8,
+			"damage": 9,
+			"armor": 5,
+			"attack_speed": 15
+		},
+		"abilities": [
+			{
+				"name": "Unholy Strength",
+				"type": "toggle",
+				"affects": "self",
+				"description": "Gives +31 damage, +10 attack speed, and +25 strength while active, but drains 40 HP per second. You cannot die from the health loss when the bonus strength is gone, or the health drain per second.",
+				"cooldown": 2
+			}
+		]
 	},
 	"183": {
 		"name": "recipe_invis_sword",
@@ -2024,7 +2082,23 @@
 		"name": "invis_sword",
 		"localized_name": "Shadow Blade",
 		"cost": 3000,
-		"aliases": [ "sb", "invis" ]
+		"aliases": [ "sb", "invis" ],
+		"description": "The blade of a fallen king, it allows you to move unseen and strike from the shadows.",
+		"bonuses": {
+			"damage": 30,
+			"attack_speed": 30
+		},
+		"abilities": [
+			{
+				"name": "Shadow Walk",
+				"type": "no_target",
+				"affects": "self",
+				"damage": "physical",
+				"description": "Makes you invisible until the duration ends, or until you attack or cast a spell. While Shadow Walk is active, you move 20% faster and can move through units. If attacking to break the invisibility, you gain 150 bonus damage on that attack. Lasts 12 seconds.",
+				"mana": 75,
+				"cooldown": 18
+			}
+		]
 	},
 	"153": {
 		"name": "recipe_sange_and_yasha",
@@ -2036,7 +2110,28 @@
 		"name": "sange_and_yasha",
 		"localized_name": "Sange and Yasha",
 		"cost": 4100,
-		"aliases": [ "sny", "s&y", "sy" ]
+		"aliases": [ "sny", "s&y", "sy" ],
+		"description": "Sange and Yasha, when attuned by the moonlight and used together, become a very powerful combination.",
+		"bonuses": {
+			"strength": 16,
+			"agility": 16,
+			"damage": 12,
+			"attack_speed": 15
+			"movement_speed": "12%"
+		},
+		"abilities": [
+			{
+				"name": "Greater Maim",
+				"type": "passive",
+				"affects": "enemies",
+				"description": "Gives a chance on attack to slow for 4 seconds.",
+				"attributes": {
+					"Maim Chance": "15%",
+					"Movement Speed Slow": "30%",
+					"Attack Speed Slow": "30%"
+				}
+			}
+		]
 	},
 	"155": {
 		"name": "recipe_satanic",
@@ -2047,7 +2142,13 @@
 	"156": {
 		"name": "satanic",
 		"localized_name": "Satanic",
-		"cost": 6150
+		"cost": 6150,
+		"description": "Immense power at the cost of your soul.",
+		"bonuses": {
+			"strength": 25,
+			"damage": 20,
+			"armor": 5
+		}
 	},
 	"157": {
 		"name": "recipe_mjollnir",
@@ -2059,7 +2160,40 @@
 		"name": "mjollnir",
 		"localized_name": "Mjollnir",
 		"cost": 5400,
-		"disassemblable": 1
+		"disassemblable": 1,
+		"description": "Thor's magical hammer, made for him by the dwarves Brok and Eitri.",
+		"bonuses": {
+			"damage": 24,
+			"attack_speed": 80
+		},
+		"abilities": [
+			{
+				"name": "Static Charge",
+				"type": "target_ally",
+				"affects": "units",
+				"damage": "magical",
+				"description": "Places a charged shield on a target unit.",
+				"attributes": {
+					"Duration": 20,
+					"Cast Range": 600,
+					"Lightning Chance": "20%",
+					"Damage": 200
+				}
+			},
+			{
+				"name": "Chain Lightning",
+				"type": "passive",
+				"affects": "enemies",
+				"damage": "magical",
+				"description": "Grants a chance on attack to release a Chain Lightning that hits 8 targets, dealing damage. Mjollnir is a Unique Attack Modifier that stacks with other Unique Attack Modifiers, but overrides them when Chain Lightning occurs.",
+				"uam": 1,
+				"attributes": {
+					"Chance": "25%",
+					"Damage": 160,
+					"Bounce Range": 500
+				}
+			}
+		]
 	},
 	"159": {
 		"name": "recipe_skadi",
@@ -2071,7 +2205,29 @@
 		"name": "skadi",
 		"localized_name": "Eye of Skadi",
 		"cost": 5675,
-		"aliases": [ "eos" ]
+		"aliases": [ "eos" ],
+		"description": "Extremely rare artifact, guarded by the azure dragons.",
+		"bonuses": {
+			"strength": 25,
+			"agility": 25,
+			"intelligence": 25,
+			"hp": 250,
+			"mana": 250
+		},
+		"abilities": [
+			{
+				"name": "Cold Attack",
+				"type": "passive",
+				"affects": "enemies",
+				"description": "Eye of Skadi is a Unique Attack Modifier, and does not stack with other Unique Attack Modifiers. On ranged heroes, Eye of Skadi can be combined with a lifesteal Unique Attack Modifier.",
+				"attributes": {
+					"Movement Speed Slow": "30%",
+					"Attack Speed Slow": "20%",
+					"Duration (melee wielder)": 5,
+					"Duration (ranged wielder)": 3
+				}
+			}
+		]
 	},
 	"161": {
 		"name": "recipe_sange",
@@ -2082,7 +2238,25 @@
 	"162": {
 		"name": "sange",
 		"localized_name": "Sange",
-		"cost": 2050
+		"cost": 2050,
+		"description": "Sange is an usually accurate weapon, seeking weak points automatically.",
+		"bonuses": {
+			"strength": 16,
+			"damage": 10
+		},
+		"abilities": [
+			{
+				"name": "Lesser Maim",
+				"type": "passive",
+				"affects": "enemies",
+				"description": "Gives a chance on attack to slow for 4 seconds.",
+				"attributes": {
+					"Maim Chance": "15%",
+					"Movement Speed Slow": "20%",
+					"Attack Speed Slow": "20%"
+				}
+			}
+		]
 	},
 	"163": {
 		"name": "recipe_helm_of_the_dominator",
@@ -2094,7 +2268,34 @@
 		"name": "helm_of_the_dominator",
 		"localized_name": "Helm of the Dominator",
 		"cost": 1850,
-		"aliases": [ "hotd" ]
+		"aliases": [ "hotd" ],
+		"description": "The powerful headpiece of a dead necromancer.",
+		"bonuses": {
+			"damage": 20,
+			"armor": 5
+		},
+		"abilities": [
+			{
+				"name": "Dominate",
+				"type": "target_unit",
+				"affects": "units",
+				"description": "Take control of a non-hero, non-ancient target unit.",
+				"attributes": {
+					"Cast Range": 700
+				},
+				"mana": 75,
+				"cooldown": 60
+			},
+			{
+				"name": "Lifesteal",
+				"type": "passive",
+				"description": "Gives lifesteal on attacks.",
+				"uam": 1,
+				"attributes": {
+					"Lifesteal": "15%"
+				}
+			}
+		]
 	},
 	"165": {
 		"name": "recipe_maelstrom",
@@ -2105,7 +2306,27 @@
 	"166": {
 		"name": "maelstrom",
 		"localized_name": "Maelstrom",
-		"cost": 2700
+		"cost": 2700,
+		"description": "A hammer forged for the gods themselves, Maelstrom allows its user to harness the power of lightning.",
+		"bonuses": {
+			"damage": 24,
+			"attack_speed": 25
+		},
+		"abilities": [
+			{
+				"name": "Chain Lightning",
+				"type": "passive",
+				"affects": "enemies",
+				"damage": "magical",
+				"description": "Grants a chance on attack to release a Chain Lightning that hits 4 targets, dealing damage. Maelstrom is a Unique Attack Modifier that stacks with other Unique Attack Modifiers, but overrides them when Chain Lightning occurs.",
+				"uam": 1,
+				"attributes": {
+					"Chance": "25%",
+					"Damage": 120,
+					"Bounce Range": 500
+				}
+			}
+		]
 	},
 	"167": {
 		"name": "recipe_desolator",
@@ -2116,7 +2337,22 @@
 	"168": {
 		"name": "desolator",
 		"localized_name": "Desolator",
-		"cost": 4100
+		"cost": 4100,
+		"description": "A wicked weapon, used in torturing political criminals.",
+		"bonuses": {
+			"damage": 60
+		},
+		"abilities": {
+			"name": "Corruption",
+			"type": "passive",
+			"affects": "enemy_units_and_structures",
+			"description": "Your attacks reduce target's armor.",
+			"uam": 1,
+			"attributes": {
+				"Armor Reduction": 6,
+				"Duration": 15
+			}
+		}
 	},
 	"169": {
 		"name": "recipe_yasha",
