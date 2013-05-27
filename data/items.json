@@ -2116,7 +2116,7 @@
 			"strength": 16,
 			"agility": 16,
 			"damage": 12,
-			"attack_speed": 15
+			"attack_speed": 15,
 			"movement_speed": "12%"
 		},
 		"abilities": [
@@ -2363,7 +2363,13 @@
 	"170": {
 		"name": "yasha",
 		"localized_name": "Yasha",
-		"cost": 2050
+		"cost": 2050,
+		"description": "Yasha is regarded as thet swiftest weapon ever created.",
+		"bonuses": {
+			"agility": 16,
+			"attack_speed": 15,
+			"movement_speed": "10%"
+		}
 	},
 	"171": {
 		"name": "recipe_mask_of_madness",
@@ -2375,7 +2381,30 @@
 		"name": "mask_of_madness",
 		"localized_name": "Mask of Madness",
 		"cost": 1900,
-		"aliases": [ "mom" ]
+		"aliases": [ "mom" ],
+		"description": "Once this mask is worn, its bearer becomes an uncontrollable aggressive force.",
+		"abilities": [
+			{
+				"name": "Berserk",
+				"type": "no_target",
+				"affects": "self",
+				"description": "Gives +100 attack speed and +30% movement speed but causes you to take extra 30% damage.",
+				"attributes": {
+					"Duration": 12
+				},
+				"mana": 25,
+				"cooldown": 25
+			},
+			{
+				"name": "Lifesteal",
+				"type": "passive",
+				"description": "Gives lifesteal on attacks.",
+				"uam": 1,
+				"attributes": {
+					"Lifesteal": "17%"
+				}
+			}
+		]
 	},
 	"173": {
 		"name": "recipe_diffusal_blade",
@@ -2392,11 +2421,37 @@
 	"174": {
 		"name": "diffusal_blade",
 		"localized_name": "Diffusal Blade",
-		"cost": 3300
+		"cost": 3300,
+		"description": "An enchanted blade that allows the user to cut straight into the enemy's soul.",
+		"bonuses": {
+			"agility": "22/26",
+			"intelligence": "6/10"
+		},
+		"abilities": [
+			{
+				"name": "Purge",
+				"type": "target_unit",
+				"affects": "units",
+				"description": "Purges a target unit, removing buffs, slowing, and dealing damage if it is a summoned unit.",
+				"attributes": {
+					"Range": 600,
+					"Slow Duration": 4
+				},
+				"cooldown": 8
+			},
+			{
+				"name": "Feedback",
+				"type": "passive",
+				"affects": "enemies",
+				"damage": "physical",
+				"description": "Your attacks burn 20 mana (36 mana when upgraded) and deal the same amount in damage. Upgradable.",
+				"uam": 1
+			}
+		]
 	},
 	"196": {
 		"name": "diffusal_blade",
-		"localized_name": "",
+		"localized_name": "Diffusal Blade (2)",
 		"cost": 3300
 	},
 	"175": {
@@ -2410,7 +2465,29 @@
 		"localized_name": "Ethereal Blade",
 		"cost": 4900,
 		"aliases": [ "eb" ],
-		"disassemblable": 1
+		"disassemblable": 1,
+		"description": "A flickering blade of a ghastly nature, it is capable of dealing damage in both magical and physical planes.",
+		"bonuses": {
+			"strength": 10,
+			"agility": 40,
+			"intelligence": 10,
+			"abilities": [
+				{
+					"name": "Ether Blast",
+					"type": "target_unit",
+					"affects": "units",
+					"damage": "magical",
+					"description": "Converts you and your target into ethereal form. Target unit is slowed and cannot attack or be attacked, and takes 2&times; your primary attribute + 75 as damage.",
+					"attributes": {
+						"Movement Speed Slow": "80%",
+						"Duration": 3,
+						"Range": 800
+					},
+					"mana": 150,
+					"cooldown": 30
+				}
+			]
+		}
 	},
 	"177": {
 		"name": "recipe_soul_ring",
@@ -2421,7 +2498,21 @@
 	"178": {
 		"name": "soul_ring",
 		"localized_name": "Soul Ring",
-		"cost": 800
+		"cost": 800,
+		"description": "A ring that feeds on the souls of those around it.",
+		"bonuses": {
+			"hp_regen": 3,
+			"mana_regen": "50%"
+		},
+		"abilities": [
+			{
+				"name": "Sacrifice",
+				"type": "no_target",
+				"affects": "self",
+				"description": "Consume 150 HP to temporarily gain 150 mana. Lasts 10 seconds.",
+				"cooldown": 30
+			}
+		]
 	},
 	"179": {
 		"name": "recipe_arcane_boots",
@@ -2433,14 +2524,50 @@
 		"name": "arcane_boots",
 		"localized_name": "Arcane Boots",
 		"cost": 1450,
-		"aliases": [ "mana", "mb" ]
+		"aliases": [ "mana", "mb" ],
+		"description": "Magi equipped with these boots are valued in battle.",
+		"bonuses": {
+			"mana": 250,
+			"movement_speed": 60
+		},
+		"abilities": [
+			{
+				"name": "Replenish Mana",
+				"type": "no target",
+				"affects": "allies",
+				"description": "Restores mana in an area around the hero.",
+				"attributes": {
+					"Mana Restored": 135,
+					"Radius": 600
+				},
+				"mana": 25,
+				"cooldown": 55
+			}
+		]
 	},
 	"181": {
 		"name": "orb_of_venom",
 		"localized_name": "Orb of Venom",
 		"cost": 275,
 		"side_shop": 1,
-		"secret_shop": 1
+		"secret_shop": 1,
+		"description": "Imbues your weapon with the venom of a poisonous spider.",
+		"abilities": [
+			{
+				"name": "Poison Attack",
+				"type": "passive",
+				"affects": "enemies",
+				"damage": "magical",
+				"description": "Poisons the target, dealing damage over time and slowing, depending on whether your hero is melee or ranged.",
+				"uam": 1,
+				"attributes": {
+					"Damage per second": 3,
+					"Movement Speed Slow (Ranged Wielder)": "4%",
+					"Movement Speed Slow (Melee Wielder)": "12%",
+					"Duration": 4
+				}
+			}
+		]
 	},
 	"184": {
 		"name": "recipe_ancient_janggo",
@@ -2451,7 +2578,38 @@
 	"185": {
 		"name": "ancient_janggo",
 		"localized_name": "Drum of Endurance",
-		"cost": 1725
+		"cost": 1725,
+		"description": "A relic that enchants the bodies of those around it for swifter movement in times of crisis.",
+		"bonuses": {
+			"strength": 9,
+			"agility": 9,
+			"intelligence": 9,
+			"damage": 3
+		},
+		"abilities": [
+			{
+				"name": "Endurance",
+				"type": "no_target",
+				"affects": "allied_heroes",
+				"description": "Gives bonus +10 attack speed and +10% movement speed to surrounding allies.",
+				"attributes": {
+					"Radius": 900,
+					"Duration": 6
+				},
+				"cooldown": 30
+			},
+			{
+				"name": "Swiftness Aura",
+				"type": "aura",
+				"affects": "allies",
+				"description": "Gives bonus attack and movement speed to surrounding allies.",
+				"attributes": {
+					"Bonus Attack Speed": 5,
+					"Bonus Movement Speed": "5%",
+					"Radius": 900
+				}
+			}
+		]
 	},
 	"186": {
 		"name": "recipe_medallion_of_courage",
@@ -2462,14 +2620,46 @@
 	"187": {
 		"name": "medallion_of_courage",
 		"localized_name": "Medallion of Courage",
-		"cost": 1075
+		"cost": 1075,
+		"description": "The bearer has no fear of combat.",
+		"bonuses": {
+			"mana_regen": "50%",
+			"armor": 6
+		},
+		"abilities": [
+			{
+				"name": "Valor",
+				"type": "target_unit",
+				"affects": "enemies",
+				"description": "Reduces the armor of you and your target. Lasts 7 seconds.",
+				"attributes": {
+					"Armor Reduction": 6,
+					"Range": 800
+				},
+				"cooldown": 7
+			}
+		]
 	},
 	"188": {
 		"name": "smoke_of_deceit",
 		"localized_name": "Smoke of Deceit",
 		"cost": 0,
 		"shareable": 1,
-		"stackable": 1
+		"stackable": 1,
+		"abilities": [
+			{
+				"name": "Smoke of Deceit",
+				"type": "no_target",
+				"affects": "allied_heroes",
+				"description": "pon activation, the user and all nearby allied player-controlled units gain invisiblity and bonus movement speed for a brief time. Minimap icons will also be hidden. Upon moving within 1025 range of an enemy hero or tower, the invisibility and movement speed bonus is lost.",
+				"attributes": {
+					"Radius": 1200,
+					"Bonus Movement Speed": "15%",
+					"Duration": 40
+				},
+				"cooldown": 90
+			}
+		]
 	},
 	"189": {
 		"name": "recipe_veil_of_discord",
