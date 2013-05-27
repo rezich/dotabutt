@@ -1334,7 +1334,25 @@
 		"name": "force_staff",
 		"localized_name": "Force Staff",
 		"cost": 2350,
-		"aliases": [ "fs" ]
+		"aliases": [ "fs" ],
+		"description": "Allows you to manipulate others, for good or evil.",
+		"bonuses": {
+			"intelligence": 10,
+			"hp_regen": 3
+		},
+		"abilities": [
+			{
+				"name": "Force",
+				"type": "target_unit",
+				"affects": "units",
+				"description": "Pushes any target unit 600 units in the direction it is facing. Double click to self-cast.",
+				"attributes": {
+					"Cast Range": 800
+				},
+				"mana": 25,
+				"cooldown": 20
+			}
+		]
 	},
 	"103": {
 		"name": "recipe_dagon",
@@ -1369,7 +1387,28 @@
 	"104": {
 		"name": "dagon",
 		"localized_name": "Dagon",
-		"cost": 2850
+		"cost": 2850,
+		"description": "A lesser wand that grows in power the longer it is used, it brings magic to the fingertips of the user.",
+		"bonuses": {
+			"strength": 3,
+			"agility": 3,
+			"intelligence": "16/18/20/22/24",
+			"damage": 9
+		},
+		"abilities": [
+			{
+				"name": "Energy Burst",
+				"type": "target_unit",
+				"affects": "enemies",
+				"damage": "magical",
+				"attributes": {
+					"Burst damage": "400/500/600/700/800",
+					"Range": "600/650/700/750/800"
+				},
+				"mana": "180/160/140/120/100",
+				"range": "35/30/25/20/15"
+			}
+		]
 	},
 	"201": {
 		"name": "dagon_2",
@@ -1412,7 +1451,21 @@
 	"106": {
 		"name": "necronomicon",
 		"localized_name": "Necronomicon",
-		"cost": 2700
+		"cost": 2700,
+		"description": "Considered the holy grail of necromancy and demonology, a powerful malefic force is locked within its pages.",
+		"bonuses": {
+			"strength": "8/12/16",
+			"intelligence": "15/21/24"
+		},
+		"abilities": [
+			{
+				"name": "Demonic Summoning",
+				"type": "no_target",
+				"description": "Summons a Necronomicon Warrior and a Necronomicon Archer to fight for you. Their strength and abilities increase as Necronomicon increases in level. Lasts 35 seconds.",
+				"mana": 50,
+				"cooldown": 80
+			}
+		]
 	},
 	"193": {
 		"name": "necronomicon_2",
@@ -1434,7 +1487,22 @@
 		"name": "ultimate_scepter",
 		"localized_name": "Aghanim's Scepter",
 		"cost": 4200,
-		"aliases": [ "ultimate" ]
+		"aliases": [ "ultimate" ],
+		"description": "The scepter of a wizard with demigod-like powers.",
+		"bonuses": {
+			"strength": 10,
+			"agility": 10,
+			"intelligence": 10,
+			"hp": 200,
+			"mana": 150
+		},
+		"abilities": [
+			{
+				"name": "Ultimate Upgrade",
+				"type": "passive",
+				"description": "Upgrades the ultimates of certain heroes."
+			}
+		]
 	},
 	"109": {
 		"name": "recipe_refresher",
@@ -1445,7 +1513,21 @@
 	"110": {
 		"name": "refresher",
 		"localized_name": "Refresher Orb",
-		"cost": 5300
+		"cost": 5300,
+		"description": "A powerful artifact created for wizards.",
+		"bonuses": {
+			"intelligence": 6,
+			"hp_regen": 5,
+			"mana_regen": "200%",
+			"damage": 40
+		},
+		"abilities": [
+			{
+				"name": "Reset Cooldowns",
+				"type": "no_target",
+				"description": "Resets the cooldowns of all your items and abilities."
+			}
+		]
 	},
 	"111": {
 		"name": "recipe_assault",
@@ -1456,7 +1538,26 @@
 	"112": {
 		"name": "assault",
 		"localized_name": "Assault Cuirass",
-		"cost": 0
+		"cost": 5350,
+		"description": "Forged in the depths of the nether reaches, this hellish mail provides an army with increased armor and attack speed.",
+		"bonuses": {
+			"armor": 10,
+			"attack_speed": 35
+		},
+		"abilities": [
+			{
+				"name": "Assault Aura",
+				"type": "aura",
+				"affects": "units",
+				"description": "Grants attack speed and armor to nearby allied units, and decreases armor for nearby enemies. Multiple instances of Assault Aura do not stack.",
+				"attributes": {
+					"Radius": 900,
+					"Bonus Attack Speed": 20,
+					"Bonus Armor": 5,
+					"Armor Reduction": 5
+				}
+			}
+		]
 	},
 	"113": {
 		"name": "recipe_heart",
@@ -1468,7 +1569,24 @@
 		"name": "heart",
 		"localized_name": "Heart of Tarrasque",
 		"cost": 5500,
-		"aliases": [ "hot" ]
+		"aliases": [ "hot" ],
+		"description": "Preserved heart of an extinct monster, it bolsters the bearer's fortitude.",
+		"bonuses": {
+			"strength": 40,
+			"hp": 300
+		},
+		"abilities": [
+			{
+				
+				"name": "Health Regeneration",
+				"type": "passive",
+				"affects": "self",
+				"description": "Restores a percentage of max health per second. This ability is disabled if damage is taken from an enemy Hero or Roshan within the last 4 seconds if your hero is melee or 6 seconds if your hero is ranged.",
+				"attributes": {
+					"Health Restored per Second": "2%"
+				}
+			}
+		]
 	},
 	"115": {
 		"name": "recipe_black_king_bar",
@@ -1480,13 +1598,36 @@
 		"name": "black_king_bar",
 		"localized_name": "Black King Bar",
 		"cost": 0,
-		"aliases": [ "bkb" ]
+		"aliases": [ "bkb" ],
+		"description": "A powerful staff imbued with the strength of giants.",
+		"bonuses": {
+			"strength": 10,
+			"damage": 24
+		},
+		"abilities": [
+			{
+				"name": "Avatar",
+				"type": "no_target",
+				"affects": "self",
+				"description": "Grants magic immunity. Duration and cooldown decrease with each use. Some Ultimate abilities are able to disable through Black King Bar.",
+				"duration": "10/9/8/7/6/5",
+				"cooldown": "80/75/70/65/60/55"
+			}
+		]
 	},
 	"117": {
 		"name": "aegis",
 		"localized_name": "Aegis of the Immortal",
 		"cost": 0,
-		"consumable": 1
+		"consumable": 1,
+		"description": "The Immortal was said to own a shield that protected him from death itself.",
+		"abilities": [
+			{
+				"name": "Reincarnation",
+				"type": "passive",
+				"description": "Brings you to life with full health and mana 5 seconds after you die, at the location where you died. Reincarnation must be used within 6 minutes or Aegis of the Immortal disappears."
+			}
+		]
 	},
 	"118": {
 		"name": "recipe_shivas_guard",
@@ -1498,7 +1639,36 @@
 		"name": "shivas_guard",
 		"localized_name": "Shiva's Guard",
 		"cost": 4700,
-		"disassemblable": 1
+		"disassemblable": 1,
+		"description": "Said to have belonged to a goddess, today it retains much of its former power.",
+		"bonuses": {
+			"intelligence": 30,
+			"armor": 15
+		},
+		"abilities": [
+			{
+				"name": "Arctic Blast",
+				"type": "no_target",
+				"affects": "enemies",
+				"damage": "magical",
+				"description": "Emits a freezing wave that does 200 damage to enemies and slows their movement by 40% for 4 seconds.",
+				"attributes": {
+					"Radius": 719
+				},
+				"mana": 100,
+				"cooldown": 30
+			},
+			{
+				"name": "Freezing Aura",
+				"type": "aura",
+				"affects": "enemies",
+				"description": "Reduces attack speed on enemies. Multiple instances of Freezing Aura do not stack.",
+				"attributes": {
+					"Attack Speed Slow": "30%",
+					"Radius": 1000
+				}
+			}
+		]
 	},
 	"120": {
 		"name": "recipe_bloodstone",
@@ -1510,7 +1680,22 @@
 		"name": "bloodstone",
 		"localized_name": "Bloodstone",
 		"cost": 5050,
-		"aliases": [ "bs" ]
+		"aliases": [ "bs" ],
+		"description": "The Bloodstone's bright ruby color is unmistakable on the battlefield, as the owner seems to have infinite vitality and spirit.",
+		"bonuses": {
+			"hp": 500,
+			"mana": 400,
+			"hp_regen": 9,
+			"mana_regen": "200%"
+		},
+		"abilities": [
+			{
+				"name": "Bloodpact",
+				"type": "passive",
+				"affects": "self",
+				"description": "Starts with 6 charges. Gains 1 charge each time an enemy hero dies within 1675 range. Each charge bestows 1 mana regeneration per second, reduces gold lost from death by 25, and reduces respawn time by 4 seconds. When the bearer dies, restores 400 HP + 30 HP per charge to allied units within 1675 range, then loses a third of its charges. While dead, the bearer continues to receive experience at the death location and gives 1800 unit vision there."
+			}
+		]
 	},
 	"122": {
 		"name": "recipe_sphere",
@@ -1522,7 +1707,25 @@
 		"name": "sphere",
 		"localized_name": "Linken's Sphere",
 		"cost": 5175,
-		"aliases": [ "ls" ]
+		"aliases": [ "ls" ],
+		"description": "This magical sphere once protected one of the most famous heroes in history.",
+		"bonuses": {
+			"strength": 15,
+			"agility": 15,
+			"intelligence": 15,
+			"hp_regen": 6,
+			"mana_regen": "150%",
+			"damage": 10
+		},
+		"abilities": [
+			{
+				"name": "Spellblock",
+				"type": "passive",
+				"affects": "self",
+				"description": "Blocks most targeted spells once every 20 seconds.",
+				"cooldown": 20
+			}
+		]
 	},
 	"124": {
 		"name": "recipe_vanguard",
@@ -1533,7 +1736,24 @@
 	"125": {
 		"name": "vanguard",
 		"localized_name": "Vanguard",
-		"cost": 2225
+		"cost": 2225,
+		"description": "A powerful shield that defends its wielder from even the most vicious of attacks.",
+		"bonuses": {
+			"hp": 250,
+			"hp_regen": 6
+		},
+		"abilities": [
+			{
+				"name": "Damage Block",
+				"type": "passive",
+				"description": "Gives a chance to block damage, depending on the type of hero you are.",
+				"attributes": {
+					"Chance to Block": "70%",
+					"Damage Blocked (melee wielder)": 40,
+					"Damage Blocked (ranged wielder)": 20
+				}
+			}
+		]
 	},
 	"126": {
 		"name": "recipe_blade_mail",
@@ -1544,7 +1764,24 @@
 	"127": {
 		"name": "blade_mail",
 		"localized_name": "Blade Mail",
-		"cost": 2200
+		"cost": 2200,
+		"description": "A razor-sharp coat of mail, it is the choice of selfless martyrs in combat.",
+		"bonuses": {
+			"intelligence": 10,
+			"damage": 22,
+			"armor": 5
+		},
+		"abilities": [
+			{
+				"name": "Damage Return",
+				"type": "no_target",
+				"affects": "enemies",
+				"damage": "pure",
+				"description": "Returns any damage you take (after reduction) to the unit that dealt the damage. You still take the damage. Damage is returned as pure damage. Lasts for 4.5 seconds, costs 25 Mana, and has a 22 second cooldown. Blade mail cannot reflect damage taken from another suit of blade mail.",
+				"mana": 25,
+				"cooldown": 22
+			}
+		]
 	},
 	"128": {
 		"name": "recipe_soul_booster",
@@ -1553,9 +1790,16 @@
 		"recipe": 1
 	},
 	"129": {
-		"name": "recipe_soul_booster",
+		"name": "soul_booster",
 		"localized_name": "Soul Booster",
-		"cost": 3300
+		"cost": 3300,
+		"description": "Regain lost courage.",
+		"bonuses": {
+			"hp": 450,
+			"mana": 400,
+			"hp_regen": 4,
+			"mana_regen": "100%"
+		}
 	},
 	"130": {
 		"name": "recipe_hood_of_defiance",
@@ -1566,7 +1810,12 @@
 	"131": {
 		"name": "hood_of_defiance",
 		"localized_name": "Hood of Defiance",
-		"cost": 2125
+		"cost": 2125,
+		"description": "A furred, magic resistant headpiece that is feared by wizards.",
+		"bonuses": {
+			"hp_regen": 8,
+			"magic_resistance": "30%"
+		}
 	},
 	"132": {
 		"name": "recipe_rapier",
@@ -1577,7 +1826,11 @@
 	"133": {
 		"name": "rapier",
 		"localized_name": "Divine Rapier",
-		"cost": 6200
+		"cost": 6200,
+		"description": "So powerful, it cannot have a single owner.",
+		"bonuses": {
+			"damage": 300
+		}
 	},
 	"134": {
 		"name": "recipe_monkey_king_bar",
@@ -1589,7 +1842,12 @@
 		"name": "monkey_king_bar",
 		"localized_name": "Monkey King Bar",
 		"cost": 5400,
-		"aliases": [ "mkb" ]
+		"aliases": [ "mkb" ],
+		"description": "A powerful staff used by a master warrior",
+		"bonuses": {
+			"damage": 88,
+			"attack_speed": 15
+		}
 	},
 	"136": {
 		"name": "recipe_radiance",
@@ -1600,7 +1858,23 @@
 	"137": {
 		"name": "radiance",
 		"localized_name": "Radiance",
-		"cost": 0
+		"cost": 5150,
+		"description": "A divine weapon that causes damage and a bright burning effect that lays waste to nearby enemies.",
+		"bonuses": {
+			"damage": 60
+		},
+		"abilities": [
+			{
+				"name": "Burn Damage",
+				"type": "toggle",
+				"affects": "enemies",
+				"damage": "magical",
+				"description": "Deals damage per second in a 650 radius.",
+				"attributes": {
+					"Damage per Second": 45
+				}
+			}
+		]
 	},
 	"138": {
 		"name": "recipe_butterfly",
@@ -1612,7 +1886,14 @@
 		"name": "butterfly",
 		"localized_name": "Butterfly",
 		"cost": 6000,
-		"aliases": [ "bfly" ]
+		"aliases": [ "bfly" ],
+		"description": "Only the mightiest and most experienced of warriors can wield the Butterfly, but it provides incredible dexterity in combat.",
+		"bonuses": {
+			"agility": 30,
+			"damage": 30,
+			"evasion": "35%",
+			"attack_speed": 30
+		}
 	},
 	"140": {
 		"name": "recipe_greater_crit",
@@ -1623,7 +1904,23 @@
 	"141": {
 		"name": "greater_crit",
 		"localized_name": "Daedalus",
-		"cost": 5550
+		"cost": 5550,
+		"description": "A weapon of incredible power that is difficult for even the strongest of warriors to control.",
+		"bonuses": {
+			"damage": 81
+		},
+		"abilities": [
+			{
+				"name": "Critical Strike",
+				"type": "passive",
+				"affects": "enemies",
+				"description": "Grants a chance to deal critical damage on an attack.",
+				"attributes": {
+					"Critical Chance": "25%",
+					"Critical Damage": "2.4&times;"
+				}
+			}
+		]
 	},
 	"142": {
 		"name": "recipe_basher",
@@ -1635,7 +1932,24 @@
 	"143": {
 		"name": "basher",
 		"localized_name": "Skull Basher",
-		"cost": 2950
+		"cost": 2950,
+		"description": "A feared weapon in the right hands, this maul's ability to shatter the defenses of its opponents should not be underestimated.",
+		"bonuses": {
+			"strength": 6,
+			"damage": 40
+		},
+		"abilities": [
+			{
+				"name": "Bash",
+				"type": "passive",
+				"affects": "enemies",
+				"description": "Gives a chance to stun for 1.4 seconds.",
+				"attributes": {
+					"Bash Chance for Melee Heroes": "25%",
+					"Bash Chance for Ranged Heroes": "10%"
+				}
+			}
+		]
 	},
 	"144": {
 		"name": "recipe_bfury",
@@ -1647,7 +1961,24 @@
 		"name": "bfury",
 		"localized_name": "Battle Fury",
 		"cost": 4350,
-		"aliases": [ "bf" ]
+		"aliases": [ "bf" ],
+		"description": "The bearer of this mighty axe gains the ability to cut down swaths of enemies at once.",
+		"bonuses": {
+			"hp_regen": 6,
+			"mana_regen": "150%",
+			"damage": 65
+		},
+		"abilities": [
+			{
+				"name": "Cleave",
+				"type": "passive",
+				"affects": "enemies",
+				"description": "Deals a percent of attack damage in a 225 radius around the target. Does not work on ranged heroes. Cleave damage on non-primary targets is not reduced by armor values.",
+				"attributes": {
+					"Cleave Damage": "35%"
+				}
+			}
+		]
 	},
 	"146": {
 		"name": "recipe_manta",
