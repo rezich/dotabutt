@@ -2671,7 +2671,28 @@
 		"name": "veil_of_discord",
 		"localized_name": "Veil of Discord",
 		"cost": 2650,
-		"aliases": [ "vod" ]
+		"aliases": [ "vod" ],
+		"description": "The headwear of corrupt magi.",
+		"bonuses": {
+			"intelligence": 12,
+			"hp_regen": 6,
+			"armor": 6
+		},
+		"abilities": [
+			{
+				"name": "Magic Weakness",
+				"type": "target_point",
+				"affects": "enemies",
+				"description": "Emits a weakening blast that increases the magical damage enemies take. Lasts 20 seconds.",
+				"attributes": {
+					"Radius": 550,
+					"Magical Damage Amplification": "25%",
+					"Range": 1000
+				},
+				"mana": 75,
+				"cooldown": 30
+			}
+		]
 	},
 	"205": {
 		"name": "recipe_rod_of_atos",
@@ -2682,7 +2703,27 @@
 	"206": {
 		"name": "rod_of_atos",
 		"localized_name": "Rod of Atos",
-		"cost": 3100
+		"cost": 3100,
+		"description": "Atos, the Lord of Blight, has his essence stored in this deceptively simple wand.",
+		"bonuses": {
+			"intelligence": 25,
+			"hp": 325
+		},
+		"abilities": [
+			{
+				"name": "Cripple",
+				"type": "target_unit",
+				"affects": "enemies",
+				"description": "Slows the target's movement speed.",
+				"attributes": {
+					"Movement Speed Slow": "60%",
+					"Duration": 4,
+					"Range": 1200
+				},
+				"mana": 50,
+				"cooldown": 16
+			}
+		]
 	},
 	"207": {
 		"name": "recipe_abyssal_blade",
@@ -2694,7 +2735,25 @@
 		"name": "abyssal_blade",
 		"localized_name": "Abyssal Blade",
 		"cost": 6750,
-		"disassemblable": 1
+		"disassemblable": 1,
+		"description": "The lost blade of the Commander of the Abyss, this edge cuts into an enemy's soul.",
+		"bonuses": {
+			"strength": 10,
+			"damage": 100
+		},
+		"abilities": [
+			{
+				"name": "Overwhelm",
+				"type": "target_unit",
+				"affects": "enemies",
+				"description": "Stun a target enemy unit for 2 seconds. Goes through Magic Immunity.",
+				"attributes": {
+					"Range": 140
+				},
+				"mana": 150,
+				"cooldown": 60
+			}
+		]
 	},
 	"209": {
 		"name": "recipe_heavens_halberd",
@@ -2705,7 +2764,37 @@
 	"210": {
 		"name": "heavens_halberd",
 		"localized_name": "Heaven's Halberd",
-		"cost": 3850
+		"cost": 3850,
+		"description": "This halberd moves with the speed of a smaller weapon, allowing the bearer to win duels that a heavy edge would not.",
+		"bonuses": {
+			"strength": 20,
+			"damage": 25,
+			"evasion": "25%"
+		},
+		"abilities": [
+			{
+				"name": "Disarm",
+				"type": "target_unit",
+				"affects": "enemies",
+				"description": "Disarms the target for 4.5 seconds. Lasts 3 on melee targets.",
+				"attributes": {
+					"Range": 600
+				},
+				"mana": 100,
+				"cooldown": 30
+			},
+			{
+				"name": "Lesser Maim",
+				"type": "passive",
+				"affects": "enemies",
+				"description": "Gives a chance on attack to slow for 4 seconds.",
+				"attributes": {
+					"Maim Chance": "15%",
+					"Movement Speed Slow": "20%",
+					"Attack Speed Slow": "20%"
+				}
+			}
+		]
 	},
 	"211": {
 		"name": "recipe_ring_of_aquila",
@@ -2719,7 +2808,27 @@
 		"cost": 985,
 		"aliases": [ "roa" ],
 		"shareable": 1,
-		"disassemblable": 1
+		"disassemblable": 1,
+		"description": "The ring of the fallen Warlord Aquila continues to support armies in battle.",
+		"bonuses": {
+			"strength": 3,
+			"agility": 6,
+			"intelligence": 3,
+			"damage": 9,
+			"armor": 1
+		},
+		"abilities": [
+			{
+				"name": "Aquila Aura",
+				"type": "toggle",
+				"affects": "allies",
+				"description": "Grants mana regeneration and armor in a 900 radius.",
+				"attributes": {
+					"Bonus Mana Regeneration": 0.65,
+					"Bonus Armor": 2
+				}
+			}
+		]
 	},
 	"213": {
 		"name": "recipe_tranquil_boots",
@@ -2731,11 +2840,41 @@
 		"name": "tranquil_boots",
 		"localized_name": "Tranquil Boots",
 		"cost": 975,
-		"disassemblable": 1
+		"disassemblable": 1,
+		"description": "While they increase the longevity of the wearer, this boot is not particularly reliable.",
+		"bonuses": {
+			"hp_regen": 3,
+			"armor": 3,
+			"movement_speed": 75
+		},
+		"abilities": [
+			{
+				"name": "Heal",
+				"type": "no_target",
+				"affects": "self",
+				"description": "Restores 250 HP over 20 seconds for the wearer. If you take damage from a tower or another player, the heal is lost. The tooltip incorrectly states that Roshan will cancel the heal.",
+				"mana": 25,
+				"cooldown": 60
+			}
+		]
 	},
 	"215": {
 		"name": "shadow_amulet",
 		"localized_name": "Shadow Amulet",
-		"cost": 1600
+		"cost": 1600,
+		"bonuses": {
+			"attack_speed": 30
+		},
+		"abilities": [
+			{
+				"name": "Fade",
+				"type": "no_target",
+				"affects": "self",
+				"description": "Fade to invisibility. If you move you will become visible.",
+				"attributes": {
+					"Fade Time": 2.6
+				}
+			}
+		]
 	}
 }
