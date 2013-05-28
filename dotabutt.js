@@ -62,20 +62,25 @@ module.exports = {
 	items: function() {
 		return this._items;
 	},
-	getMatch: function(id, callback) {
+	getMatch: function(id, callback) { // callback(match, err)
 		var self = this;
 		id = parseInt(id);
 		this.db.matches.find({ match_id: id }, function(err, matches) {
 			if (err) console.log('Error finding match! ' + err);
 			if (matches.length == 0) {
 				console.log('Match %s not found in db, querying API...', id);
-				steamapi.dota2.getMatchDetails(id, function(match) {
-					self.db.matches.save(match, function(err, saved) {
-						if (err) console.log('Error saving match! ' + err);
-						if (saved) console.log('Match %s saved to db.', match.match_id);
-						else console.log('Match %s not saved to db.', match.match_id);
-					});
-					callback(match);
+				var err = false;
+				steamapi.dota2.getMatchDetails(id, function(match, err) {
+					if (err) {
+						self.db.matches.save(match, function(err, saved) {
+							if (err) console.log('Error saving match! ' + err);
+							if (saved) console.log('Match %s saved to db.', match.match_id);
+							else console.log('Match %s not saved to db.', match.match_id);
+						});
+					}
+					else err = true;
+					if (err) console.log('match is invalid!');
+					callback(match, err);
 				});
 			}
 			else {
@@ -173,5 +178,40 @@ module.exports = {
 		this.db.players.find({}, function(err, players) {
 			callback(players);
 		});
-	}
+	},
+	search: function(query, callback) {
+		var again = function(query, callback, butt, tried, results) {
+			if (!tried) tried = { times: 0 };
+			if (!results) results = {};
+			tried.times++;
+			console.log(tried);
+			console.log(results);
+			if (!tried.number) {
+				if (!isNaN(query)) { // is a number
+					if (!tried.match) {
+						butt.getMatch(parseInt(query), function(match, err) {
+							if (!err) {
+								if (!results.matches) results.matches = [];
+								results.matches.push(match);
+							}
+							tried.match = true;
+							again(query, callback, butt, tried, results);
+						});
+					}
+					else {
+						tried.number = true;
+						again(query, callback, butt, tried, results);
+					}
+				}
+				else {
+					tried.number = true;
+					again(query, callback, butt, tried, results);
+				}
+			}
+			if (tried.number) {
+				callback(results);
+			}
+		};
+		again(query, callback, this);
+	},
 }

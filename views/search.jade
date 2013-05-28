@@ -1,0 +1,11 @@
+extends layout
+
+block content
+	h1 Search results - #{query}
+	if results.empty
+		p: em Nothing found!
+	if results.matches
+		h2 Matches
+		ul
+			each match in results.matches
+				li: a(href='/matches/#{match.match_id}') Match #{match.match_id}

@@ -124,37 +124,40 @@ mixin item(id)
 		a(href='/items/#{id}/', title='#{items[id].localized_name}'): img(src='http://media.steampowered.com/apps/dota2/images/items/#{items[id].name}_eg.png', alt='#{items[id].localized_name}')
 
 block content
-	table.fullwidth
-		tbody
-			tr
-				td.matchinfo
-					h1 Match #{match.match_id}
-					if match.radiant_win
-						p Radiant victory
-					else
-						p Dire victory
-					p= (match.duration.hours() > 0 ? match.duration.hours() + ':' : '') + (match.duration.minutes().toString().length < 2 ? '0' : '') + match.duration.minutes() + ':' + (match.duration.seconds().toString().length < 2 ? '0' : '') + match.duration.seconds() + ' (' + moment(match.start_time.toString(), 'X').fromNow() + ')'
-					p: a(href='dota2://matchid=#{match.match_id}') Watch replay
-				mixin towermap(match)
-	h2
-		if match.radiant_name
-			| #{match.radiant_name}
-		else
-			| Radiant
-	table.fullwidth.padded
-		mixin players_header('Radiant')
-		tbody
-			for player in match.players
-				if player.player_slot < 127
-					mixin player_block(player)
-	h2
-		if match.dire_name
-			| #{match.dire_name}
-		else
-			| Dire
-	table.fullwidth.padded
-		mixin players_header('Dire')
-		tbody
-			for player in match.players
-				if player.player_slot > 127
-					mixin player_block(player)
+	if match
+		table.fullwidth
+			tbody
+				tr
+					td.matchinfo
+						h1 Match #{match.match_id}
+						if match.radiant_win
+							p Radiant victory
+						else
+							p Dire victory
+						p= (match.duration.hours() > 0 ? match.duration.hours() + ':' : '') + (match.duration.minutes().toString().length < 2 ? '0' : '') + match.duration.minutes() + ':' + (match.duration.seconds().toString().length < 2 ? '0' : '') + match.duration.seconds() + ' (' + moment(match.start_time.toString(), 'X').fromNow() + ')'
+						p: a(href='dota2://matchid=#{match.match_id}') Watch replay
+					mixin towermap(match)
+		h2
+			if match.radiant_name
+				| #{match.radiant_name}
+			else
+				| Radiant
+		table.fullwidth.padded
+			mixin players_header('Radiant')
+			tbody
+				for player in match.players
+					if player.player_slot < 127
+						mixin player_block(player)
+		h2
+			if match.dire_name
+				| #{match.dire_name}
+			else
+				| Dire
+		table.fullwidth.padded
+			mixin players_header('Dire')
+			tbody
+				for player in match.players
+					if player.player_slot > 127
+						mixin player_block(player)
+	else
+		h1 Invalid match ID!

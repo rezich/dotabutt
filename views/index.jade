@@ -3,7 +3,9 @@ extends layout
 block content
 	#home
 		#search-container
-			input#search(placeholder='Search for Dota stuff...')
+			form.search(action='search/')
+				input#search(name='q',placeholder='Search for Dota stuff...')
+				input(type='submit',value='Submit')
 	.centered Yeah, that search up there? Doesn't work just yet.
 	.centered Meanwhile, 
 		a(href='/matches/100728043') here's a cool match

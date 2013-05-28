@@ -53,10 +53,8 @@ module.exports = {
 			port: 80,
 			path: call
 		}, function(response) {
-			// TODO: Error checking, using response.statusCode
-			if (response.statusCode != 200) {
-				console.log('aw shit son!');
-			}
+			var err = false;
+			if (response.statusCode != 200) err = true;
 			var data = '';
 			response.on('data', function(chunk) {
 				data += chunk;
@@ -66,7 +64,7 @@ module.exports = {
 				// callback?
 			});
 			response.on('end', function() {
-				if (callback) callback(JSON.parse(data));
+				if (callback) callback(JSON.parse(data), err);
 				console.log('API call %s completed', call.replace(self._key, 'API_KEY'));
 			});
 		});
@@ -144,7 +142,8 @@ module.exports = {
 			delete this.heroes;
 			this.heroes = {};
 			var self = this;
-			this._api._call('/IEconDOTA2_570/GetHeroes/v0001/', {}, function(data) {
+			this._api._call('/IEconDOTA2_570/GetHeroes/v0001/', {}, function(data, err) {
+				if (err) console.log("ERROR GETTING HEROES!");
 				data.result.heroes.forEach(function(hero) {
 					hero.short_name = hero.name.replace('npc_dota_hero_', '');
 					self.heroes[hero.id] = hero;
