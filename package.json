@@ -17,7 +17,7 @@
 		"nib": "*",
 		"moment": "*",
 		"mongodb": "*",
-		"mongojs": "*",
+		"mongojs": "0.7.5",
 		"passport": "*",
 		"passport-steam": "*",
 		"slug": "*"
