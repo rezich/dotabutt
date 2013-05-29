@@ -15,7 +15,7 @@ butt.init();
 
 moment().format();
 
-baseUrl = 'http://nukle.us:3000';
+baseUrl = 'http://nukle.us:80';
 if (process.env.DOMAIN) baseUrl = process.env.DOMAIN
 
 routes.matches = require('./routes/matches');
@@ -84,7 +84,7 @@ app.configure(function() {
 		res.locals.steamapi = steamapi;
 		next();
 	});
-	app.set('port', process.env.PORT || 3000);
+	app.set('port', process.env.PORT || 80);
 	app.set('views', __dirname + '/views');
 	app.set('view engine', 'jade');
 	app.use(express.favicon(__dirname + '/public/images/favicon.ico'));
