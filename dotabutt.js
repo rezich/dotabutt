@@ -276,7 +276,7 @@ module.exports = {
 							if (!err) {
 								for (var i = 0; i < db_players.length; i++) {
 									if (!results.players) results.players = {};
-									db_players[i]._searchedBy = db_players[i].realname;
+									db_players[i]._searchedBy = 'real name: ' + db_players[i].realname;
 									results.players[db_players[i].account_id] = db_players[i];
 									results.count++;
 									results.last = '/players/' + db_players[i].account_id;

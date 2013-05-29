@@ -14,7 +14,9 @@ block content
 		ul
 			each player in results.players
 				li
-					a(href='/players/#{player.account_id}') #{player.personaname}
+					a(href='/players/#{player.account_id}')
+						img(src='#{player.avatar}')
+						=player.personaname
 					if player._searchedBy
 						=' (' + player._searchedBy + ')'
 	if results.items
@@ -22,7 +24,9 @@ block content
 		ul
 			each item in results.items
 				li
-					a(href='/items/#{item.slug}') #{item.localized_name}
+					a(href='/items/#{item.slug}')
+						img(src='http://media.steampowered.com/apps/dota2/images/items/#{item.name}_eg.png') 
+						=item.localized_name
 					if item._searchedBy
 						=' (' + item._searchedBy + ')'
 	if results.heroes
@@ -30,6 +34,8 @@ block content
 		ul
 			each hero in results.heroes
 				li
-					a(href='/heroes/#{item.slug}') #{hero.localized_name}
+					a(href='/heroes/#{hero.slug}')
+						img(src='http://media.steampowered.com/apps/dota2/images/heroes/#{hero.short_name}_sb.png') 
+						=hero.localized_name
 					if hero._searchedBy
 						=' (' + hero._searchedBy + ')'
