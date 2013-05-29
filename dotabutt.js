@@ -10,6 +10,7 @@ module.exports = {
 	lastBackfillMatch: 0,
 	lastBackfillMatchSaved: 0,
 	backfillWriteThreshold: 1000,
+	backfillTimeout: 1,
 	init: function() {
 		var self = this;
 		this._getKey(function(key) {
@@ -32,6 +33,7 @@ module.exports = {
 				});
 			});
 		});
+		this.backfillTimeout = process.env.BACKFILL_TIMEOUT || 1;
 		this.db = mongojs(
 			process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || 'test',
 			['players', 'matches', 'teams']
@@ -389,7 +391,6 @@ module.exports = {
 	},
 	backfill: function() {
 		var self = this;
-		process.env['DOTABUTT_PREVIOUS_BACKFILL_MATCH'] = this.lastBackfillMatch;
 		steamapi.dota2.getMatchHistoryBySequenceNum({ start_at_match_seq_num: this.lastBackfillMatch }, function(matches) {
 			matches.forEach(function(match) {
 				self.checkMatch(match.match_id, function(found_match, err) {
@@ -406,7 +407,7 @@ module.exports = {
 				});
 			}
 			console.log(self.lastBackfillMatch);
-			self.backfill();
+			setTimeout(function() { self.backfill(); }, self.backfillTimeout);
 		});
 	}
 }
