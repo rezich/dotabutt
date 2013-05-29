@@ -25,3 +25,11 @@ block content
 					a(href='/items/#{id}') #{item.localized_name}
 					if item._searchedBy
 						=' (' + item._searchedBy + ')'
+	if results.heroes
+		h2 Heroes
+		ul
+			each hero,id in results.heroes
+				li
+					a(href='/heroes/#{id}') #{hero.localized_name}
+					if hero._searchedBy
+						=' (' + hero._searchedBy + ')'

@@ -114,6 +114,7 @@ app.get('/players', routes.players.index);
 app.get('/players/:id', routes.players.view);
 
 app.get('/heroes', routes.heroes.index);
+app.get('/heroes/:id', routes.heroes.view);
 
 app.get('/items', routes.items.index);
 app.get('/items/:id', routes.items.view);

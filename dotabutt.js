@@ -174,7 +174,6 @@ module.exports = {
 			var regex = new RegExp(query, 'i');
 			if (!tried) tried = { times: 0 };
 			if (!results) results = { count: 0 };
-			console.log(tried);
 			tried.times++;
 			if (!tried.number) {
 				if (!isNaN(query) && parseInt(query).toString() == query) { // is a number
@@ -214,6 +213,18 @@ module.exports = {
 							results.last = '/items/' + query.toString();
 						}
 						tried.item_id = true;
+						again(query, callback, butt, tried, results);
+					}
+					else if (!tried.hero_id) {
+						var heroes = butt.heroes();
+						if (heroes[query]) {
+							if (!results.heroes) results.heroes = {};
+							heroes[query]._searchedBy = 'hero ID';
+							results.heroes[query] = heroes[query];
+							results.count++;
+							results.last = '/heroes/' + query.toString();
+						}
+						tried.hero_id = true;
 						again(query, callback, butt, tried, results);
 					}
 					/*else if (!tried.steam_id) { // steam id
@@ -289,6 +300,7 @@ module.exports = {
 						keys = Object.keys(items);
 						for (var i = 0; i < keys.length; i++) {
 							if (items[keys[i]].localized_name && items[keys[i]].localized_name.match(regex)) {
+								if (!results.items) results.items = {};
 								if (!results.items[keys[i]]) {
 									results.items[keys[i]] = items[keys[i]];
 									results.count++;
@@ -319,6 +331,22 @@ module.exports = {
 							}
 						}
 						tried.item_aliases = true;
+						again(query, callback, butt, tried, results);
+					}
+					else if (!tried.hero_name) {
+						var heroes = butt.heroes();
+						keys = Object.keys(heroes);
+						for (var i = 0; i < keys.length; i++) {
+							if (heroes[keys[i]].localized_name && heroes[keys[i]].localized_name.match(regex)) {
+								if (!results.heroes) results.heroes = {};
+								if (!results.heroes[keys[i]]) {
+									results.heroes[keys[i]] = heroes[keys[i]];
+									results.count++;
+									results.last = '/heroes/' + keys[i];
+								}
+							}
+						}
+						tried.hero_name = true;
 						again(query, callback, butt, tried, results);
 					}
 					else {

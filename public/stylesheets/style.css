@@ -19,7 +19,7 @@ h3{font-size:18px}
 abbr{cursor:help}
 a img{cursor:pointer}
 .centered{text-align:center}
-.item-big{float:right}
+.item-big,.hero-big{float:right}
 form.search input[type="submit"]{display:none}
 #home{width:100%;height:100px}
 #home {
