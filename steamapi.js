@@ -154,7 +154,7 @@ module.exports = {
 				if (callback) callback(data.result.heroes, err);
 			});
 		},
-		getItems: function() {
+		getItems: function(callback) { // callback(err)
 			var self = this;
 			delete this.items;
 			this.items = {};
@@ -168,6 +168,7 @@ module.exports = {
 						self.items[parseInt(key)].slug = slug(self.items[parseInt(key)].localized_name).toLowerCase();
 					});
 				}
+				callback(err);
 			});
 		},
 		getMatchDetails: function(match_id, callback) {

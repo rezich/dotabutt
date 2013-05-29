@@ -7,19 +7,31 @@ module.exports = {
 	db: null,
 	ready: false,
 	anon: '4294967295',
-	lastBackfillMatchID: 0,
+	lastBackfillMatch: 0,
+	lastBackfillMatchSaved: 0,
+	backfillWriteThreshold: 1000,
 	init: function() {
 		var self = this;
 		this._getKey(function(key) {
 			steamapi.init(key);
 			steamapi.dota2.getHeroes(function() {
-				self.ready = true;
-			});
-			steamapi.dota2.getItems(function() {
-				// ???
+				steamapi.dota2.getItems(function() {
+					fs.exists('backfill', function(exists) {
+						if (exists) {
+							fs.readFile('backfill', function(err, data) {
+								self.lastBackfillMatch = parseInt(data);
+								self.ready = true;
+								self.backfill();
+							});
+						}
+						else {
+							self.ready = true;
+							self.backfill();
+						}
+					});
+				});
 			});
 		});
-		//var mongoUri = process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || 'mongodb://localhost/mydb';
 		this.db = mongojs(
 			process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || 'test',
 			['players', 'matches', 'teams']
@@ -55,6 +67,19 @@ module.exports = {
 	items: function() {
 		return steamapi.dota2.items;
 	},
+	saveMatch: function(match, callback) { // callback(saved, err)
+		this.db.matches.save(match, function(err, saved) {
+			if (err) console.log('Error saving match! ' + err);
+			//if (saved) console.log('Match %s saved to db.', match.match_id);
+			//else console.log('Match %s not saved to db.', match.match_id);
+			callback(saved, err);
+		});
+	},
+	checkMatch: function(id, callback) { // callback(match, err)
+		this.db.matches.find({ match_id: id }, function(err, matches) {
+			callback((matches.length == 0 ? false : matches[0]), err);
+		});
+	},
 	getMatch: function(id, callback) { // callback(match, err)
 		var self = this;
 		id = parseInt(id);
@@ -64,11 +89,7 @@ module.exports = {
 				console.log('Match %s not found in db, querying API...', id);
 				steamapi.dota2.getMatchDetails(id, function(match, err) {
 					if (!err) {
-						self.db.matches.save(match, function(db_err, saved) {
-							if (db_err) console.log('Error saving match! ' + db_err);
-							if (saved) console.log('Match %s saved to db.', match.match_id);
-							else console.log('Match %s not saved to db.', match.match_id);
-						});
+						self.saveMatch(match);
 					}
 					//if (err) console.log('match is invalid!');
 					callback(match, err);
@@ -367,5 +388,25 @@ module.exports = {
 		again(query, callback, this);
 	},
 	backfill: function() {
+		var self = this;
+		process.env['DOTABUTT_PREVIOUS_BACKFILL_MATCH'] = this.lastBackfillMatch;
+		steamapi.dota2.getMatchHistoryBySequenceNum({ start_at_match_seq_num: this.lastBackfillMatch }, function(matches) {
+			matches.forEach(function(match) {
+				self.checkMatch(match.match_id, function(found_match, err) {
+					if (!found_match && !err) self.saveMatch(match, function(saved, err) {
+						// ???
+					});
+				});
+			});
+			self.lastBackfillMatch = matches[matches.length - 1].match_seq_num + 1;
+			if (self.lastBackfillMatch - self.lastBackfillMatchSaved > self.backfillWriteThreshold) {
+				self.lastBackfillMatchSaved = self.lastBackfillMatch;
+				fs.writeFile('backfill', self.lastBackfillMatch.toString(), function(err) {
+					// ???
+				});
+			}
+			console.log(self.lastBackfillMatch);
+			self.backfill();
+		});
 	}
 }

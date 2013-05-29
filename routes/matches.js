@@ -14,7 +14,6 @@ exports.view = function(req, res) {
 		var lookup_ids = [];
 		if (!err) {
 			for (var i = 0; i < match.players.length; i++) {
-				console.log(match.players[i]);
 				if (match.players[i].account_id != butt.anon) {
 					changed_players.push(i);
 					lookup_ids.push(match.players[i].account_id);
