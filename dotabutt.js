@@ -70,15 +70,15 @@ module.exports = {
 			if (matches.length == 0) {
 				console.log('Match %s not found in db, querying API...', id);
 				var err = false;
-				steamapi.dota2.getMatchDetails(id, function(match, err) {
+				steamapi.dota2.getMatchDetails(id, function(match, api_err) {
 					if (err) {
-						self.db.matches.save(match, function(err, saved) {
-							if (err) console.log('Error saving match! ' + err);
+						self.db.matches.save(match, function(db_err, saved) {
+							if (db_err) console.log('Error saving match! ' + db_err);
 							if (saved) console.log('Match %s saved to db.', match.match_id);
 							else console.log('Match %s not saved to db.', match.match_id);
 						});
 					}
-					else err = true;
+					else err = false;
 					if (err) console.log('match is invalid!');
 					callback(match, err);
 				});

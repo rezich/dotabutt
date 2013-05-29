@@ -148,7 +148,7 @@ module.exports = {
 					hero.short_name = hero.name.replace('npc_dota_hero_', '');
 					self.heroes[hero.id] = hero;
 				});
-				if (callback) callback(data.result.heroes);
+				if (callback) callback(data.result.heroes, err);
 			});
 		},
 		getItems: function() {
@@ -157,8 +157,8 @@ module.exports = {
 			// placeholder
 		},
 		getMatchDetails: function(match_id, callback) {
-			this._api._call('/IDOTA2Match_570/GetMatchDetails/V001/', { match_id: match_id }, function(data) {
-				if (callback) callback(data.result);
+			this._api._call('/IDOTA2Match_570/GetMatchDetails/V001/', { match_id: match_id }, function(data, err) {
+				if (callback) callback(data.result, err);
 			});
 		},
 		getTeamInfoByTeamID: function(options, callback) {
