@@ -12,5 +12,5 @@
 	<SyndicationRight>open</SyndicationRight>
 	<Image height="16" width="16" type="image/vnd.microsoft.icon">http://dotabutt.com/favicon.ico</Image>
 	<Image height="64" width="64" type="image/png">http://dotabutt.com/images/dotabutt_64.png</Image>
-	<Url type="text/html" template="http://dotabutt.com/?q={searchTerms}"/>
+	<Url type="text/html" template="http://dotabutt.com/search/?q={searchTerms}"/>
 </OpenSearchDescription>
