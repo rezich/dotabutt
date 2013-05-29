@@ -78,6 +78,12 @@ module.exports = {
 			if (callback) callback(saved, err);
 		});
 	},
+	insertMatch: function(match, callback) { // callback(saved, err)
+		this.db.matches.insert(match, function(err, inserted) {
+			if (err) console.log('Error inserting match! ' + err);
+			if (callback) callback(inserted, err);
+		});
+	},
 	checkMatch: function(id, callback) { // callback(match, err)
 		this.db.matches.find({ match_id: id }, function(err, matches) {
 			callback((matches.length == 0 ? false : matches[0]), err);
@@ -411,7 +417,7 @@ module.exports = {
 				}
 				/*var newMatches = [];
 				for (var key in matches) newMatches.push(matches[key]);*/
-				self.saveMatch(matches, function(saved, err) {
+				self.insertMatch(matches, function(saved, err) {
 					self.lastBackfillMatch = matches[matches.length - 1].match_seq_num + 1;
 					self.backfillReady = true;
 					if (self.lastBackfillMatch - self.lastBackfillMatchSaved > self.backfillWriteThreshold) {
