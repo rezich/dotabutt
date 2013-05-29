@@ -182,7 +182,7 @@ module.exports = {
 		steamapi.dota2.getTeamInfoByTeamID({ start_at_team_id: id, teams_requested: 1 }, callback);
 	},
 	getRecentMatches: function(callback) {
-		this.db.matches.find({}, function(err, matches) {
+		this.db.matches.find().sort({ start_time: -1 }).limit(108, function(err, matches) {
 			callback(matches);
 		});
 	},
