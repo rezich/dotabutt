@@ -2,7 +2,7 @@ extends layout
 
 block content
 	h1 Items
-	ul
+	ul.columns
 		each item,id in items
 			li: a(href='/items/#{item.slug}', title='#{item.localized_name}')
 				img(src='http://media.steampowered.com/apps/dota2/images/items/#{item.name}_eg.png', alt='#{item.localized_name}') 

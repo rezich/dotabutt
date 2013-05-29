@@ -1,12 +1,14 @@
 extends layout
 
 block content
+	script
+		$(function() { $("#search").focus(); });
 	#home
 		#search-container
 			form.search(action='search/')
 				input#search(name='q',placeholder='Search for Dota stuff...')
 				input(type='submit',value='Submit')
-	.centered That search up there works, finally!
+	.centered Search works, finally!
 	.centered
 		a(href='/matches/100728043') Here's a cool match
 		| , 

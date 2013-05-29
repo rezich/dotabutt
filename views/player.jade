@@ -1,6 +1,7 @@
 extends layout
 
 block content
+	img.player-big(src='#{player.avatarfull}')
 	h1 #{player.personaname}
 	h2 Matches
 	if player.matches && player.matches.length > 0
