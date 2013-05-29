@@ -1,6 +1,6 @@
 exports.index = function(req, res) {
 	var butt = res.locals.butt;
-	butt.getRecentMatches(function(matches) {
+	butt.getRecentMatches(36, function(matches) {
 		res.locals.matches = matches;
 		res.render('matches', { title: 'Matches', user: req.user });
 	});

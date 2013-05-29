@@ -11,6 +11,7 @@ module.exports = {
 	lastBackfillMatchSaved: 0,
 	backfillWriteThreshold: 1000,
 	backfillTimeout: 1,
+	backfillReady: true,
 	init: function() {
 		var self = this;
 		this._getKey(function(key) {
@@ -22,18 +23,18 @@ module.exports = {
 							fs.readFile('backfill', function(err, data) {
 								self.lastBackfillMatch = parseInt(data);
 								self.ready = true;
-								self.backfill();
+								self.startBackfill();
 							});
 						}
 						else {
 							self.ready = true;
-							self.backfill();
+							self.startBackfill();
 						}
 					});
 				});
 			});
 		});
-		this.backfillTimeout = process.env.BACKFILL_TIMEOUT || 1;
+		this.backfillTimeout = process.env.BACKFILL_TIMEOUT || 1000;
 		this.db = mongojs(
 			process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || 'test',
 			['players', 'matches', 'teams']
@@ -183,8 +184,8 @@ module.exports = {
 	getTeam: function(id, callback) {
 		steamapi.dota2.getTeamInfoByTeamID({ start_at_team_id: id, teams_requested: 1 }, callback);
 	},
-	getRecentMatches: function(callback) {
-		this.db.matches.find().sort({ start_time: -1 }).limit(108, function(err, matches) {
+	getRecentMatches: function(number, callback) {
+		this.db.matches.find().sort({ start_time: -1 }).limit(number, function(err, matches) {
 			callback(matches);
 		});
 	},
@@ -389,7 +390,13 @@ module.exports = {
 		};
 		again(query, callback, this);
 	},
+	startBackfill: function() {
+		var self = this;
+		setInterval(function() { self.backfill(); }, this.backfillTimeout);
+	},
 	backfill: function() {
+		if (!this.backfillReady) return;
+		this.backfillReady = false;
 		var self = this;
 		steamapi.dota2.getMatchHistoryBySequenceNum({ start_at_match_seq_num: this.lastBackfillMatch }, function(matches) {
 			matches.forEach(function(match) {
@@ -400,6 +407,7 @@ module.exports = {
 				});
 			});
 			self.lastBackfillMatch = matches[matches.length - 1].match_seq_num + 1;
+			self.backfillReady = true;
 			if (self.lastBackfillMatch - self.lastBackfillMatchSaved > self.backfillWriteThreshold) {
 				self.lastBackfillMatchSaved = self.lastBackfillMatch;
 				fs.writeFile('backfill', self.lastBackfillMatch.toString(), function(err) {
@@ -407,7 +415,6 @@ module.exports = {
 				});
 			}
 			console.log(self.lastBackfillMatch);
-			setTimeout(function() { self.backfill(); }, self.backfillTimeout);
 		});
 	}
 }
