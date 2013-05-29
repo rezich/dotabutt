@@ -115,6 +115,17 @@ module.exports = {
 			}
 		});
 	},
+	checkPlayers: function(ids, callback) { // callback(match, err)
+		this.db.players.find( { account_id: { $in: ids } }, function(err, players) {
+			callback(players, err);
+		});
+	},
+	insertPlayer: function(player, callback) { // callback(saved, err)
+		this.db.players.insert(player, function(err, inserted) {
+			if (err) console.log('Error inserting players! ' + err);
+			if (callback) callback(inserted, err);
+		});
+	},
 	getPlayers: function(ids, callback) { // callback(players, err)
 		var self = this;
 		for (var i = 0; i < ids.length; i++) ids[i] = parseInt(ids[i]);
@@ -410,23 +421,41 @@ module.exports = {
 		this.backfillReady = false;
 		var self = this;
 		steamapi.dota2.getMatchHistoryBySequenceNum({ start_at_match_seq_num: this.lastBackfillMatch }, function(matches) {
-		
+			var players = [];
+			matches.forEach(function(match) {
+				match.players.forEach(function(player) {
+					var found = false;
+					for (var i = 0; i < players.length; i++) {
+						if (players[i].account_id == player.account_id) {
+							found = true;
+							break;
+						}
+					}
+					if (!found) players.push(player.account_id);
+				});
+			});
 			self.checkMatches(Object.keys(matches), function(existingMatches, err) {
 				for (var i = 0; i < Object.keys(existingMatches); i++) {
 					delete matches[Object.keys(existingMatches)[i]];
 				}
-				/*var newMatches = [];
-				for (var key in matches) newMatches.push(matches[key]);*/
 				self.insertMatch(matches, function(saved, err) {
-					self.lastBackfillMatch = matches[matches.length - 1].match_seq_num + 1;
-					self.backfillReady = true;
-					if (self.lastBackfillMatch - self.lastBackfillMatchSaved > self.backfillWriteThreshold) {
-						self.lastBackfillMatchSaved = self.lastBackfillMatch;
-						fs.writeFile('backfill', self.lastBackfillMatch.toString(), function(err) {
-							// ???
+					self.checkPlayers(players, function(existingPlayers, err) {
+						for (var i = 0; i < Object.keys(existingPlayers); i++) {
+							players.splice(players.indexOf(Object.keys(existingPlayers)[i]), 1);
+						}
+						console.log(players);
+						self.getPlayers(players, function(inserted, err) {
+							self.lastBackfillMatch = matches[matches.length - 1].match_seq_num + 1;
+							self.backfillReady = true;
+							if (self.lastBackfillMatch - self.lastBackfillMatchSaved > self.backfillWriteThreshold) {
+								self.lastBackfillMatchSaved = self.lastBackfillMatch;
+								fs.writeFile('backfill', self.lastBackfillMatch.toString(), function(err) {
+									// ???
+									console.log(self.lastBackfillMatch);
+								});
+							}
 						});
-					}
-					console.log(self.lastBackfillMatch);
+					});
 				});
 			});
 		});
