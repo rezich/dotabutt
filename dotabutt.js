@@ -7,6 +7,7 @@ module.exports = {
 	db: null,
 	ready: false,
 	anon: '4294967295',
+	lastBackfillMatchID: 0,
 	init: function() {
 		var self = this;
 		this._getKey(function(key) {
@@ -237,7 +238,7 @@ module.exports = {
 								results.last = '/players/' + player.account_id;
 							}
 							tried.steam_id = true;
-							again(query, callback, butt, tried, results);
+							again(query, callbac0, butt, tried, results);
 						});
 					}*/
 					else { // none of the above
@@ -365,4 +366,6 @@ module.exports = {
 		};
 		again(query, callback, this);
 	},
+	backfill: function() {
+	}
 }
