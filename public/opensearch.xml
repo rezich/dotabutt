@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">
+	<ShortName>Dotabutt</ShortName>
+	<LongName>Dotabutt</LongName>
+	<Description>Search for matches, players, items, heroes, teams, and more on Dotabutt</Description>
+	<InputEncoding>UTF-8</InputEncoding>
+	<OutputEncoding>UTF-8</OutputEncoding>
+	<AdultContent>false</AdultContent>
+	<Language>en-us</Language>
+	<Developer>Adam Rezich</Developer>
+	<Contact>adam@rezich.com</Contact>
+	<SyndicationRight>open</SyndicationRight>
+	<Image height="16" width="16" type="image/vnd.microsoft.icon">http://dotabutt.com/favicon.ico</Image>
+	<Image height="64" width="64" type="image/png">http://dotabutt.com/images/dotabutt_64.png</Image>
+	<Url type="text/html" template="http://dotabutt.com/?q={searchTerms}"/>
+</OpenSearchDescription>
