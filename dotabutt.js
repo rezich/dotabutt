@@ -83,6 +83,11 @@ module.exports = {
 			callback((matches.length == 0 ? false : matches[0]), err);
 		});
 	},
+	checkMatches: function(ids, callback) { // callback(match, err)
+		this.db.matches.find( { match_id: { $in: ids } }, function(err, matches) {
+			callback(matches, err);
+		});
+	},
 	getMatch: function(id, callback) { // callback(match, err)
 		var self = this;
 		id = parseInt(id);
@@ -399,22 +404,25 @@ module.exports = {
 		this.backfillReady = false;
 		var self = this;
 		steamapi.dota2.getMatchHistoryBySequenceNum({ start_at_match_seq_num: this.lastBackfillMatch }, function(matches) {
-			matches.forEach(function(match) {
-				self.checkMatch(match.match_id, function(found_match, err) {
-					if (!found_match && !err) self.saveMatch(match, function(saved, err) {
-						// ???
-					});
+		
+			self.checkMatches(Object.keys(matches), function(existingMatches, err) {
+				for (var i = 0; i < Object.keys(existingMatches); i++) {
+					delete matches[Object.keys(existingMatches)[i]];
+				}
+				/*var newMatches = [];
+				for (var key in matches) newMatches.push(matches[key]);*/
+				self.saveMatch(matches, function(saved, err) {
+					self.lastBackfillMatch = matches[matches.length - 1].match_seq_num + 1;
+					self.backfillReady = true;
+					if (self.lastBackfillMatch - self.lastBackfillMatchSaved > self.backfillWriteThreshold) {
+						self.lastBackfillMatchSaved = self.lastBackfillMatch;
+						fs.writeFile('backfill', self.lastBackfillMatch.toString(), function(err) {
+							// ???
+						});
+					}
+					console.log(self.lastBackfillMatch);
 				});
 			});
-			self.lastBackfillMatch = matches[matches.length - 1].match_seq_num + 1;
-			self.backfillReady = true;
-			if (self.lastBackfillMatch - self.lastBackfillMatchSaved > self.backfillWriteThreshold) {
-				self.lastBackfillMatchSaved = self.lastBackfillMatch;
-				fs.writeFile('backfill', self.lastBackfillMatch.toString(), function(err) {
-					// ???
-				});
-			}
-			console.log(self.lastBackfillMatch);
 		});
 	}
 }
