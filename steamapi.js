@@ -1,5 +1,6 @@
 var http = require('http'),
-bignum = require('bignum');
+bignum = require('bignum'),
+fs = require('fs');
 
 module.exports = {
 	_key: '',
@@ -152,9 +153,19 @@ module.exports = {
 			});
 		},
 		getItems: function() {
+			var self = this;
 			delete this.items;
 			this.items = {};
-			// placeholder
+			fs.readFile('data/items.json', function(err, data) {
+				if (err) console.log('!!! ITEM FILE WAS MISSING OR CORRUPT !!!')
+				else {
+					console.log('Loaded items successfully.');
+					var parsedItems = JSON.parse(data);
+					Object.keys(parsedItems).forEach(function(key) {
+						self.items[parseInt(key)] = parsedItems[key];
+					});
+				}
+			});
 		},
 		getMatchDetails: function(match_id, callback) {
 			this._api._call('/IDOTA2Match_570/GetMatchDetails/V001/', { match_id: match_id }, function(data, err) {

@@ -4,7 +4,6 @@ var mongojs = require('mongojs');
 var moment = require('moment');
 module.exports = {
 	_player_update_interval: 60 * 60,
-	_items: {},
 	db: null,
 	ready: false,
 	anon: '4294967295',
@@ -15,27 +14,20 @@ module.exports = {
 			steamapi.dota2.getHeroes(function() {
 				self.ready = true;
 			});
+			steamapi.dota2.getItems(function() {
+				// ???
+			});
 		});
 		//var mongoUri = process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || 'mongodb://localhost/mydb';
 		this.db = mongojs(
 			process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || 'test',
 			['players', 'matches', 'teams']
 		);
-		fs.readFile('data/items.json', function(err, data) {
-			if (err) console.log('!!! ITEM FILE WAS MISSING OR CORRUPT !!!')
-			else {
-				console.log('Loaded items successfully.');
-				var parsedItems = JSON.parse(data);
-				Object.keys(parsedItems).forEach(function(key) {
-					self._items[parseInt(key)] = parsedItems[key];
-				});
-			}
-		});
 	},
 	_getKey: function(callback) {
 		var key = null;
 		if (process.env.STEAM_API_KEY != null) {
-			console.log("STEAM_API_KEY environment variable found, initializing DotaButt...");
+			console.log("STEAM_API_KEY environment variable found, initializing Dotabutt...");
 			callback(process.env.STEAM_API_KEY);
 		}
 		else {
@@ -45,7 +37,7 @@ module.exports = {
 					fs.readFile('api_key', function (err, data) {
 						if (err) throw err;
 						else {
-							console.log("Found api_key file, initializing DotaButt...");
+							console.log("Found api_key file, initializing Dotabutt...");
 							callback(data);
 						}
 					});
@@ -60,7 +52,7 @@ module.exports = {
 		return steamapi.dota2.heroes;
 	},
 	items: function() {
-		return this._items;
+		return steamapi.dota2.items;
 	},
 	getMatch: function(id, callback) { // callback(match, err)
 		var self = this;
@@ -77,7 +69,7 @@ module.exports = {
 							else console.log('Match %s not saved to db.', match.match_id);
 						});
 					}
-					if (err) console.log('match is invalid!');
+					//if (err) console.log('match is invalid!');
 					callback(match, err);
 				});
 			}
@@ -179,17 +171,17 @@ module.exports = {
 	},
 	search: function(query, callback) {
 		var again = function(query, callback, butt, tried, results) {
+			var regex = new RegExp(query, 'i');
 			if (!tried) tried = { times: 0 };
 			if (!results) results = { count: 0 };
-			tried.times++;
 			console.log(tried);
-			console.log(results);
+			tried.times++;
 			if (!tried.number) {
 				if (!isNaN(query) && parseInt(query).toString() == query) { // is a number
+					query = parseInt(query);
 					if (!tried.match) { // match id
-						butt.getMatch(parseInt(query), function(match, err) {
+						butt.getMatch(query, function(match, err) {
 							if (!err) {
-								console.log(err);
 								if (!results.matches) results.matches = {};
 								results.matches[match.match_id] = match;
 								results.count++;
@@ -200,7 +192,7 @@ module.exports = {
 						});
 					}
 					else if (!tried.account_id) { // player id
-						butt.getPlayer(parseInt(query), function(player, err) {
+						butt.getPlayer(query, function(player, err) {
 							if (!err) {
 								if (!results.players) results.players = {};
 								player._searchedBy = 'account ID';
@@ -211,6 +203,18 @@ module.exports = {
 							tried.account_id = true;
 							again(query, callback, butt, tried, results);
 						});
+					}
+					else if (!tried.item_id) {
+						var items = butt.items();
+						if (items[query]) {
+							if (!results.items) results.items = {};
+							items[query]._searchedBy = 'item ID';
+							results.items[query] = items[query];
+							results.count++;
+							results.last = '/items/' + query.toString();
+						}
+						tried.item_id = true;
+						again(query, callback, butt, tried, results);
 					}
 					/*else if (!tried.steam_id) { // steam id
 						butt.getPlayer(parseInt(steamapi.convertIDTo32Bit(query)), function(player, err) {
@@ -236,12 +240,14 @@ module.exports = {
 				}
 			}
 			else if (!tried.string) {
-				if (query.length > 3) {
+				query = query.toString();
+				if (query.length < 3) tried.long_string = true;
+				if (!tried.long_string) {
 					if (!tried.personaname) {
-						butt.db.players.find({ personaname: { $regex: new RegExp(query, 'i') } }, function(err, db_players) {
+						butt.db.players.find({ personaname: { $regex: regex } }, function(err, db_players) {
 							if (!err) {
-								if (!results.players) results.players = {};
 								for (var i = 0; i < db_players.length; i++) {
+									if (!results.players) results.players = {};
 									results.players[db_players[i].account_id] = db_players[i];
 									results.count++;
 									results.last = '/players/' + db_players[i].account_id;
@@ -255,10 +261,10 @@ module.exports = {
 						});
 					}
 					else if (!tried.realname) {
-						butt.db.players.find({ realname: { $regex: new RegExp(query, 'i') } }, function(err, db_players) {
+						butt.db.players.find({ realname: { $regex: regex } }, function(err, db_players) {
 							if (!err) {
-								if (!results.players) results.players = {};
 								for (var i = 0; i < db_players.length; i++) {
+									if (!results.players) results.players = {};
 									db_players[i]._searchedBy = db_players[i].realname;
 									results.players[db_players[i].account_id] = db_players[i];
 									results.count++;
@@ -273,7 +279,50 @@ module.exports = {
 						});
 					}
 					else {
-						tried.string = true;
+						tried.long_string = true;
+						again(query, callback, butt, tried, results);
+					}
+				}
+				else if (!tried.short_string) {
+					if (!tried.item_name) {
+						var items = butt.items();
+						keys = Object.keys(items);
+						for (var i = 0; i < keys.length; i++) {
+							if (items[keys[i]].localized_name && items[keys[i]].localized_name.match(regex)) {
+								if (!results.items[keys[i]]) {
+									results.items[keys[i]] = items[keys[i]];
+									results.count++;
+									results.last = '/items/' + keys[i];
+								}
+							}
+						}
+						tried.item_name = true;
+						again(query, callback, butt, tried, results);
+					}
+					else if (!tried.item_aliases) {
+						var items = butt.items();
+						keys = Object.keys(items);
+						for (var i = 0; i < keys.length; i++) {
+							if (items[keys[i]].aliases) {
+								var aliases = items[keys[i]].aliases;
+								for (var j = 0; j < aliases.length; j++) {
+									if (aliases[j].match(regex)) {
+										if (!results.items) results.items = {};
+										if (!results.items[keys[i]]) {
+											results.items[keys[i]] = items[keys[i]];
+											results.items[keys[i]]._searchedBy = 'item alias';
+											results.count++;
+											results.last = '/items/' + keys[i];
+										}
+									}
+								}
+							}
+						}
+						tried.item_aliases = true;
+						again(query, callback, butt, tried, results);
+					}
+					else {
+						tried.short_string = true;
 						again(query, callback, butt, tried, results);
 					}
 				}

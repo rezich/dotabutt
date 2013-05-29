@@ -14,8 +14,14 @@ block content
 		ul
 			each player in results.players
 				li
-					a(href='/players/#{player.account_id}')
-						=player.personaname
+					a(href='/players/#{player.account_id}') #{player.personaname}
 					if player._searchedBy
 						=' (' + player._searchedBy + ')'
-				
+	if results.items
+		h2 Items
+		ul
+			each item,id in results.items
+				li
+					a(href='/items/#{id}') #{item.localized_name}
+					if item._searchedBy
+						=' (' + item._searchedBy + ')'
