@@ -87,7 +87,7 @@ module.exports = {
 			}
 		});
 	},
-	getPlayers: function(ids, callback) {
+	getPlayers: function(ids, callback) { // callback(players, err)
 		var self = this;
 		for (var i = 0; i < ids.length; i++) ids[i] = parseInt(ids[i]);
 		
@@ -151,7 +151,7 @@ module.exports = {
 							}
 						}
 					}
-					callback(return_players);
+					callback(return_players, err);
 				});
 			}
 		});
@@ -161,8 +161,8 @@ module.exports = {
 			callback(matches);
 		});
 	},
-	getPlayer: function(id, callback) {
-		this.getPlayers([parseInt(id)], function(players) { callback(players[0]) });
+	getPlayer: function(id, callback) { // callback(player, err)
+		this.getPlayers([parseInt(id)], function(players, err) { callback(players[0], err) });
 	},
 	getTeam: function(id, callback) {
 		steamapi.dota2.getTeamInfoByTeamID({ start_at_team_id: id, teams_requested: 1 }, callback);
@@ -185,13 +185,13 @@ module.exports = {
 			console.log(tried);
 			console.log(results);
 			if (!tried.number) {
-				if (!isNaN(query)) { // is a number
-					if (!tried.match) {
+				if (!isNaN(query) && parseInt(query).toString() == query) { // is a number
+					if (!tried.match) { // match id
 						butt.getMatch(parseInt(query), function(match, err) {
 							if (!err) {
 								console.log(err);
-								if (!results.matches) results.matches = [];
-								results.matches.push(match);
+								if (!results.matches) results.matches = {};
+								results.matches[match.match_id] = match;
 								results.count++;
 								results.last = '/matches/' + match.match_id;
 							}
@@ -199,17 +199,90 @@ module.exports = {
 							again(query, callback, butt, tried, results);
 						});
 					}
-					else {
+					else if (!tried.account_id) { // player id
+						butt.getPlayer(parseInt(query), function(player, err) {
+							if (!err) {
+								if (!results.players) results.players = {};
+								player._searchedBy = 'account ID';
+								results.players[player.account_id] = player;
+								results.count++;
+								results.last = '/players/' + player.account_id;
+							}
+							tried.account_id = true;
+							again(query, callback, butt, tried, results);
+						});
+					}
+					/*else if (!tried.steam_id) { // steam id
+						butt.getPlayer(parseInt(steamapi.convertIDTo32Bit(query)), function(player, err) {
+							if (!err) {
+								if (!results.players) results.players = {};
+								player._searchedBy = 'Steam ID';
+								results.players[player.account_id] = player;
+								results.count++;
+								results.last = '/players/' + player.account_id;
+							}
+							tried.steam_id = true;
+							again(query, callback, butt, tried, results);
+						});
+					}*/
+					else { // none of the above
 						tried.number = true;
 						again(query, callback, butt, tried, results);
 					}
 				}
-				else {
+				else { // not a number
 					tried.number = true;
 					again(query, callback, butt, tried, results);
 				}
 			}
-			if (tried.number) {
+			else if (!tried.string) {
+				if (query.length > 3) {
+					if (!tried.personaname) {
+						butt.db.players.find({ personaname: { $regex: new RegExp(query, 'i') } }, function(err, db_players) {
+							if (!err) {
+								if (!results.players) results.players = {};
+								for (var i = 0; i < db_players.length; i++) {
+									results.players[db_players[i].account_id] = db_players[i];
+									results.count++;
+									results.last = '/players/' + db_players[i].account_id;
+								}
+								tried.personaname = true;
+								again(query, callback, butt, tried, results);
+							}
+							else {
+								// TODO: error handling?
+							}
+						});
+					}
+					else if (!tried.realname) {
+						butt.db.players.find({ realname: { $regex: new RegExp(query, 'i') } }, function(err, db_players) {
+							if (!err) {
+								if (!results.players) results.players = {};
+								for (var i = 0; i < db_players.length; i++) {
+									db_players[i]._searchedBy = db_players[i].realname;
+									results.players[db_players[i].account_id] = db_players[i];
+									results.count++;
+									results.last = '/players/' + db_players[i].account_id;
+								}
+								tried.realname = true;
+								again(query, callback, butt, tried, results);
+							}
+							else {
+								// TODO: error handling?
+							}
+						});
+					}
+					else {
+						tried.string = true;
+						again(query, callback, butt, tried, results);
+					}
+				}
+				else {
+					tried.string = true;
+					again(query, callback, butt, tried, results);
+				}
+			}
+			else {
 				callback(results);
 			}
 		};

@@ -9,3 +9,13 @@ block content
 		ul
 			each match in results.matches
 				li: a(href='/matches/#{match.match_id}') Match #{match.match_id}
+	if results.players
+		h2 Players
+		ul
+			each player in results.players
+				li
+					a(href='/players/#{player.account_id}')
+						=player.personaname
+					if player._searchedBy
+						=' (' + player._searchedBy + ')'
+				
