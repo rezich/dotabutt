@@ -6,6 +6,7 @@ http = require('http'),
 path = require('path'),
 fs = require('fs'),
 moment = require('moment'),
+slug = require('slug'),
 passport = require('passport'),
 steamstrat = require('passport-steam').Strategy,
 steamapi = require('./steamapi.js'),
@@ -114,10 +115,10 @@ app.get('/players', routes.players.index);
 app.get('/players/:id', routes.players.view);
 
 app.get('/heroes', routes.heroes.index);
-app.get('/heroes/:id', routes.heroes.view);
+app.get('/heroes/:slug', routes.heroes.view);
 
 app.get('/items', routes.items.index);
-app.get('/items/:id', routes.items.view);
+app.get('/items/:slug', routes.items.view);
 
 app.get('/teams', routes.teams.index);
 app.get('/teams/:id', routes.teams.view);

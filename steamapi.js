@@ -1,6 +1,7 @@
 var http = require('http'),
 bignum = require('bignum'),
-fs = require('fs');
+fs = require('fs'),
+slug = require('slug');
 
 module.exports = {
 	_key: '',
@@ -148,6 +149,7 @@ module.exports = {
 				data.result.heroes.forEach(function(hero) {
 					hero.short_name = hero.name.replace('npc_dota_hero_', '');
 					self.heroes[hero.id] = hero;
+					self.heroes[hero.id].slug = slug(hero.localized_name).toLowerCase();
 				});
 				if (callback) callback(data.result.heroes, err);
 			});
@@ -163,6 +165,7 @@ module.exports = {
 					var parsedItems = JSON.parse(data);
 					Object.keys(parsedItems).forEach(function(key) {
 						self.items[parseInt(key)] = parsedItems[key];
+						self.items[parseInt(key)].slug = slug(self.items[parseInt(key)].localized_name).toLowerCase();
 					});
 				}
 			});

@@ -210,7 +210,7 @@ module.exports = {
 							items[query]._searchedBy = 'item ID';
 							results.items[query] = items[query];
 							results.count++;
-							results.last = '/items/' + query.toString();
+							results.last = '/items/' + items[query].slug;
 						}
 						tried.item_id = true;
 						again(query, callback, butt, tried, results);
@@ -222,7 +222,7 @@ module.exports = {
 							heroes[query]._searchedBy = 'hero ID';
 							results.heroes[query] = heroes[query];
 							results.count++;
-							results.last = '/heroes/' + query.toString();
+							results.last = '/heroes/' + heroes[query].slug;
 						}
 						tried.hero_id = true;
 						again(query, callback, butt, tried, results);
@@ -304,7 +304,7 @@ module.exports = {
 								if (!results.items[keys[i]]) {
 									results.items[keys[i]] = items[keys[i]];
 									results.count++;
-									results.last = '/items/' + keys[i];
+									results.last = '/items/' + items[keys[i]].slug;
 								}
 							}
 						}
@@ -324,7 +324,7 @@ module.exports = {
 											results.items[keys[i]] = items[keys[i]];
 											results.items[keys[i]]._searchedBy = 'item alias';
 											results.count++;
-											results.last = '/items/' + keys[i];
+											results.last = '/items/' + items[keys[i]].slug;
 										}
 									}
 								}
@@ -342,7 +342,7 @@ module.exports = {
 								if (!results.heroes[keys[i]]) {
 									results.heroes[keys[i]] = heroes[keys[i]];
 									results.count++;
-									results.last = '/heroes/' + keys[i];
+									results.last = '/heroes/' + heroes[keys[i]].slug;
 								}
 							}
 						}

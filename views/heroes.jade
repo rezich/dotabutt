@@ -3,5 +3,7 @@ extends layout
 block content
 	h1 Heroes
 	ul
-		each hero in heroes
-			li #{hero.id} #{hero.localized_name}
+		each hero,id in heroes
+			li: a(href='/heroes/#{hero.slug}', title='#{hero.localized_name}')
+				img(src='http://media.steampowered.com/apps/dota2/images/heroes/#{hero.short_name}_sb.png', alt='#{hero.localized_name}') 
+				=hero.localized_name

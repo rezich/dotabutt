@@ -6,6 +6,10 @@ exports.index = function(req, res) {
 exports.view = function(req, res) {
 	var butt = res.locals.butt;
 	var heroes = butt.heroes();
-	res.locals.hero = heroes[req.params.id];
-	res.render('hero', { title: 'Hero - ' + res.locals.hero.localized_name, user: req.user });
+	Object.keys(heroes).forEach(function(id) {
+		if (heroes[id].slug == req.params.slug) {
+			res.locals.hero = heroes[id];
+			res.render('hero', { title: 'Hero - ' + res.locals.hero.localized_name, user: req.user });
+		}
+	});
 };

@@ -19,6 +19,7 @@
 		"mongodb": "*",
 		"mongojs": "*",
 		"passport": "*",
-		"passport-steam": "*"
+		"passport-steam": "*",
+		"slug": "*"
 	}
 }
