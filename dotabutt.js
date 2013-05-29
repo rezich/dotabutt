@@ -182,7 +182,7 @@ module.exports = {
 	search: function(query, callback) {
 		var again = function(query, callback, butt, tried, results) {
 			if (!tried) tried = { times: 0 };
-			if (!results) results = {};
+			if (!results) results = { count: 0 };
 			tried.times++;
 			console.log(tried);
 			console.log(results);
@@ -193,6 +193,8 @@ module.exports = {
 							if (!err) {
 								if (!results.matches) results.matches = [];
 								results.matches.push(match);
+								results.count++;
+								results.last = '/matches/' + match.match_id;
 							}
 							tried.match = true;
 							again(query, callback, butt, tried, results);

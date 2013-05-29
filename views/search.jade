@@ -2,7 +2,7 @@ extends layout
 
 block content
 	h1 Search results - #{query}
-	if results.empty
+	if results.count == 0
 		p: em Nothing found!
 	if results.matches
 		h2 Matches
