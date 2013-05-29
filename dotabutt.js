@@ -36,7 +36,7 @@ module.exports = {
 		});
 		this.backfillTimeout = process.env.BACKFILL_TIMEOUT || 1000;
 		this.db = mongojs(
-			process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || 'test',
+			process.env.MONGOHQ_URL || process.env.MONGOLAB_URI || 'test',
 			['players', 'matches', 'teams']
 		);
 	},
