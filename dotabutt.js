@@ -75,7 +75,7 @@ module.exports = {
 			if (err) console.log('Error saving match! ' + err);
 			//if (saved) console.log('Match %s saved to db.', match.match_id);
 			//else console.log('Match %s not saved to db.', match.match_id);
-			callback(saved, err);
+			if (callback) callback(saved, err);
 		});
 	},
 	checkMatch: function(id, callback) { // callback(match, err)
