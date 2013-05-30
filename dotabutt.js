@@ -7,8 +7,8 @@ module.exports = {
 	db: null,
 	ready: false,
 	anon: '4294967295',
+	config: { id: 0, backfill: 0 },
 	lastBackfillMatch: 0,
-	lastBackfillMatchSaved: 0,
 	backfillWriteThreshold: 1000,
 	backfillTimeout: 1,
 	backfillReady: true,
@@ -18,19 +18,10 @@ module.exports = {
 			steamapi.init(key);
 			steamapi.dota2.getHeroes(function() {
 				steamapi.dota2.getItems(function() {
-					fs.exists('backfill', function(exists) {
-						if (exists) {
-							fs.readFile('backfill', function(err, data) {
-								self.lastBackfillMatch = parseInt(data);
-								self.ready = true;
-								self.startBackfill();
-							});
-						}
-						else {
-							self.lastBackfillMatch = process.env.BACKFILL_LAST || 0;
-							self.ready = true;
-							self.startBackfill();
-						}
+					self.loadConfig(function(err) {
+						console.log('STARTING FROM MATCH NUM ' + self.config.backfill.toString());
+						self.ready = true;
+						self.startBackfill();
 					});
 				});
 			});
@@ -38,7 +29,7 @@ module.exports = {
 		this.backfillTimeout = process.env.BACKFILL_TIMEOUT || 1000;
 		this.db = mongojs(
 			process.env.MONGOHQ_URL || process.env.MONGOLAB_URI || 'test',
-			['players', 'matches', 'teams']
+			['players', 'matches', 'teams', 'config']
 		);
 	},
 	_getKey: function(callback) {
@@ -452,18 +443,36 @@ module.exports = {
 						self.getPlayers(players, function(inserted, err) {
 							self.lastBackfillMatch = matches[matches.length - 1].match_seq_num + 1;
 							self.backfillReady = true;
-							if (self.lastBackfillMatch - self.lastBackfillMatchSaved > self.backfillWriteThreshold) {
-								self.lastBackfillMatchSaved = self.lastBackfillMatch;
-								process.env.BACKFILL_TIMEOUT = self.lastBackfillMatch;
-								fs.writeFile('backfill', self.lastBackfillMatch.toString(), function(err) {
+							if (self.lastBackfillMatch - self.config.backfill > self.backfillWriteThreshold) {
+								self.config.backfill = self.lastBackfillMatch;
+								self.saveConfig(function(saved, err) {
 									// ???
-									console.log(self.lastBackfillMatch);
+									console.log(self.config.backfill);
 								});
 							}
 						});
 					});
 				});
 			});
+		});
+	},
+	saveConfig: function(callback) {
+		this.db.config.save(this.config, function(err, saved) {
+			callback(saved, err);
+		});
+	},
+	loadConfig: function(callback) { // callback(err)
+		var self = this;
+		this.db.config.find(function(err, configs) {
+			if (configs.length > 0) {
+				self.config = configs[0];
+				if (callback) callback(err);
+			}
+			else {
+				self.saveConfig(function(saved, err) {
+					if (callback) callback(err);
+				});
+			}
 		});
 	}
 }
