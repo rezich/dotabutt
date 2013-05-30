@@ -125,18 +125,18 @@ module.exports = {
 		items: {},
 		getMatchHistory: function(options, callback) {
 			// player_name, hero_id, game_mode, skill, date_min, date_max, min_players, account_id, league_id, start_at_match_id, matches_requested, tournament_games_only
-			this._api._call('/IDOTA2Match_570/GetMatchHistory/v001/', options, function(data) {
+			this._api._call('/IDOTA2Match_570/GetMatchHistory/v001/', options, function(data, err) {
 				if (callback) callback(data.matches, data.status, data.num_results, data.total_results, data.results_remaining);
 			});
 		},
 		getMatchHistoryBySequenceNum: function(options, callback) {
 			// start_at_match_seq_num, matches_requested
-			this._api._call('/IDOTA2Match_570/GetMatchHistoryBySequenceNum/v0001/', options, function(data) {
+			this._api._call('/IDOTA2Match_570/GetMatchHistoryBySequenceNum/v0001/', options, function(data, err) {
 				if (callback) callback(data.result.matches, data.result.status);
 			});
 		},
 		getLeagueListing: function(callback) {
-			this._api._call('/IDOTA2Match_570/GetLeagueListing/v0001/', options, function(data) {
+			this._api._call('/IDOTA2Match_570/GetLeagueListing/v0001/', options, function(data, err) {
 				if (callback) callback(data.result.leagues);
 			});
 		},
@@ -146,12 +146,14 @@ module.exports = {
 			var self = this;
 			this._api._call('/IEconDOTA2_570/GetHeroes/v0001/', {}, function(data, err) {
 				if (err) console.log("ERROR GETTING HEROES!");
-				data.result.heroes.forEach(function(hero) {
-					hero.short_name = hero.name.replace('npc_dota_hero_', '');
-					self.heroes[hero.id] = hero;
-					self.heroes[hero.id].slug = slug(hero.localized_name).toLowerCase();
-				});
-				if (callback) callback(data.result.heroes, err);
+				else {
+					data.result.heroes.forEach(function(hero) {
+						hero.short_name = hero.name.replace('npc_dota_hero_', '');
+						self.heroes[hero.id] = hero;
+						self.heroes[hero.id].slug = slug(hero.localized_name).toLowerCase();
+					});
+				}
+				if (callback) callback((data.result ? data.result.heroes : null), err);
 			});
 		},
 		getItems: function(callback) { // callback(err)
@@ -178,12 +180,12 @@ module.exports = {
 		},
 		getTeamInfoByTeamID: function(options, callback) {
 			// start_at_team_id, teams_requested
-			this._api._call('/IDOTA2Match_570/GetTeamInfoByTeamID/v001/', options, function(data) {
+			this._api._call('/IDOTA2Match_570/GetTeamInfoByTeamID/v001/', options, function(data, err) {
 				if (callback) callback(data.result.teams, data.result.status);
 			});
 		},
 		getLiveLeagueGames: function(callback) {
-			this._api._call('/IDOTA2Match_570/GetLiveLeagueGames/v0001/', options, function(data) {
+			this._api._call('/IDOTA2Match_570/GetLiveLeagueGames/v0001/', options, function(data, err) {
 				if (callback) callback(data.result.games);
 			});
 		}

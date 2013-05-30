@@ -67,7 +67,7 @@ form.search input[type="submit"]{display:none}
 #title a:hover{color:#00b7ff}
 #tagline{margin-top:-3px;color:#aaa;margin-left:4px;float:left;width:100%;font-size:11pt}
 #logo-container{float:left;width:68px}
-#logo{height:64px;width:64px;background:url("/images/dotabutt_64.png") #fff;border:2px solid #000;float:left}
+#logo{height:64px;width:64px;background:url("/images/dotabutt_64.png") #fff;border:2px solid #999;float:left}
 #logo:hover{border-color:#00b7ff}
 #nav-container-large{text-align:center;width:100%;display:none}
 ul#nav-large{margin:0 auto;padding:0;width:464px}
@@ -134,14 +134,25 @@ td.playername{width:150px}
 td.heroname{width:100px}
 td.playericon{width:32px}
 td.heroicon{width:59px}
+table.matchlist tbody tr{height:36px}
+table.matchlist tbody tr:nth-child(4n+3),table.matchlist tbody tr:nth-child(4n+4){background:#eee}
 .clearfix{zoom:1}
 .clearfix:before,.clearfix:after{content:"";display:table}
 .clearfix:after{clear:both}
 .matchinfo{vertical-align:top;padding-right:4px}
 .fullwidth{width:100%}
-.towermap{width:128px;border:4px solid #000;vertical-align:top}
+.valign-top{vertical-align:top}
+.valign-bottom{vertical-align:bottom}
+.halign-right{text-align:right}
+.padding-right{padding-right:4px}
+.big-text{font-size:20pt;color:#111}
+.items-small-2x3{width:81px}
+.towermap{width:128px;border:4px solid #999;vertical-align:top}
 .towermap > div{position:relative;background:url("/images/towermap_background.png");height:128px}
 .towermap > div > div{width:128px;height:128px;position:absolute;top:0;left:0}
+.towermap-small{width:64px;border:4px solid #ccc;vertical-align:top}
+.towermap-small > div{position:relative;background:url("/images/towermap_background.png");-webkit-background-size:64px;-moz-background-size:64px;background-size:64px;height:64px}
+.towermap-small > div > div{width:64px;height:64px;position:absolute;-webkit-background-size:64px;-moz-background-size:64px;background-size:64px;top:0;left:0}
 .radiant-ancient{background:url("/images/towermap_radiant_ancient.png")}
 .radiant-tower-ancient-top{background:url("/images/towermap_radiant_tower_ancient_top.png")}
 .radiant-tower-ancient-bottom{background:url("/images/towermap_radiant_tower_ancient_bottom.png")}

@@ -8,4 +8,5 @@ database setup:
 
 	db.matches.ensureIndex( { match_id: 1 })
 	db.matches.ensureIndex( { start_time: -1 })
+	db.matches.ensureIndex( { 'players.account_id': 1 })
 	db.players.ensureIndex( { account_id: 1 })

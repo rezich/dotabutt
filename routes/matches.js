@@ -5,6 +5,7 @@ exports.index = function(req, res) {
 			res.locals.matches = matches;
 			res.locals.behind = res.locals.moment(butt.lastTime.toString(), 'X');
 			res.locals.total_matches = total_matches;
+			res.locals.heroes = butt.heroes();
 			res.render('matches', { title: 'Matches', user: req.user });
 		});
 	});

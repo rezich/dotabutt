@@ -9,7 +9,7 @@ exports.index = function(req, res) {
 			}
 			else {
 				res.locals.results = results;
-				res.render('search', { title: 'search - ' + req.params.query, user: req.user });
+				res.render('search', { title: 'search - ' + req.params.q, user: req.user });
 			}
 		});
 	}

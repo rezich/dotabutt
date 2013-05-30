@@ -24,7 +24,8 @@ mixin player_block(player)
 		else
 			td.playericon: a(href='/players/#{player.account_id}'): img(src='#{player.summary.avatar}')
 			td.playername: a(href='/players/#{player.account_id}') #{player.summary.personaname}
-		td.heroicon: img(src='http://media.steampowered.com/apps/dota2/images/heroes/#{heroes[player.hero_id].short_name}_sb.png')
+		td.heroicon
+			mixin hero_image_small(heroes[player.hero_id])
 		td.heroname= heroes[player.hero_id].localized_name
 		td= player.level
 		td= player.kills
@@ -35,89 +36,13 @@ mixin player_block(player)
 		td= player.denies
 		td= player.gold_per_min
 		td= player.xp_per_min
-		td
+		td.items-small-2x3
 			mixin item(player.item_0)
 			mixin item(player.item_1)
 			mixin item(player.item_2)
 			mixin item(player.item_3)
 			mixin item(player.item_4)
 			mixin item(player.item_5)
-
-mixin towermap(match)
-	td.towermap
-		div
-			if match.radiant_win
-				div.radiant-ancient &nbsp;
-			if match.tower_status_radiant & steamapi.dota2.tower.ancient.top
-				div.radiant-tower-ancient-top &nbsp;
-			if match.tower_status_radiant & steamapi.dota2.tower.ancient.bottom
-				div.radiant-tower-ancient-bottom &nbsp;
-			if match.barracks_status_radiant & steamapi.dota2.barracks.top.ranged
-				div.radiant-barracks-top-ranged &nbsp;
-			if match.barracks_status_radiant & steamapi.dota2.barracks.top.melee
-				div.radiant-barracks-top-melee &nbsp;
-			if match.barracks_status_radiant & steamapi.dota2.barracks.middle.ranged
-				div.radiant-barracks-middle-ranged &nbsp;
-			if match.barracks_status_radiant & steamapi.dota2.barracks.middle.melee
-				div.radiant-barracks-middle-melee &nbsp;
-			if match.barracks_status_radiant & steamapi.dota2.barracks.bottom.ranged
-				div.radiant-barracks-bottom-ranged &nbsp;
-			if match.barracks_status_radiant & steamapi.dota2.barracks.bottom.melee
-				div.radiant-barracks-bottom-melee &nbsp;
-			if match.tower_status_radiant & steamapi.dota2.tower.tier1.top
-				div.radiant-tower-tier1-top &nbsp;
-			if match.tower_status_radiant & steamapi.dota2.tower.tier1.middle
-				div.radiant-tower-tier1-middle &nbsp;
-			if match.tower_status_radiant & steamapi.dota2.tower.tier1.bottom
-				div.radiant-tower-tier1-bottom &nbsp;
-			if match.tower_status_radiant & steamapi.dota2.tower.tier2.top
-				div.radiant-tower-tier2-top &nbsp;
-			if match.tower_status_radiant & steamapi.dota2.tower.tier2.middle
-				div.radiant-tower-tier2-middle &nbsp;
-			if match.tower_status_radiant & steamapi.dota2.tower.tier2.bottom
-				div.radiant-tower-tier2-bottom &nbsp;
-			if match.tower_status_radiant & steamapi.dota2.tower.tier3.top
-				div.radiant-tower-tier3-top &nbsp;
-			if match.tower_status_radiant & steamapi.dota2.tower.tier3.middle
-				div.radiant-tower-tier3-middle &nbsp;
-			if match.tower_status_radiant & steamapi.dota2.tower.tier3.bottom
-				div.radiant-tower-tier3-bottom &nbsp;
-			if !match.radiant_win
-				div.dire-ancient &nbsp;
-			if match.tower_status_dire & steamapi.dota2.tower.ancient.top
-				div.dire-tower-ancient-top &nbsp;
-			if match.tower_status_dire & steamapi.dota2.tower.ancient.bottom
-				div.dire-tower-ancient-bottom &nbsp;
-			if match.barracks_status_dire & steamapi.dota2.barracks.top.ranged
-				div.dire-barracks-top-ranged &nbsp;
-			if match.barracks_status_dire & steamapi.dota2.barracks.top.melee
-				div.dire-barracks-top-melee &nbsp;
-			if match.barracks_status_dire & steamapi.dota2.barracks.middle.ranged
-				div.dire-barracks-middle-ranged &nbsp;
-			if match.barracks_status_dire & steamapi.dota2.barracks.middle.melee
-				div.dire-barracks-middle-melee &nbsp;
-			if match.barracks_status_dire & steamapi.dota2.barracks.bottom.ranged
-				div.dire-barracks-bottom-ranged &nbsp;
-			if match.barracks_status_dire & steamapi.dota2.barracks.bottom.melee
-				div.dire-barracks-bottom-melee &nbsp;
-			if match.tower_status_dire & steamapi.dota2.tower.tier1.top
-				div.dire-tower-tier1-top &nbsp;
-			if match.tower_status_dire & steamapi.dota2.tower.tier1.middle
-				div.dire-tower-tier1-middle &nbsp;
-			if match.tower_status_dire & steamapi.dota2.tower.tier1.bottom
-				div.dire-tower-tier1-bottom &nbsp;
-			if match.tower_status_dire & steamapi.dota2.tower.tier2.top
-				div.dire-tower-tier2-top &nbsp;
-			if match.tower_status_dire & steamapi.dota2.tower.tier2.middle
-				div.dire-tower-tier2-middle &nbsp;
-			if match.tower_status_dire & steamapi.dota2.tower.tier2.bottom
-				div.dire-tower-tier2-bottom &nbsp;
-			if match.tower_status_dire & steamapi.dota2.tower.tier3.top
-				div.dire-tower-tier3-top &nbsp;
-			if match.tower_status_dire & steamapi.dota2.tower.tier3.middle
-				div.dire-tower-tier3-middle &nbsp;
-			if match.tower_status_dire & steamapi.dota2.tower.tier3.bottom
-				div.dire-tower-tier3-bottom &nbsp;
 
 mixin item(id)
 	if items[id] != undefined
@@ -134,7 +59,8 @@ block content
 							p Radiant victory
 						else
 							p Dire victory
-						p= (match.duration.hours() > 0 ? match.duration.hours() + ':' : '') + (match.duration.minutes().toString().length < 2 ? '0' : '') + match.duration.minutes() + ':' + (match.duration.seconds().toString().length < 2 ? '0' : '') + match.duration.seconds() + ' (' + moment(match.start_time.toString(), 'X').fromNow() + ')'
+						p
+							mixin format_duration(match)
 						p: a(href='dota2://matchid=#{match.match_id}') Watch replay
 					mixin towermap(match)
 		h2
