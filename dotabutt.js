@@ -27,6 +27,7 @@ module.exports = {
 							});
 						}
 						else {
+							self.lastBackfillMatch = process.env.BACKFILL_LAST || 0;
 							self.ready = true;
 							self.startBackfill();
 						}
@@ -453,6 +454,7 @@ module.exports = {
 							self.backfillReady = true;
 							if (self.lastBackfillMatch - self.lastBackfillMatchSaved > self.backfillWriteThreshold) {
 								self.lastBackfillMatchSaved = self.lastBackfillMatch;
+								process.env.BACKFILL_TIMEOUT = self.lastBackfillMatch;
 								fs.writeFile('backfill', self.lastBackfillMatch.toString(), function(err) {
 									// ???
 									console.log(self.lastBackfillMatch);
