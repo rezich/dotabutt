@@ -16,7 +16,7 @@ butt.init();
 
 moment().format();
 
-baseUrl = 'http://nukle.us:80';
+baseUrl = 'http://dotabutt.com';
 if (process.env.DOMAIN) baseUrl = process.env.DOMAIN
 
 routes.matches = require('./routes/matches');

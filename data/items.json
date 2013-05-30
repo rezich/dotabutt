@@ -1141,7 +1141,7 @@
 	},
 	"89": {
 		"name": "recipe_pipe",
-		"localized_name": "",
+		"localized_name": "Recipe: Pipe of Insight",
 		"cost": 900,
 		"recipe": 1
 	},

@@ -9,7 +9,7 @@ module.exports = {
 	anon: '4294967295',
 	config: { id: 0, backfill: 0 },
 	lastBackfillMatch: 0,
-	backfillWriteThreshold: 1000,
+	backfillWriteThreshold: 500,
 	backfillTimeout: 1,
 	backfillReady: true,
 	lastTime: 0,
@@ -28,7 +28,7 @@ module.exports = {
 				});
 			});
 		});
-		this.backfillTimeout = process.env.BACKFILL_TIMEOUT || 1000;
+		this.backfillTimeout = process.env.BACKFILL_TIMEOUT || 500;
 		this.db = mongojs(
 			process.env.MONGOHQ_URL || process.env.MONGOLAB_URI || 'test',
 			['players', 'matches', 'teams', 'config']
@@ -426,7 +426,9 @@ module.exports = {
 		setInterval(function() { self.backfill(); }, this.backfillTimeout);
 	},
 	backfill: function() {
-		if (!this.backfillReady) return;
+		if (!this.backfillReady) {
+			return;
+		}
 		this.backfillReady = false;
 		var self = this;
 		steamapi.dota2.getMatchHistoryBySequenceNum({ start_at_match_seq_num: this.lastBackfillMatch }, function(matches) {
