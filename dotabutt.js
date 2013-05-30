@@ -429,6 +429,7 @@ module.exports = {
 		this.backfillReady = false;
 		var self = this;
 		steamapi.dota2.getMatchHistoryBySequenceNum({ start_at_match_seq_num: this.lastBackfillMatch }, function(matches) {
+			self.lastTime = matches[0].start_time;
 			var players = [];
 			matches.forEach(function(match) {
 				match.players.forEach(function(player) {
@@ -446,7 +447,6 @@ module.exports = {
 				for (var i = 0; i < Object.keys(existingMatches); i++) {
 					delete matches[Object.keys(existingMatches)[i]];
 				}
-				self.lastTime = matches[matches.length - 1].start_time;
 				self.insertMatch(matches, function(saved, err) {
 					self.checkPlayers(players, function(existingPlayers, err) {
 						for (var i = 0; i < Object.keys(existingPlayers); i++) {

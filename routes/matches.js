@@ -3,7 +3,7 @@ exports.index = function(req, res) {
 	butt.getRecentMatches(36, function(matches) {
 		butt.getMatchCount(function(total_matches) {
 			res.locals.matches = matches;
-			res.locals.behind = butt.lastTime;
+			res.locals.behind = res.locals.moment(butt.lastTime.toString(), 'X');
 			res.locals.total_matches = total_matches;
 			res.render('matches', { title: 'Matches', user: req.user });
 		});
