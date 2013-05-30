@@ -3,7 +3,7 @@ extends layout
 block content
 	h1 Players
 	if players && players.length > 0
-		ul
+		ul.columns
 			each player in players
 				li: a(href='/players/#{player.account_id}')
 					img(src='#{player.avatar}')

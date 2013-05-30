@@ -143,7 +143,7 @@ module.exports = {
 				var found = false;
 				for (var i = 0; i < db_players.length; i++) {
 					if (db_players[i].account_id == key) {
-						console.log('Player %s found in db', key);
+						//console.log('Player %s found in db', key);
 						players[key] = db_players[i];
 						found = true;
 					}
@@ -169,8 +169,8 @@ module.exports = {
 						api_players[i].account_id = steamapi.convertIDTo32Bit(api_ids[i]);
 						api_players[i].updated = moment().unix();
 						self.db.players.save(api_players[i], function(err, saved) {
-							if (saved) console.log('Saved player!');
-							else console.log('Saving player failed!');
+							/*if (saved) console.log('Saved player!');
+							else console.log('Saving player failed!');*/
 						});
 					}
 					for (var key in players) {
@@ -213,6 +213,11 @@ module.exports = {
 	},
 	getAllPlayers: function(callback) {
 		this.db.players.find({}, function(err, players) {
+			callback(players);
+		});
+	},
+	getRecentPlayers: function(number, callback) {
+		this.db.players.find().sort({ lastlogoff: -1 }).limit(number, function(err, players) {
 			callback(players);
 		});
 	},
@@ -443,7 +448,6 @@ module.exports = {
 						for (var i = 0; i < Object.keys(existingPlayers); i++) {
 							players.splice(players.indexOf(Object.keys(existingPlayers)[i]), 1);
 						}
-						console.log(players);
 						self.getPlayers(players, function(inserted, err) {
 							self.lastBackfillMatch = matches[matches.length - 1].match_seq_num + 1;
 							self.backfillReady = true;

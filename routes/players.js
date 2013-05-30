@@ -1,6 +1,6 @@
 exports.index = function(req, res) {
 	var butt = res.locals.butt;
-	butt.getAllPlayers(function(players) {
+	butt.getRecentPlayers(108, function(players) {
 		res.locals.players = players;
 		res.render('players', { title: 'Players', user: req.user });
 	});
