@@ -16,7 +16,7 @@
 		"bignum": "*",
 		"nib": "*",
 		"moment": "*",
-		"mongodb": "*",
+		"mongodb": "2.4.3",
 		"mongojs": "*",
 		"passport": "*",
 		"passport-steam": "*",
