@@ -8,4 +8,4 @@ block content
 				li: a(href='/matches/#{match.match_id}') #{match.match_id}
 	else
 		p No matches!
-	.centered #{total_matches} matches on file
+	.centered #{total_matches} matches on file | #{moment(behind).fromNow(true)} behind

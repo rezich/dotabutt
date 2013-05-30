@@ -12,6 +12,7 @@ module.exports = {
 	backfillWriteThreshold: 1000,
 	backfillTimeout: 1,
 	backfillReady: true,
+	lastTime: 0,
 	init: function() {
 		var self = this;
 		this._getKey(function(key) {
@@ -445,6 +446,7 @@ module.exports = {
 				for (var i = 0; i < Object.keys(existingMatches); i++) {
 					delete matches[Object.keys(existingMatches)[i]];
 				}
+				self.lastTime = matches[matches.length - 1].start_time;
 				self.insertMatch(matches, function(saved, err) {
 					self.checkPlayers(players, function(existingPlayers, err) {
 						for (var i = 0; i < Object.keys(existingPlayers); i++) {
