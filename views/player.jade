@@ -3,10 +3,25 @@ extends layout
 block content
 	img.player-big(src='#{player.avatarfull}')
 	h1 #{player.personaname}
-	h2 Matches
+	ul
+		if player.locstatecode || player.loccountrycode
+			li
+				if player.locstatecode
+					=player.locstatecode
+				if player.loccountrycode
+					if player.locstatecode
+						=', '
+					=player.loccountrycode
+		if player.timecreated
+			li
+				='Steam user since '
+				=moment(player.timecreated.toString(), 'X').format('MMMM Do, YYYY')
+		li: a(href='#{player.profileurl}') Steam Community page
+		if player.matches && player.matches.length > 0
+			li
+				=(player.matches.length.toString() || 'no') + (player.matches && player.matches.length == 1 ? ' match' : ' matches') + ' on file'
 	if player.matches && player.matches.length > 0
+		h2 Matches
 		ul
 			each match in player.matches
 				li: a(href='/matches/#{match.match_id}') #{match.match_id}
-	else
-		p No matches!
