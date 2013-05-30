@@ -11,7 +11,8 @@ block content
 				if player.loccountrycode
 					if player.locstatecode
 						=', '
-					=player.loccountrycode
+					=player.loccountrycode + ' '
+					img(src='/images/flags/#{player.loccountrycode.toLowerCase()}.png')
 		if player.timecreated
 			li
 				='Steam user since '
