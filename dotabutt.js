@@ -188,7 +188,7 @@ module.exports = {
 		});
 	},
 	getPlayerMatches: function(id, callback) {
-		this.db.matches.find({ players: { $elemMatch: { 'account_id': parseInt(id) } } }, function(err, matches) {
+		this.db.matches.find({ players: { $elemMatch: { 'account_id': parseInt(id) } } }).sort({ start_time: -1 }, function(err, matches) {
 			callback(matches);
 		});
 	},
@@ -203,6 +203,11 @@ module.exports = {
 			callback(matches);
 		});
 	},
+	getMatchCount: function(callback) {
+		this.db.matches.find().count(function(err, matches) {
+			callback(matches);
+		});
+	},
 	getAllPlayers: function(callback) {
 		this.db.players.find({}, function(err, players) {
 			callback(players);
@@ -210,6 +215,11 @@ module.exports = {
 	},
 	getRecentPlayers: function(number, callback) {
 		this.db.players.find().sort({ lastlogoff: -1 }).limit(number, function(err, players) {
+			callback(players);
+		});
+	},
+	getPlayerCount: function(callback) {
+		this.db.players.find().count(function(err, players) {
 			callback(players);
 		});
 	},

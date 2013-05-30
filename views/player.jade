@@ -22,6 +22,6 @@ block content
 				=(player.matches.length.toString() || 'no') + (player.matches && player.matches.length == 1 ? ' match' : ' matches') + ' on file'
 	if player.matches && player.matches.length > 0
 		h2 Matches
-		ul
+		ul.columns
 			each match in player.matches
 				li: a(href='/matches/#{match.match_id}') #{match.match_id}

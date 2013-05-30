@@ -1,8 +1,11 @@
 exports.index = function(req, res) {
 	var butt = res.locals.butt;
 	butt.getRecentMatches(36, function(matches) {
-		res.locals.matches = matches;
-		res.render('matches', { title: 'Matches', user: req.user });
+		butt.getMatchCount(function(total_matches) {
+			res.locals.matches = matches;
+			res.locals.total_matches = total_matches;
+			res.render('matches', { title: 'Matches', user: req.user });
+		});
 	});
 };
 
