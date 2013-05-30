@@ -20,6 +20,7 @@ module.exports = {
 			steamapi.dota2.getHeroes(function() {
 				steamapi.dota2.getItems(function() {
 					self.loadConfig(function(err) {
+						self.lastBackfillMatch = self.config.backfill;
 						console.log('STARTING FROM MATCH NUM ' + self.config.backfill.toString());
 						self.ready = true;
 						self.startBackfill();
@@ -431,7 +432,19 @@ module.exports = {
 		steamapi.dota2.getMatchHistoryBySequenceNum({ start_at_match_seq_num: this.lastBackfillMatch }, function(matches) {
 			self.lastTime = matches[0].start_time;
 			var players = [];
-			matches.forEach(function(match) {
+			for (var i = 0; i < Object.keys(matches); i++) {
+				for (var j = 0; j < matches[Object.keys(matches)[i]].players.length; j++) {
+					var found = false;
+					for (var k = 0; k < players.length; k++) {
+						if (players[k].account_id == matches[Object.keys(matches)[i]].players[j].account_id) {
+							found = true;
+							break;
+						}
+					}
+					if (!found) players.push(matches[Object.keys(matches)[i]].players[j].account_id);
+				}
+			}
+			/*matches.forEach(function(match) {
 				match.players.forEach(function(player) {
 					var found = false;
 					for (var i = 0; i < players.length; i++) {
@@ -442,7 +455,7 @@ module.exports = {
 					}
 					if (!found) players.push(player.account_id);
 				});
-			});
+			});*/
 			self.checkMatches(Object.keys(matches), function(existingMatches, err) {
 				for (var i = 0; i < Object.keys(existingMatches); i++) {
 					delete matches[Object.keys(existingMatches)[i]];
