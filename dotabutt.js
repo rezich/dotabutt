@@ -21,9 +21,10 @@ module.exports = {
 			function(callback) { self._getKey(function(key) { steamapi.init(key); callback(); }); },
 			function(callback) { steamapi.dota2.getHeroes(function() { callback(); }); },
 			function(callback) { steamapi.dota2.getItems(function() { callback(); }); },
-			function(callback) { self.loadConfig(function(err) { self.lastbackfillMatch = self.config.backfill; callback(); }); }
+			function(callback) { self.loadConfig(function(err) { callback(); }); }
 		],
 		function(err) {
+			self.lastBackfillMatch = self.config.backfill;
 			console.log('STARTING FROM MATCH NUM ' + self.config.backfill.toString());
 			self.ready = true;
 			self.startBackfill();
