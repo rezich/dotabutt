@@ -2,6 +2,8 @@ var steamapi = require('./steamapi.js');
 var fs = require('fs');
 var mongojs = require('mongojs');
 var moment = require('moment');
+var async = require('async');
+
 module.exports = {
 	_player_update_interval: 60 * 60,
 	db: null,
@@ -15,7 +17,18 @@ module.exports = {
 	lastTime: 0,
 	init: function() {
 		var self = this;
-		this._getKey(function(key) {
+		async.series([
+			function(callback) { self._getKey(function(key) { steamapi.init(key); callback(); }); },
+			function(callback) { steamapi.dota2.getHeroes(function() { callback(); }); },
+			function(callback) { steamapi.dota2.getItems(function() { callback(); }); },
+			function(callback) { self.loadConfig(function(err) { self.lastbackfillMatch = self.config.backfill; callback(); }); }
+		],
+		function(err) {
+			console.log('STARTING FROM MATCH NUM ' + self.config.backfill.toString());
+			self.ready = true;
+			self.startBackfill();
+		});
+		/*this._getKey(function(key) {
 			steamapi.init(key);
 			steamapi.dota2.getHeroes(function() {
 				steamapi.dota2.getItems(function() {
@@ -27,7 +40,7 @@ module.exports = {
 					});
 				});
 			});
-		});
+		});*/
 		this.backfillTimeout = process.env.BACKFILL_TIMEOUT || 500;
 		this.db = mongojs(
 			process.env.MONGOHQ_URL || process.env.MONGOLAB_URI || 'test',

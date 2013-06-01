@@ -5,18 +5,21 @@ block content
 	h2.centered Matches
 	table.width-100
 		tr
-			th.halign-right.padding-right.width-50 Total in database
-			td=matches.count
+			td.halign-right.padding-right.width-50=matches.count
+			th matches in database
 		tr
-			th.halign-right.padding-right.width-50  Latest match acquired date
-			td=matches.latest
+			td.halign-right.padding-right.width-50=matches.latest
+			th is when the latest scraped match took place
 		tr
-			th.halign-right.padding-right.width-50  How far behind we are
-			td=matches.behind
+			td.halign-right.padding-right.width-50=matches.behind
+			th is how far behind we are on scraping match data
+		tr
+			td.halign-right.padding-right.width-50=matches.size+'GB'
+			th is about how much space the matches take up
 	h2.centered Players
 	table.width-100
 		tr
-			th.halign-right.padding-right.width-50  Total in database
-			td=players.count
+			td.halign-right.padding-right.width-50=players.count
+			th players in database
 	h2.centered Teams
-	p.centered Teams aren't even implemented yet lol
+	p.centered aren't even implemented yet lol

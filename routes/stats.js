@@ -9,6 +9,7 @@ exports.index = function(req, res) {
 		function(callback) {
 			butt.getMatchCount(function(count) {
 				res.locals.matches.count = count;
+				res.locals.matches.size = Number(count * 0.00000343099).toFixed(2); //3684 / 1024 / 1024 / 1024;
 				callback();
 			});
 		},
