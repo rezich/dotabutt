@@ -19,6 +19,9 @@ h3{font-size:18px}
 abbr{cursor:help}
 a img{cursor:pointer}
 .centered{text-align:center}
+.centered-margins{margin:0 auto}
+.width-100{width:100%}
+.width-50{width:50%}
 .item-big,.hero-big,.player-big{float:right}
 .columns {
 		column-width: 250px;

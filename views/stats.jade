@@ -1,0 +1,22 @@
+extends layout
+
+block content
+	h1 Stats
+	h2.centered Matches
+	table.width-100
+		tr
+			th.halign-right.padding-right.width-50 Total in database
+			td=matches.count
+		tr
+			th.halign-right.padding-right.width-50  Latest match acquired date
+			td=matches.latest
+		tr
+			th.halign-right.padding-right.width-50  How far behind we are
+			td=matches.behind
+	h2.centered Players
+	table.width-100
+		tr
+			th.halign-right.padding-right.width-50  Total in database
+			td=players.count
+	h2.centered Teams
+	p.centered Teams aren't even implemented yet lol

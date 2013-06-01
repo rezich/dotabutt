@@ -27,6 +27,7 @@ routes.heroes = require('./routes/heroes');
 routes.teams = require('./routes/teams');
 routes.pages = require('./routes/pages');
 routes.search = require('./routes/search');
+routes.stats = require('./routes/stats');
 
 var app = express();
 
@@ -125,7 +126,8 @@ app.get('/teams', routes.teams.index);
 app.get('/teams/:id', routes.teams.view);
 
 app.get('/search', routes.search.index);
-//app.get('/search/:query', routes.search.results);
+
+app.get('/stats', routes.stats.index);
 
 app.get('/about', routes.pages.about);
 app.get('/privacy', routes.pages.privacy);
