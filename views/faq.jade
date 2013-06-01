@@ -2,5 +2,40 @@ extends layout
 
 block content
 	h1 Frequently asked questions
+	
 	h2 What is Dotabutt?
-	p Dotabutt is a website for Dota 2 statistics. It pulls data from Valve's Dota 2 API
+	p Dotabutt is a website for Dota 2 statistics. It pulls data from Valve's Dota 2 API and does cool stuff with it.
+	
+	h2
+		| What can Dotabutt do for
+		em me?
+	p Dotabutt aims to be the #1 Dota 2 stats tracking website on the Internet. Anyone who plays Dota 2 (and has their public stats enabled) can log in with their Steam logins and check out their stats and stuff. Eventually, you'll be able to compare your stats to your Steam friends and all sorts of cool stuff.
+	p Okay, yeah, there's not a lot to it right now, but you can totally go to dotabutt.com/matches/[match id] after you stomp some pubs and see your results immediately, without having to wait for us to sequentially acquire it from the API!
+	
+	h2 Is Dotabutt affiliated with any other Dota-centric websites?
+	p Not at the moment!
+	
+	h2 Does Dotabutt have any sort of global ranking system to compare players?
+	p We might show you, like, who has the highest win percentage, or whatever, but nah, we don't have any sort of ranking system. That's just too much math.
+	
+	h2 So Dotabutt's in alpha?
+	p Yep! There's not much to it right now, but man, there will be. You'll see.
+	
+	h2 How come it says I don't have any matches, or I only have a couple matches, when I've put like 500 hours into Dota 2 over the last year?
+	p Due to the Dota 2 API kind of being crappy, we have to pull down every single match, ever, since Dota 2 first started tracking such things, and store them in a database. And I don't know if you know this, but there's been like a billion Dota 2 matches since then.
+	p So yeah, we're trying. Dotabutt is constantly getting every match ever, from the very beginning, and maybe one day it'll catch up to the present. Since we're only using the official API (which allows for one request per second) and no other roundabout, potentially against terms of use methods to acquire data, all we can do is wait.
+	
+	h2 Is Dotabutt going to steal my Steam login?
+	p Well... no... but that's just what a website that would steal your Steam login would say, right?
+	p However! Notice how when you click the "Sign in through STEAM" button, it redirects you to a secure page on steamcommunity.com. You can tell it's secure because your browser has some sort of lock icon or green coloring in the address bar... plus it's steamcommunity.com, which Valve owns.
+	
+	h2
+		| I'm some kind of crazy person and want to have access to Dotabutt at 
+		em all 
+		| times. Is there a mobile version of Dotabutt?
+	p Yes! Sort of! Dotabutt is a "reactive" (or whatever the correct buzzword these days for it is) website, meaning it fits whatever device or window size you have super awesomely. Just resize your window or put it on your phone and check it out!
+	
+	h2 Butts, really? That's so immature.
+	p
+		em You're 
+		| so immature!
