@@ -195,10 +195,14 @@ module.exports = {
 		});
 	},
 	getPlayer: function(id, callback) { // callback(player, err)
-		this.getPlayers([parseInt(id)], function(players, err) { callback(players[0], err) });
+		this.getPlayers([parseInt(id)], function(players, err) { callback(players[0], err); });
+	},
+	getTeams: function(ids, callback) {
+		// TODO: IMPLEMENT
+		callback();
 	},
 	getTeam: function(id, callback) {
-		steamapi.dota2.getTeamInfoByTeamID({ start_at_team_id: id, teams_requested: 1 }, callback);
+		steamapi.dota2.getTeamInfoByTeamID({ start_at_team_id: id, teams_requested: 1 }, function(teams, err) { callback(teams[0], err); });
 	},
 	getRecentMatches: function(number, callback) {
 		this.db.matches.find().sort({ start_time: -1 }).limit(number, function(err, matches) {

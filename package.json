@@ -20,6 +20,7 @@
 		"mongojs": "*",
 		"passport": "*",
 		"passport-steam": "*",
-		"slug": "*"
+		"slug": "*",
+		"async": "*"
 	}
 }
