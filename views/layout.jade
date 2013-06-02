@@ -5,7 +5,7 @@ mixin hero_image_small(hero)
 
 mixin format_duration(match)
 	- var duration = moment.duration(match.duration, 'seconds')
-	=(duration.hours() > 0 ? time.hours() + ':' : '') + (duration.minutes().toString().length < 2 ? '0' : '') + duration.minutes() + ':' + (duration.seconds().toString().length < 2 ? '0' : '') + duration.seconds() + ' (' + moment(match.start_time.toString(), 'X').fromNow() + ')'
+	=(duration.hours() > 0 ? duration.hours() + ':' : '') + (duration.minutes().toString().length < 2 ? '0' : '') + duration.minutes() + ':' + (duration.seconds().toString().length < 2 ? '0' : '') + duration.seconds() + ' (' + moment(match.start_time.toString(), 'X').fromNow() + ')'
 	
 mixin towermap(match)
 	td.towermap

@@ -29,19 +29,6 @@ module.exports = {
 			self.ready = true;
 			self.startBackfill();
 		});
-		/*this._getKey(function(key) {
-			steamapi.init(key);
-			steamapi.dota2.getHeroes(function() {
-				steamapi.dota2.getItems(function() {
-					self.loadConfig(function(err) {
-						self.lastBackfillMatch = self.config.backfill;
-						console.log('STARTING FROM MATCH NUM ' + self.config.backfill.toString());
-						self.ready = true;
-						self.startBackfill();
-					});
-				});
-			});
-		});*/
 		this.backfillTimeout = process.env.BACKFILL_TIMEOUT || 500;
 		this.db = mongojs(
 			process.env.MONGOHQ_URL || process.env.MONGOLAB_URI || 'test',
