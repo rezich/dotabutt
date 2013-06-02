@@ -22,10 +22,14 @@ exports.view = function(req, res) {
 			butt.getPlayer(req.params.id, function(player) { res.locals.player = player; callback(); });
 		},
 		function(callback) {
-			butt.getPlayerMatches(res.locals.player.account_id, function(matches) { res.locals.player.matches = matches; callback(); });
+			butt.getPlayerMatches(res.locals.player.account_id, 10, 0, function(matches) { res.locals.player.matches = matches; callback(); });
+		},
+		function(callback) {
+			butt.getPlayerMatchCount(res.locals.player.account_id, function(count) { res.locals.player.matches.count = count; callback(); });
 		}
 	],
 	function(err) {
+		res.locals.heroes = butt.heroes();
 		res.render('player', { title: res.locals.player.personaname, user: req.user });
 	});
 }

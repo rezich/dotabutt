@@ -15,6 +15,35 @@ mixin towermap2(match)
 	td.towermap-small(rowspan='2')
 		mixin towermap_inner(match)
 
+mixin match_list(matches)
+	table.fullwidth.matchlist
+		thead
+			tr
+				th &nbsp;
+				th Heroes
+				th Duration
+				th Map
+		tbody
+			each match in matches
+				tr
+					if match.radiant_win
+						td.valign-bottom.halign-right.padding-right: a.big-text(href='/matches/#{match.match_id}') Radiant Victory
+					else
+						td.valign-bottom.halign-right.padding-right: a.big-text(href='/matches/#{match.match_id}') Dire Victory
+					td
+						each player in match.players
+							if player.player_slot < 127
+								mixin hero_image_small(heroes[player.hero_id])
+					td(rowspan='2')
+						mixin format_duration(match)
+					mixin towermap2(match)
+				tr
+					td.valign-top.halign-right.padding-right: a(href='/matches/#{match.match_id}') #{match.match_id}
+					td
+						each player in match.players
+							if player.player_slot > 127
+								mixin hero_image_small(heroes[player.hero_id])
+
 mixin towermap_inner(match)
 	div
 		if match.radiant_win

@@ -1,7 +1,7 @@
 extends layout
 
 block content
-	img.player-big(src='#{player.avatarfull}')
+	img.player-big(src='#{player.avatarmedium}')
 	h1 #{player.personaname}
 	ul
 		if player.locstatecode || player.loccountrycode
@@ -20,9 +20,9 @@ block content
 		li: a(href='#{player.profileurl}') Steam Community page
 		if player.matches && player.matches.length > 0
 			li
-				=(player.matches.length.toString() || 'no') + (player.matches && player.matches.length == 1 ? ' match' : ' matches') + ' on file'
+				=(player.matches.count.toString() || 'no') + (player.matches && player.matches.length == 1 ? ' match' : ' matches') + ' on file'
 	if player.matches && player.matches.length > 0
-		h2 Matches
-		ul.columns
-			each match in player.matches
-				li: a(href='/matches/#{match.match_id}') #{match.match_id}
+		h2 Recent matches
+		if player.matches
+			mixin match_list(player.matches)
+	p TODO: Pagination

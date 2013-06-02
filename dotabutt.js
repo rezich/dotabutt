@@ -190,8 +190,13 @@ module.exports = {
 			}
 		});
 	},
-	getPlayerMatches: function(id, callback) {
-		this.db.matches.find({ players: { $elemMatch: { 'account_id': parseInt(id) } } }).sort({ start_time: -1 }, function(err, matches) {
+	getPlayerMatches: function(id, number, startAt, callback) {
+		this.db.matches.find({ players: { $elemMatch: { 'account_id': parseInt(id) } } }).sort({ start_time: -1 }).limit(number).skip(startAt, function(err, matches) {
+			callback(matches);
+		});
+	},
+	getPlayerMatchCount: function(id, callback) {
+		this.db.matches.find({ players: { $elemMatch: { 'account_id': parseInt(id) } } }).count(function(err, matches) {
 			callback(matches);
 		});
 	},

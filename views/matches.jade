@@ -4,33 +4,7 @@ block content
 	h1 Matches
 	p These are the ten most recent matches in Dotabutt's database. "Recent" as in when they took place, not when they were added to the database.
 	if matches && matches.length > 0
-		table.fullwidth.matchlist
-			thead
-				tr
-					th &nbsp;
-					th Heroes
-					th Duration
-					th Map
-			tbody
-				each match in matches
-					tr
-						if match.radiant_win
-							td.valign-bottom.halign-right.padding-right: a.big-text(href='/matches/#{match.match_id}') Radiant Victory
-						else
-							td.valign-bottom.halign-right.padding-right: a.big-text(href='/matches/#{match.match_id}') Dire Victory
-						td
-							each player in match.players
-								if player.player_slot < 127
-									mixin hero_image_small(heroes[player.hero_id])
-						td(rowspan='2')
-							mixin format_duration(match)
-						mixin towermap2(match)
-					tr
-						td.valign-top.halign-right.padding-right: a(href='/matches/#{match.match_id}') #{match.match_id}
-						td
-							each player in match.players
-								if player.player_slot > 127
-									mixin hero_image_small(heroes[player.hero_id])
+		mixin match_list(matches)
 	else
 		p No matches!
 	.centered #{total_matches} matches on file | #{moment(behind).fromNow(true)} behind (#{moment(behind)})
