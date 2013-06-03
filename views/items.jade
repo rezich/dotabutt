@@ -3,17 +3,64 @@ extends layout
 block content
 	h1 Items
 	.centered
-		a(href='#') Names
+		a(href='#',id='items_shownames') Names
 		|  | 
-		a(href='#') Names + Icons
+		a(href='#',id='items_shownamesicons') Names + Icons
 		|  | 
-		a(href='#') Icons
+		a(href='#',id='items_showicons') Icons
 	.centered
-		a(href='#') Show recipes
+		a(href='#',id='items_togglerecipes') Show recipes
 		|  | 
-		a(href='#') Show duplicates
-	ul.columns
+		a(href='#',id='items_toggleduplicates') Show duplicates
+	ul.item-list
 		each item,id in items
-			li: a(href='/items/#{item.slug}', title='#{item.localized_name}')
-				img(src='http://media.steampowered.com/apps/dota2/images/items/#{item.name}_eg.png', alt='#{item.localized_name}') 
-				=item.localized_name
+			- var klass = 'item'
+			- if (item.recipe) klass += ' recipe';
+			- if (item.duplicate) klass += ' duplicate';
+			li(class=klass): a(href='/items/#{item.slug}', title='#{item.localized_name}')
+				img.item-list-icon-small(src='http://media.steampowered.com/apps/dota2/images/items/#{item.name}_eg.png', alt='#{item.localized_name}') 
+				img.item-list-icon-large(src='http://media.steampowered.com/apps/dota2/images/items/#{item.name}_lg.png', alt='#{item.localized_name}') 
+				span.item-list-name #{item.localized_name}
+	script(type='text/javascript')
+		$(function() {
+			$('#items_togglerecipes').click(function(e) {
+				e.preventDefault();
+				$('.recipe').fadeToggle('slow');
+				if ($('#items_togglerecipes').html() == 'Show recipes') $('#items_togglerecipes').html('Hide recipes');
+				else $('#items_togglerecipes').html('Show recipes');
+			});
+			$('#items_toggleduplicates').click(function(e) {
+				e.preventDefault();
+				$('.duplicate').fadeToggle('slow');
+				if ($('#items_toggleduplicates').html() == 'Show duplicates') $('#items_toggleduplicates').html('Hide duplicates');
+				else $('#items_toggleduplicates').html('Show duplicates');
+			});
+			$('#items_shownames').click(function(e) {
+				e.preventDefault();
+				$('.item-list-icon-small').hide();
+				$('.item-list-icon-large').hide();
+				$('.item-list-name').show();
+				$('.item-list').css('column-width', 250);
+				$('.item-list').css('-webkit-column-width', 250);
+				$('.item-list').css('-moz-column-width', 250);
+			});
+			$('#items_shownamesicons').click(function(e) {
+				e.preventDefault();
+				$('.item-list-icon-small').show();
+				$('.item-list-icon-large').hide();
+				$('.item-list-name').show();
+				$('.item-list').css('column-width', 250);
+				$('.item-list').css('-webkit-column-width', 250);
+				$('.item-list').css('-moz-column-width', 250);
+			});
+			$('#items_showicons').click(function(e) {
+				e.preventDefault();
+				$('.item-list-icon-small').hide();
+				$('.item-list-icon-large').show();
+				$('.item-list-name').hide();
+				$('.item-list').css('column-width', 85);
+				$('.item-list').css('-webkit-column-width', 85);
+				$('.item-list').css('-moz-column-width', 85);
+			});
+		});
+		

@@ -1364,25 +1364,29 @@
 		"name": "recipe_dagon_2",
 		"localized_name": "Recipe: Dagon (2)",
 		"cost": 0,
-		"recipe": 1
+		"recipe": 1,
+		"duplicate": 1
 	},
 	"198": {
 		"name": "recipe_dagon_3",
 		"localized_name": "Recipe: Dagon (3)",
 		"cost": 0,
-		"recipe": 1
+		"recipe": 1,
+		"duplicate": 1
 	},
 	"199": {
 		"name": "recipe_dagon_4",
 		"localized_name": "Recipe: Dagon (4)",
 		"cost": 0,
-		"recipe": 1
+		"recipe": 1,
+		"duplicate": 1
 	},
 	"200": {
 		"name": "recipe_dagon_5",
 		"localized_name": "Recipe: Dagon (5)",
 		"cost": 0,
-		"recipe": 1
+		"recipe": 1,
+		"duplicate": 1
 	},
 	"104": {
 		"name": "dagon",
@@ -1413,22 +1417,26 @@
 	"201": {
 		"name": "dagon_2",
 		"localized_name": "Dagon (2)",
-		"cost": 2850
+		"cost": 2850,
+		"duplicate": 1
 	},
 	"202": {
 		"name": "dagon_3",
 		"localized_name": "Dagon (3)",
-		"cost": 2850
+		"cost": 2850,
+		"duplicate": 1
 	},
 	"203": {
 		"name": "dagon_4",
 		"localized_name": "Dagon (4)",
-		"cost": 2850
+		"cost": 2850,
+		"duplicate": 1
 	},
 	"204": {
 		"name": "dagon_5",
 		"localized_name": "Dagon (5)",
-		"cost": 2850
+		"cost": 2850,
+		"duplicate": 1
 	},
 	"105": {
 		"name": "recipe_necronomicon",
@@ -1440,13 +1448,15 @@
 		"name": "recipe_necronomicon_2",
 		"localized_name": "Recipe: Necronomicon (2)",
 		"cost": 0,
-		"recipe": 1
+		"recipe": 1,
+		"duplicate": 1
 	},
 	"192": {
 		"name": "recipe_necronomicon_3",
 		"localized_name": "Recipe: Necronomicon (3)",
 		"cost": 0,
-		"recipe": 1
+		"recipe": 1,
+		"duplicate": 1
 	},
 	"106": {
 		"name": "necronomicon",
@@ -1470,12 +1480,14 @@
 	"193": {
 		"name": "necronomicon_2",
 		"localized_name": "Necronomicon (2)",
-		"cost": 2700
+		"cost": 2700,
+		"duplicate": 1
 	},
 	"194": {
 		"name": "necronomicon_3",
 		"localized_name": "Necronomicon (3)",
-		"cost": 2700
+		"cost": 2700,
+		"duplicate": 1
 	},
 	"107": {
 		"name": "recipe_ultimate_scepter",
@@ -2416,7 +2428,8 @@
 		"name": "recipe_diffusal_blade_2",
 		"localized_name": "Recipe: Diffusal Blade (2)",
 		"cost": 0,
-		"recipe": 1
+		"recipe": 1,
+		"duplicate": 1
 	},
 	"174": {
 		"name": "diffusal_blade",
@@ -2452,7 +2465,8 @@
 	"196": {
 		"name": "diffusal_blade",
 		"localized_name": "Diffusal Blade (2)",
-		"cost": 3300
+		"cost": 3300,
+		"duplicate": 1
 	},
 	"175": {
 		"name": "recipe_ethereal_blade",

@@ -23,6 +23,8 @@ a
 	color: #00B7FF
 	cursor: pointer
 	text-decoration: none
+a *
+	cursor: pointer
 a:hover
 	text-decoration: underline
 p
@@ -59,12 +61,21 @@ a img
 	float: right
 
 @css {
-	.columns {
+	.columns, .item-list, .hero-list {
 		column-width: 250px;
 		-webkit-column-width: 250px;
 		-moz-column-width: 250px;
 	}
 }
+
+li.recipe
+	display: none
+li.duplicate
+	display: none
+.item-list-icon-large
+	display: none
+.hero-list-icon-large
+	display: none
 
 form.search input[type="submit"]
 	display: none

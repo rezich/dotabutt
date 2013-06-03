@@ -3,15 +3,44 @@ extends layout
 block content
 	h1 Heroes
 	.centered
-		a(href='#') Names
+		a(href='#',id='heroes_shownames') Names
 		|  | 
-		a(href='#') Names + Icons
+		a(href='#',id='heroes_shownamesicons') Names + Icons
 		|  | 
-		a(href='#') Icons
-	.centered
-		a(href='#') Show unreleased
+		a(href='#',id='heroes_showicons') Icons
 	ul.columns
 		each hero,id in heroes
 			li: a(href='/heroes/#{hero.slug}', title='#{hero.localized_name}')
-				img(src='http://media.steampowered.com/apps/dota2/images/heroes/#{hero.short_name}_sb.png', alt='#{hero.localized_name}') 
-				=hero.localized_name
+				img.hero-list-icon-small(src='http://media.steampowered.com/apps/dota2/images/heroes/#{hero.short_name}_sb.png', alt='#{hero.localized_name}')
+				img.hero-list-icon-large(src='http://media.steampowered.com/apps/dota2/images/heroes/#{hero.short_name}_lg.png', alt='#{hero.localized_name}')
+				span.hero-list-name #{hero.localized_name}
+	script(type='text/javascript')
+		$(function() {
+			$('#heroes_shownames').click(function(e) {
+				e.preventDefault();
+				$('.hero-list-icon-small').hide();
+				$('.hero-list-icon-large').hide();
+				$('.hero-list-name').show();
+				$('.hero-list').css('column-width', 250);
+				$('.hero-list').css('-webkit-column-width', 250);
+				$('.hero-list').css('-moz-column-width', 250);
+			});
+			$('#heroes_shownamesicons').click(function(e) {
+				e.preventDefault();
+				$('.hero-list-icon-small').show();
+				$('.hero-list-icon-large').hide();
+				$('.hero-list-name').show();
+				$('.hero-list').css('column-width', 250);
+				$('.hero-list').css('-webkit-column-width', 250);
+				$('.hero-list').css('-moz-column-width', 250);
+			});
+			$('#heroes_showicons').click(function(e) {
+				e.preventDefault();
+				$('.hero-list-icon-small').hide();
+				$('.hero-list-icon-large').show();
+				$('.hero-list-name').hide();
+				$('.hero-list').css('column-width', 205);
+				$('.hero-list').css('-webkit-column-width', 205);
+				$('.hero-list').css('-moz-column-width', 205);
+			});
+		});
