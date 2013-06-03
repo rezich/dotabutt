@@ -99,6 +99,7 @@ app.configure(function() {
 	app.use(express.session({ secret: 'asdfasdfasdfasdf' }));
 	app.use(passport.initialize());
 	app.use(passport.session());
+	app.use(express.static(path.join(__dirname, 'public')));
 	app.use(app.router);
 	/*app.use(stylus.middleware({
 		src: __dirname + '/public',
@@ -106,56 +107,57 @@ app.configure(function() {
 			return stylus(str).use(nib());
 		}
 	}));*/
-	app.use(express.static(path.join(__dirname, 'public')));
-});
-
-app.get('/', routes.index);
-
-app.get('/matches', routes.matches.index);
-app.get('/matches/:id', routes.matches.view);
-
-app.get('/players', routes.players.index);
-app.get('/players/:id', routes.players.view);
-app.get('/players/:id/matches/:page', routes.players.matches);
-app.get('/players/:id/matches', routes.players.matches);
-
-app.get('/heroes', routes.heroes.index);
-app.get('/heroes/:slug', routes.heroes.view);
-
-app.get('/items', routes.items.index);
-app.get('/items/:slug', routes.items.view);
-
-app.get('/teams', routes.teams.index);
-app.get('/teams/:id', routes.teams.view);
-
-app.get('/search', routes.search.index);
-
-app.get('/stats', routes.stats.index);
-
-app.get('/settings', routes.settings.index);
-
-app.get('/about', routes.pages.about);
-app.get('/privacy', routes.pages.privacy);
-app.get('/faq', routes.pages.faq);
-app.get('/donate', routes.pages.donate);
-
-app.get('/auth',
-	passport.authenticate('steam', {failureRedirect: '/login' }),
-	function(req, res) {
+	app.get('/', routes.index);
+	
+	app.get('/matches', routes.matches.index);
+	app.get('/matches/:id', routes.matches.view);
+	
+	app.get('/players', routes.players.index);
+	app.get('/players/:id', routes.players.view);
+	app.get('/players/:id/matches/:page', routes.players.matches);
+	app.get('/players/:id/matches', routes.players.matches);
+	
+	app.get('/heroes', routes.heroes.index);
+	app.get('/heroes/:slug', routes.heroes.view);
+	
+	app.get('/items', routes.items.index);
+	app.get('/items/:slug', routes.items.view);
+	
+	app.get('/teams', routes.teams.index);
+	app.get('/teams/:id', routes.teams.view);
+	
+	app.get('/search', routes.search.index);
+	
+	app.get('/stats', routes.stats.index);
+	
+	app.get('/settings', routes.settings.index);
+	
+	app.get('/about', routes.pages.about);
+	app.get('/privacy', routes.pages.privacy);
+	app.get('/faq', routes.pages.faq);
+	app.get('/donate', routes.pages.donate);
+	
+	app.get('/auth',
+		passport.authenticate('steam', {failureRedirect: '/login' }),
+		function(req, res) {
+			res.redirect('/');
+		}
+	);
+	
+	app.get('/auth/return',
+		passport.authenticate('steam', {failureRedirect: '/login' }),
+		function(req, res) {
+			res.redirect('/');
+		}
+	);
+	
+	app.get('/logout', function(req, res) {
+		req.logout();
 		res.redirect('/');
-	}
-);
-
-app.get('/auth/return',
-	passport.authenticate('steam', {failureRedirect: '/login' }),
-	function(req, res) {
-		res.redirect('/');
-	}
-);
-
-app.get('/logout', function(req, res) {
-	req.logout();
-	res.redirect('/');
+	});
+	
+	app.get('/404', routes.pages._404);
+	app.get('*', routes.pages._404);
 });
 
 function ensureAuthenticated(req, res, next) {
