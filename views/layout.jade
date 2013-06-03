@@ -6,7 +6,12 @@ mixin hero_image_small(hero)
 mixin format_duration(match)
 	- var duration = moment.duration(match.duration, 'seconds')
 	=(duration.hours() > 0 ? duration.hours() + ':' : '') + (duration.minutes().toString().length < 2 ? '0' : '') + duration.minutes() + ':' + (duration.seconds().toString().length < 2 ? '0' : '') + duration.seconds() + ' (' + moment(match.start_time.toString(), 'X').fromNow() + ')'
-	
+mixin format_just_duration(match)
+	- var duration = moment.duration(match.duration, 'seconds')
+	=(duration.hours() > 0 ? duration.hours() + ':' : '') + (duration.minutes().toString().length < 2 ? '0' : '') + duration.minutes() + ':' + (duration.seconds().toString().length < 2 ? '0' : '') + duration.seconds()
+mixin format_when(match)
+	=moment(match.start_time.toString(), 'X').fromNow()
+
 mixin towermap(match)
 	td.towermap
 		mixin towermap_inner(match)
@@ -22,6 +27,7 @@ mixin match_list(matches)
 				th &nbsp;
 				th Heroes
 				th Duration
+				th Time
 				th Map
 		tbody
 			each match in matches
@@ -35,7 +41,9 @@ mixin match_list(matches)
 							if player.player_slot < 127
 								mixin hero_image_small(heroes[player.hero_id])
 					td(rowspan='2')
-						mixin format_duration(match)
+						mixin format_just_duration(match)
+					td(rowspan='2')
+						mixin format_when(match)
 					mixin towermap2(match)
 				tr
 					td.valign-top.halign-right.padding-right: a(href='/matches/#{match.match_id}') #{match.match_id}
@@ -141,7 +149,7 @@ html
 								#user-name: a(href='/players/' + user.player.account_id) 
 									=user.player.personaname
 								#user-controls
-									a(href='/') Settings
+									a(href='/settings/') Settings
 									|  | 
 									a(href='/logout/') Sign Out
 						else

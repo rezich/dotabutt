@@ -25,4 +25,5 @@ block content
 		h2 Recent matches
 		if player.matches
 			mixin match_list(player.matches)
-	p TODO: Pagination
+	if player.matches.count > 10
+		p: a(href='/players/#{player.account_id}/matches/2') Earlier matches

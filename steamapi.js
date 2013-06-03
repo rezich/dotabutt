@@ -11,6 +11,7 @@ module.exports = {
 	_last: new Date(),
 	_checking: false,
 	_lang: 'en_us',
+	down: false,
 	init: function(key, lang) {
 		this._key = key;
 		if (lang) this._lang = lang;
@@ -56,7 +57,11 @@ module.exports = {
 			path: call
 		}, function(response) {
 			var err = false;
-			if (response.statusCode != 200) err = true;
+			if (response.statusCode != 200) {
+				err = true;
+				self.down = true;
+			}
+			else self.down = false;
 			var data = '';
 			response.on('data', function(chunk) {
 				data += chunk;

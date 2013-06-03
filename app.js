@@ -28,6 +28,7 @@ routes.teams = require('./routes/teams');
 routes.pages = require('./routes/pages');
 routes.search = require('./routes/search');
 routes.stats = require('./routes/stats');
+routes.settings = require('./routes/settings');
 
 var app = express();
 
@@ -115,6 +116,8 @@ app.get('/matches/:id', routes.matches.view);
 
 app.get('/players', routes.players.index);
 app.get('/players/:id', routes.players.view);
+app.get('/players/:id/matches/:page', routes.players.matches);
+app.get('/players/:id/matches', routes.players.matches);
 
 app.get('/heroes', routes.heroes.index);
 app.get('/heroes/:slug', routes.heroes.view);
@@ -128,6 +131,8 @@ app.get('/teams/:id', routes.teams.view);
 app.get('/search', routes.search.index);
 
 app.get('/stats', routes.stats.index);
+
+app.get('/settings', routes.settings.index);
 
 app.get('/about', routes.pages.about);
 app.get('/privacy', routes.pages.privacy);

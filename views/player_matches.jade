@@ -1,0 +1,14 @@
+extends layout
+
+block content
+	img.player-big(src='#{player.avatarmedium}')
+	h1 #{player.personaname} - Matches
+	if player.matches && player.matches.length > 0
+		if player.matches
+			mixin match_list(player.matches)
+	if next || previous
+		ul
+			if previous
+				li: a(href='/players/#{player.account_id}/matches/#{previous}') Later matches
+			if next
+				li: a(href='/players/#{player.account_id}/matches/#{next}') Earlier matches

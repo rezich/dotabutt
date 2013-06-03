@@ -33,3 +33,32 @@ exports.view = function(req, res) {
 		res.render('player', { title: res.locals.player.personaname, user: req.user });
 	});
 }
+
+exports.matches = function(req, res) {
+	var butt = res.locals.butt;
+	res.locals.previous = false;
+	res.locals.next = false;
+	async.series([
+		function(callback) {
+			butt.getPlayer(req.params.id, function(player) { res.locals.player = player; callback(); });
+		},
+		function(callback) {
+			if (req.params.page === undefined) res.locals.page = 1;
+			else res.locals.page = parseInt(req.params.page);
+			if (res.locals.page < 1) res.locals.page = 1;
+			var skip = (parseInt(res.locals.page) - 1) * 10;
+			if (isNaN(skip)) skip = 0;
+			if (res.locals.page > 1) res.locals.previous = res.locals.page - 1;
+			res.locals.skip = skip;
+			butt.getPlayerMatches(res.locals.player.account_id, 10, skip, function(matches) { res.locals.player.matches = matches; callback(); });
+		},
+		function(callback) {
+			if (true) res.locals.next = res.locals.page + 1;
+			butt.getPlayerMatchCount(res.locals.player.account_id, function(count) { res.locals.player.matches.count = count; callback(); });
+		}
+	],
+	function(err) {
+		res.locals.heroes = butt.heroes();
+		res.render('player_matches', { title: res.locals.player.personaname, user: req.user });
+	});
+}
