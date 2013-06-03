@@ -52,7 +52,7 @@ module.exports = {
 		call = call.replace('API_KEY', this._key) + '&language=' + this._lang;
 		//console.log('Making API call: %s', call.replace(this._key, 'API_KEY'));
 		http.get({
-			host: 'zapi.steampowered.com',
+			host: 'api.steampowered.com',
 			port: 80,
 			path: call
 		}, function(response) {

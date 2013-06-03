@@ -1,14 +1,14 @@
 exports.about = function(req, res) {
-	res.render('about', { title: 'About', user: req.user });
+	res.render('about', { title: 'About' });
 };
 exports.privacy = function(req, res) {
-	res.render('privacy', { title: 'Privacy Policy', user: req.user });
+	res.render('privacy', { title: 'Privacy Policy' });
 };
 exports.faq = function(req, res) {
-	res.render('faq', { title: 'FAQ', user: req.user });
+	res.render('faq', { title: 'FAQ' });
 };
 exports.donate = function(req, res) {
-	res.render('donate', { title: 'Donate', user: req.user });
+	res.render('donate', { title: 'Donate' });
 };
 exports._404 = function(req, res) {
 	var messages = [
@@ -29,5 +29,5 @@ exports._404 = function(req, res) {
 		}
 	];
 	res.locals.message = messages[Math.floor(Math.random() * (messages.length))];
-	res.status(404).render('404', { title: 'Page not found', user: req.user });
+	res.status(404).render('404', { title: 'Page not found' });
 }

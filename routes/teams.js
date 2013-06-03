@@ -1,15 +1,16 @@
 var async = require('async');
 
-exports.index = function(req, res) {
-	res.render('teams', { title: 'Teams', user: req.user });
+exports.index = function(req, res, next) {
+	res.render('teams', { title: 'Teams' });
 };
 
-exports.view = function(req, res) {
+exports.view = function(req, res, next) {
 	var butt = res.locals.butt;
 	var lookup_ids = [];
 	async.series([
 		function(callback) {
-			butt.getTeam(req.params.id, function(team) {
+			butt.getTeam(req.params.id, function(team, err) {
+				if (err) return callback(err);
 				res.locals.team = team;
 				lookup_ids = [
 					team.player_0_account_id,
@@ -22,7 +23,8 @@ exports.view = function(req, res) {
 			});
 		},
 		function(callback) {
-			butt.getPlayers(lookup_ids, function(player_summaries) {
+			butt.getPlayers(lookup_ids, function(player_summaries, err) {
+				if (err) return callback(err);
 				res.locals.team.players = player_summaries;
 				res.locals.team.players[0].account_id = res.locals.team.player_0_account_id;
 				res.locals.team.players[1].account_id = res.locals.team.player_1_account_id;
@@ -34,6 +36,7 @@ exports.view = function(req, res) {
 		}
 	],
 	function(err) {
-		res.render('team', { title: res.locals.team.tag + ' - ' + res.locals.team.name, user: req.user });
+		if (err) return next(err);
+		res.render('team', { title: res.locals.team.tag + ' - ' + res.locals.team.name });
 	});
 };

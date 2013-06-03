@@ -30,7 +30,7 @@ routes.search = require('./routes/search');
 routes.stats = require('./routes/stats');
 routes.settings = require('./routes/settings');
 
-var app = express();
+var app = express(); 
 
 passport.serializeUser(function(user, done) {
 	done(null, user);
@@ -48,24 +48,18 @@ passport.deserializeUser(function(obj, done) {
 	else done(null, obj);
 });
 
-passport.use(
-	new steamstrat({
-		returnURL: baseUrl + '/auth/return',
-		realm: baseUrl + '/'
-	},
-	function(identifier, profile, done) {
-		process.nextTick(function () {
+passport.use(new steamstrat({ returnURL: baseUrl + '/auth/return', realm: baseUrl + '/' }, function(identifier, profile, done) {
+	process.nextTick(function () {
 		profile.identifier = identifier;
 		//profile.id = identifier.match(/\b[0-9]+\b/)[1];
 		return done(null, profile);
 	});
-	}
-));
+}));
 
 app.configure('development', function() {
 	var stylusMiddleware = stylus.middleware({
 		src: __dirname + '/public/',
-		/*dest: __dirname + '/public/',*/
+		//dest: __dirname + '/public/',
 		debug: true,
 		compile: function(str, path) {
 		return stylus(str)
@@ -76,11 +70,11 @@ app.configure('development', function() {
 		}
 	});
 	app.use(stylusMiddleware);  
-	app.use(express.errorHandler({ dumpExceptions: true, showStack: true })); 
+	//app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
 });
 
 app.configure('production', function(){
-	app.use(express.errorHandler());
+	//app.use(express.errorHandler());
 });
 
 app.configure(function() {
@@ -88,6 +82,8 @@ app.configure(function() {
 		res.locals.butt = butt;
 		res.locals.moment = moment;
 		res.locals.steamapi = steamapi;
+		res.locals.user = false;
+		if (req.user) res.locals.user = req.user;
 		next();
 	});
 	app.set('port', process.env.PORT || 80);
@@ -109,6 +105,7 @@ app.configure(function() {
 			return stylus(str).use(nib());
 		}
 	}));*/
+	app.use(errorMiddleware);
 	app.get('/', routes.index);
 	
 	app.get('/matches', routes.matches.index);
@@ -159,8 +156,14 @@ app.configure(function() {
 	});
 	
 	app.get('/404', routes.pages._404);
+	
 	app.get('*', routes.pages._404);
 });
+
+function errorMiddleware(err, req, res, next) {
+	console.log('error middleware!');
+	res.status(500).render('500', { title: 'Internal server error', error: err });
+}
 
 function ensureAuthenticated(req, res, next) {
 	if (req.isAuthenticated()) { return next(); }
