@@ -71,7 +71,17 @@ module.exports = {
 				// callback?
 			});
 			response.on('end', function() {
-				if (callback) callback(JSON.parse(data), err);
+				var parsedData = false;
+				try {
+					parsedData = JSON.parse(data);
+				}
+				catch(e) {
+					err = e;
+					self.down = true;
+				}
+				finally {
+					if (callback) callback(parsedData, err);
+				}
 				//console.log('API call %s completed', call.replace(self._key, 'API_KEY'));
 			});
 		}).on('error', function(err) {

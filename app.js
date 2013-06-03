@@ -78,14 +78,7 @@ app.configure('production', function(){
 });
 
 app.configure(function() {
-	app.use(function(req, res, next) {
-		res.locals.butt = butt;
-		res.locals.moment = moment;
-		res.locals.steamapi = steamapi;
-		res.locals.user = false;
-		if (req.user) res.locals.user = req.user;
-		next();
-	});
+	app.use(buttMiddleware);
 	app.set('port', process.env.PORT || 80);
 	app.set('views', __dirname + '/views');
 	app.set('view engine', 'jade');
@@ -98,6 +91,7 @@ app.configure(function() {
 	app.use(passport.initialize());
 	app.use(passport.session());
 	app.use(express.static(path.join(__dirname, 'public')));
+	app.use(startupCheckMiddleware);
 	app.use(app.router);
 	/*app.use(stylus.middleware({
 		src: __dirname + '/public',
@@ -160,9 +154,22 @@ app.configure(function() {
 	app.get('*', routes.pages._404);
 });
 
+function startupCheckMiddleware(req, res, next) {
+	if (butt.startupFailed) return res.status(500).render('500', { title: 'Internal server error', error: 'Dotabutt failed to initialize properly.' });
+	next();
+}
+
 function errorMiddleware(err, req, res, next) {
-	console.log('error middleware!');
 	res.status(500).render('500', { title: 'Internal server error', error: err });
+}
+
+function buttMiddleware(req, res, next) {
+	res.locals.butt = butt;
+	res.locals.moment = moment;
+	res.locals.steamapi = steamapi;
+	res.locals.user = false;
+	if (req.user) res.locals.user = req.user;
+	next();
 }
 
 function ensureAuthenticated(req, res, next) {

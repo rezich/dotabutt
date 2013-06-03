@@ -189,6 +189,11 @@ html
 			#main-container
 				#main
 					#content
+						if steamapi.down
+							#apidown
+								div Dotabutt is currently unable to connect to the Steam API.
+								div This either means that Steam is down, Valve is pushing an API update, or something else weird is happening.
+								div It should be back up shortly.
 						block content
 			#footer-container
 				#footer

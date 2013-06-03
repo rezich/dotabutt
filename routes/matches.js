@@ -2,15 +2,23 @@ var async = require('async');
 
 exports.index = function(req, res, next) {
 	var butt = res.locals.butt;
-	res.locals.err = false;
 	async.series([
 		function(callback) {
-			butt.getRecentMatches(10, function(matches) { res.locals.matches = matches; callback(); });
+			butt.getRecentMatches(10, function(matches, err) {
+				if (err) return callback(err);
+				res.locals.matches = matches;
+				callback();
+			});
 		},
 		function(callback) {
-			butt.getMatchCount(function(total_matches) { res.locals.total_matches = total_matches; callback(); });
+			butt.getMatchCount(function(total_matches, err) {
+				if (err) return callback(err);
+				res.locals.total_matches = total_matches;
+				callback();
+			});
 		}
 	], function(err) {
+		if (err) return next(err);
 		res.locals.behind = res.locals.moment(butt.lastTime.toString(), 'X');
 		res.locals.heroes = butt.heroes();
 		res.render('matches', { title: 'Matches' });

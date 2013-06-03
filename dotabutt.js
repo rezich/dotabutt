@@ -16,15 +16,32 @@ module.exports = {
 	backfillReady: true,
 	lastTime: 0,
 	_backfillInterval: false,
+	startupFailed: false,
 	init: function() {
 		var self = this;
 		async.series([
-			function(callback) { self._getKey(function(key) { steamapi.init(key); callback(); }); },
-			function(callback) { steamapi.dota2.getHeroes(function() { callback(); }); },
-			function(callback) { steamapi.dota2.getItems(function() { callback(); }); },
-			function(callback) { self.loadConfig(function(err) { callback(); }); }
+			function(callback) { self._getKey(function(key) {
+				steamapi.init(key);
+				callback();
+			}); },
+			function(callback) { steamapi.dota2.getHeroes(function(heroes, err) {
+				if (err) callback(err);
+				callback();
+			}); },
+			function(callback) { steamapi.dota2.getItems(function(items, err) {
+				if (err) callback(err);
+				callback();
+			}); },
+			function(callback) { self.loadConfig(function(err) {
+				callback();
+			}); }
 		],
 		function(err) {
+			if (err) {
+				console.log('!!! STARTUP FAILED !!!');
+				self.startupFailed = true;
+				return;
+			}
 			self.lastBackfillMatch = self.config.backfill;
 			console.log('Starting backfill from seq# ' + self.config.backfill.toString());
 			self.ready = true;

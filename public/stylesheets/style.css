@@ -24,6 +24,8 @@ a img{cursor:pointer}
 .width-100{width:100%}
 .width-50{width:50%}
 .item-big,.hero-big,.player-big{float:right}
+#apidown{margin:4px;background:#ff0;padding:4px;text-align:center;border:2px solid #f00}
+#apidown div:first-child{font-weight:bold;font-size:14pt}
 .columns, .item-list, .hero-list {
 		column-width: 250px;
 		-webkit-column-width: 250px;
