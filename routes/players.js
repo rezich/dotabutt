@@ -47,14 +47,16 @@ exports.matches = function(req, res) {
 			else res.locals.page = parseInt(req.params.page);
 			if (res.locals.page < 1) res.locals.page = 1;
 			var skip = (parseInt(res.locals.page) - 1) * 10;
-			if (isNaN(skip)) skip = 0;
 			if (res.locals.page > 1) res.locals.previous = res.locals.page - 1;
 			res.locals.skip = skip;
 			butt.getPlayerMatches(res.locals.player.account_id, 10, skip, function(matches) { res.locals.player.matches = matches; callback(); });
 		},
 		function(callback) {
-			if (res.locals.player.matches.count > res.locals.page * 10) res.locals.next = res.locals.page + 1;
-			butt.getPlayerMatchCount(res.locals.player.account_id, function(count) { res.locals.player.matches.count = count; callback(); });
+			butt.getPlayerMatchCount(res.locals.player.account_id, function(count) {
+				res.locals.player.matches.count = count;
+				if (res.locals.player.matches.count > res.locals.page * 10) res.locals.next = res.locals.page + 1;
+				callback();
+			});
 		}
 	],
 	function(err) {
