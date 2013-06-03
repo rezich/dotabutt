@@ -35,7 +35,7 @@ mixin match_list(matches, player)
 					if match.radiant_win
 						td.valign-bottom.halign-right.padding-right: a.big-text(href='/matches/#{match.match_id}')
 							if player
-								if match.players[0].account_id == player.account_id || match.players[1].account_id == player.account_id || match.players[2].account_id == player.account_id || match.players[3].account_id == player.account_id || match.players[4].account_id == player.account_id
+								if (match.players[0] && match.players[0].account_id == player.account_id) || (match.players[1] && match.players[1].account_id == player.account_id) || (match.players[2] && match.players[2].account_id == player.account_id) || (match.players[3] && match.players[3].account_id == player.account_id) || (match.players[4] && match.players[4].account_id == player.account_id)
 									| Radiant Victory
 								else
 									| Dire Defeat
@@ -44,7 +44,7 @@ mixin match_list(matches, player)
 					else
 						td.valign-bottom.halign-right.padding-right: a.big-text(href='/matches/#{match.match_id}')
 							if player
-								if match.players[5].account_id == player.account_id || match.players[6].account_id == player.account_id || match.players[7].account_id == player.account_id || match.players[8].account_id == player.account_id || match.players[9].account_id == player.account_id
+								if (match.players[5] && match.players[5].account_id == player.account_id) || (match.players[6] && match.players[6].account_id == player.account_id) || (match.players[7] && match.players[7].account_id == player.account_id) || (match.players[8] && match.players[8] == player.account_id) || (match.players[9] && match.players[9].account_id == player.account_id)
 									| Dire Victory
 								else
 									| Radiant Defeat
