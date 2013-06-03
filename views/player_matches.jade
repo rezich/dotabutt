@@ -2,8 +2,9 @@ extends layout
 
 block content
 	img.player-big(src='#{player.avatarmedium}')
-	h1 #{player.personaname} - Matches - Page #{page}
+	h1 #{player.personaname}
 	=(player.matches.count.toString() || 'no') + (player.matches && player.matches.length == 1 ? ' match' : ' matches') + ' on file'
+	h2 Matches - Page #{page}
 	mixin prev_next
 	if player.matches && player.matches.length > 0
 		if player.matches

@@ -15,6 +15,7 @@ module.exports = {
 	backfillTimeout: 1,
 	backfillReady: true,
 	lastTime: 0,
+	_backfillInterval: false,
 	init: function() {
 		var self = this;
 		async.series([
@@ -25,7 +26,7 @@ module.exports = {
 		],
 		function(err) {
 			self.lastBackfillMatch = self.config.backfill;
-			console.log('STARTING FROM MATCH NUM ' + self.config.backfill.toString());
+			console.log('Starting backfill from seq# ' + self.config.backfill.toString());
 			self.ready = true;
 			self.startBackfill();
 		});
@@ -93,7 +94,11 @@ module.exports = {
 		var self = this;
 		id = parseInt(id);
 		this.db.matches.find({ match_id: id }, function(err, matches) {
-			if (err) console.log('Error finding match! ' + err);
+			if (err) {
+				console.log('Error finding match! ' + err);
+				callback(false, err);
+				return;
+			}
 			if (matches.length == 0) {
 				console.log('Match %s not found in db, querying API...', id);
 				steamapi.dota2.getMatchDetails(id, function(match, err) {
@@ -106,7 +111,7 @@ module.exports = {
 			}
 			else {
 				console.log('Match %s found in db', id);
-				callback(matches[0]);
+				callback(matches[0], err);
 			}
 		});
 	},
@@ -134,48 +139,19 @@ module.exports = {
 		// look the ids up in the database
 		this.db.players.find( { account_id: { $in: ids } }, function(err, db_players) {
 			var api_ids = [];
-			for (var key in players) {
-				var found = false;
-				for (var i = 0; i < db_players.length; i++) {
-					if (db_players[i].account_id == key) {
-						//console.log('Player %s found in db', key);
-						players[key] = db_players[i];
-						found = true;
-					}
-				}
-				if (!found) api_ids.push(steamapi.convertIDTo64Bit(key));
-			}
-			if (api_ids.length == 0) {
-				var return_players = [];
-				for (var i = 0; i < ids.length; i++) {
-					for (var key in players) {
-						if (key == ids[i]) {
-							return_players.push(players[key]);
-							break;
+			if (!err) {
+				for (var key in players) {
+					var found = false;
+					for (var i = 0; i < db_players.length; i++) {
+						if (db_players[i].account_id == key) {
+							//console.log('Player %s found in db', key);
+							players[key] = db_players[i];
+							found = true;
 						}
 					}
+					if (!found) api_ids.push(steamapi.convertIDTo64Bit(key));
 				}
-				callback(return_players);
-			}
-			else {
-				steamapi.getPlayerSummaries(api_ids, function(api_players) {
-					// save these new players
-					for (var i = 0; i < api_players.length; i++) {
-						api_players[i].account_id = steamapi.convertIDTo32Bit(api_ids[i]);
-						api_players[i].updated = moment().unix();
-						self.db.players.save(api_players[i], function(err, saved) {
-							/*if (saved) console.log('Saved player!');
-							else console.log('Saving player failed!');*/
-						});
-					}
-					for (var key in players) {
-						for (var i = 0; i < api_players.length; i++) {
-							if (key == api_players[i].account_id) {
-								players[key] = api_players[i];
-								break;
-							}
-						}
-					}
+				if (api_ids.length == 0) {
 					var return_players = [];
 					for (var i = 0; i < ids.length; i++) {
 						for (var key in players) {
@@ -185,19 +161,51 @@ module.exports = {
 							}
 						}
 					}
-					callback(return_players, err);
-				});
+					callback(return_players);
+				}
+				else {
+					steamapi.getPlayerSummaries(api_ids, function(api_players) {
+						// save these new players
+						for (var i = 0; i < api_players.length; i++) {
+							api_players[i].account_id = steamapi.convertIDTo32Bit(api_ids[i]);
+							api_players[i].updated = moment().unix();
+							self.db.players.save(api_players[i], function(err, saved) {
+								/*if (saved) console.log('Saved player!');
+								else console.log('Saving player failed!');*/
+							});
+						}
+						for (var key in players) {
+							for (var i = 0; i < api_players.length; i++) {
+								if (key == api_players[i].account_id) {
+									players[key] = api_players[i];
+									break;
+								}
+							}
+						}
+						var return_players = [];
+						for (var i = 0; i < ids.length; i++) {
+							for (var key in players) {
+								if (key == ids[i]) {
+									return_players.push(players[key]);
+									break;
+								}
+							}
+						}
+						callback(return_players, err);
+					});
+				}
 			}
+			else callback(false, err);
 		});
 	},
-	getPlayerMatches: function(id, number, startAt, callback) {
+	getPlayerMatches: function(id, number, startAt, callback) { // callback(matches, err)
 		this.db.matches.find({ players: { $elemMatch: { 'account_id': parseInt(id) } } }).sort({ start_time: -1 }).limit(number).skip(startAt, function(err, matches) {
-			callback(matches);
+			callback(matches, err);
 		});
 	},
-	getPlayerMatchCount: function(id, callback) {
-		this.db.matches.find({ players: { $elemMatch: { 'account_id': parseInt(id) } } }).count(function(err, matches) {
-			callback(matches);
+	getPlayerMatchCount: function(id, callback) { // callback(count, err)
+		this.db.matches.find({ players: { $elemMatch: { 'account_id': parseInt(id) } } }).count(function(err, count) {
+			callback(count, err);
 		});
 	},
 	getPlayer: function(id, callback) { // callback(player, err)
@@ -207,45 +215,45 @@ module.exports = {
 		// TODO: IMPLEMENT
 		callback();
 	},
-	getTeam: function(id, callback) {
+	getTeam: function(id, callback) { // callback(team, err)
 		steamapi.dota2.getTeamInfoByTeamID({ start_at_team_id: id, teams_requested: 1 }, function(teams, err) { callback(teams[0], err); });
 	},
-	getRecentMatches: function(number, callback) {
+	getRecentMatches: function(number, callback) { // callback(matches, err)
 		this.db.matches.find().sort({ start_time: -1 }).limit(number, function(err, matches) {
-			callback(matches);
+			callback(matches, err);
 		});
 	},
-	getMatchCount: function(callback) {
-		this.db.matches.find().count(function(err, matches) {
-			callback(matches);
+	getMatchCount: function(callback) { // callback(count, err)
+		this.db.matches.find().count(function(err, count) {
+			callback(count, err);
 		});
 	},
-	getAllPlayers: function(callback) {
-		this.db.players.find({}, function(err, players) {
-			callback(players);
-		});
-	},
-	getRecentPlayers: function(number, callback) {
+	getRecentPlayers: function(number, callback) { // callback(players, err)
 		this.db.players.find().sort({ lastlogoff: -1 }).limit(number, function(err, players) {
-			callback(players);
+			callback(players, err);
 		});
 	},
-	getPlayerCount: function(callback) {
-		this.db.players.find().count(function(err, players) {
-			callback(players);
+	getPlayerCount: function(callback) { // callback(count, err)
+		this.db.players.find().count(function(err, count) {
+			callback(count, err);
 		});
 	},
-	search: function(query, callback) {
+	search: function(query, callback) { // callback(results) (results.err for errors)
 		var again = function(query, callback, butt, tried, results) {
 			var regex = new RegExp(query, 'i');
 			if (!tried) tried = { times: 0 };
-			if (!results) results = { count: 0 };
+			if (!results) results = { count: 0, err: [] };
+			if (results.err.length > 0) {
+				callback(results);
+				return;
+			}
 			tried.times++;
 			if (!tried.number) {
 				if (!isNaN(query) && parseInt(query).toString() == query) { // is a number
 					query = parseInt(query);
 					if (!tried.match) { // match id
 						butt.getMatch(query, function(match, err) {
+							if (err) results.err.push(err);
 							if (!err) {
 								if (!results.matches) results.matches = {};
 								results.matches[match.match_id] = match;
@@ -258,6 +266,7 @@ module.exports = {
 					}
 					else if (!tried.account_id) { // player id
 						butt.getPlayer(query, function(player, err) {
+							if (err) results.err.push(err);
 							if (!err) {
 								if (!results.players) results.players = {};
 								player._searchedBy = 'account ID';
@@ -293,19 +302,6 @@ module.exports = {
 						tried.hero_id = true;
 						again(query, callback, butt, tried, results);
 					}
-					/*else if (!tried.steam_id) { // steam id
-						butt.getPlayer(parseInt(steamapi.convertIDTo32Bit(query)), function(player, err) {
-							if (!err) {
-								if (!results.players) results.players = {};
-								player._searchedBy = 'Steam ID';
-								results.players[player.account_id] = player;
-								results.count++;
-								results.last = '/players/' + player.account_id;
-							}
-							tried.steam_id = true;
-							again(query, callbac0, butt, tried, results);
-						});
-					}*/
 					else { // none of the above
 						tried.number = true;
 						again(query, callback, butt, tried, results);
@@ -322,6 +318,7 @@ module.exports = {
 				if (!tried.long_string) {
 					if (!tried.personaname) {
 						butt.db.players.find({ personaname: { $regex: regex } }, function(err, db_players) {
+							if (err) results.err.push(err);
 							if (!err) {
 								for (var i = 0; i < db_players.length; i++) {
 									if (!results.players) results.players = {};
@@ -339,6 +336,7 @@ module.exports = {
 					}
 					else if (!tried.realname) {
 						butt.db.players.find({ realname: { $regex: regex } }, function(err, db_players) {
+							if (err) results.err.push(err);
 							if (!err) {
 								for (var i = 0; i < db_players.length; i++) {
 									if (!results.players) results.players = {};
@@ -429,19 +427,25 @@ module.exports = {
 				callback(results);
 			}
 		};
-		again(query, callback, this);
+		if (results.err.length > 0) callback(results)
+		else again(query, callback, this);
 	},
 	startBackfill: function() {
 		var self = this;
-		setInterval(function() { self.backfill(); }, this.backfillTimeout);
+		this._backfillInterval = setInterval(function() { self.backfill(); }, this.backfillTimeout);
 	},
-	backfill: function() {
+	backfill: function() { // callback(saved, err)
 		if (!this.backfillReady) {
 			return;
 		}
 		this.backfillReady = false;
 		var self = this;
-		steamapi.dota2.getMatchHistoryBySequenceNum({ start_at_match_seq_num: this.lastBackfillMatch }, function(matches) {
+		steamapi.dota2.getMatchHistoryBySequenceNum({ start_at_match_seq_num: this.lastBackfillMatch }, function(matches, status, err) {
+			if (err || status != 1) {
+				console.log('BACKFILL ERROR: Error getting data from API. REMAINING AT seq# %s', self.lastBackfillMatch);
+				self.backfillReady = true;
+				return;
+			}
 			self.lastTime = matches[0].start_time;
 			var players = [];
 			for (var i = 0; i < Object.keys(matches); i++) {
@@ -456,19 +460,12 @@ module.exports = {
 					if (!found) players.push(matches[Object.keys(matches)[i]].players[j].account_id);
 				}
 			}
-			/*matches.forEach(function(match) {
-				match.players.forEach(function(player) {
-					var found = false;
-					for (var i = 0; i < players.length; i++) {
-						if (players[i].account_id == player.account_id) {
-							found = true;
-							break;
-						}
-					}
-					if (!found) players.push(player.account_id);
-				});
-			});*/
 			self.checkMatches(Object.keys(matches), function(existingMatches, err) {
+				if (err) {
+					console.log('BACKFILL ERROR: Error checking db for matches. REMAINING AT seq# %s', self.lastBackfillMatch);
+					self.backfillReady = true;
+					return;
+				}
 				for (var i = 0; i < Object.keys(existingMatches); i++) {
 					delete matches[Object.keys(existingMatches)[i]];
 				}
@@ -484,7 +481,7 @@ module.exports = {
 								self.config.backfill = self.lastBackfillMatch;
 								self.saveConfig(function(saved, err) {
 									// ???
-									console.log(self.config.backfill);
+									console.log('Backfill saved up to seq# ' + self.config.backfill);
 								});
 							}
 						});

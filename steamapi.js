@@ -21,7 +21,7 @@ module.exports = {
 	_checkRequests: function() {
 		var self = this;
 		if (this._requests.length > 0) {
-			console.log('%s request%s left in queue', this._requests.length.toString(), (this._requests.length != 1 ? 's' : ''));
+			console.log('Request queue: %s', this._requests.length.toString());
 			this._checking = true;
 			var now = new Date();
 			if (now - this._last >= this._interval) {
@@ -50,9 +50,9 @@ module.exports = {
 	_makeCall: function(call, callback) {
 		var self = this;
 		call = call.replace('API_KEY', this._key) + '&language=' + this._lang;
-		console.log('Making API call: %s', call.replace(this._key, 'API_KEY'));
+		//console.log('Making API call: %s', call.replace(this._key, 'API_KEY'));
 		http.get({
-			host: 'api.steampowered.com',
+			host: 'zapi.steampowered.com',
 			port: 80,
 			path: call
 		}, function(response) {
@@ -72,8 +72,10 @@ module.exports = {
 			});
 			response.on('end', function() {
 				if (callback) callback(JSON.parse(data), err);
-				console.log('API call %s completed', call.replace(self._key, 'API_KEY'));
+				//console.log('API call %s completed', call.replace(self._key, 'API_KEY'));
 			});
+		}).on('error', function(err) {
+			if (callback) callback(false, err);
 		});
 	},
 	dota2: {
@@ -128,24 +130,53 @@ module.exports = {
 		},
 		heroes: {},
 		items: {},
-		getMatchHistory: function(options, callback) {
+		// IDOTA2Match
+		getLeagueListing: function(callback) { // callback(leagues, err)
+			this._api._call('/IDOTA2Match_570/GetLeagueListing/v0001/', options, function(data, err) {
+				if (callback) callback((data.result && data.result.leagues ? data.result.leagues : false), err);
+			});
+		},
+		getLiveLeagueGames: function(callback) { // callback(games, err)
+			this._api._call('/IDOTA2Match_570/GetLiveLeagueGames/v0001/', options, function(data, err) {
+				if (callback) callback((data.result && data.result.games ? data.result.games : false), err);
+			});
+		},
+		getMatchDetails: function(match_id, callback) { // callback(matchDetails, err)
+			this._api._call('/IDOTA2Match_570/GetMatchDetails/V001/', { match_id: match_id }, function(data, err) {
+				if (callback) callback(data.result || false, err);
+			});
+		},
+		getMatchHistory: function(options, callback) { // callback(matches, status, num_results, total_results, results_remaining, err)
 			// player_name, hero_id, game_mode, skill, date_min, date_max, min_players, account_id, league_id, start_at_match_id, matches_requested, tournament_games_only
 			this._api._call('/IDOTA2Match_570/GetMatchHistory/v001/', options, function(data, err) {
-				if (callback) callback(data.matches, data.status, data.num_results, data.total_results, data.results_remaining);
+				if (callback) callback(data.matches || false, data.status || false, data.num_results || false, data.total_results || false, data.results_remaining || false, err);
 			});
 		},
-		getMatchHistoryBySequenceNum: function(options, callback) {
+		getMatchHistoryBySequenceNum: function(options, callback) { // callback(matches, status, err)
 			// start_at_match_seq_num, matches_requested
-			this._api._call('/IDOTA2Match_570/GetMatchHistoryBySequenceNum/v0001/', options, function(data, err) {
-				if (callback) callback(data.result.matches, data.result.status);
+			this._api._call('/IDOTA2Match_570/GetMatchHistoryBySequenceNum/v1/', options, function(data, err) {
+				if (callback) callback((data.result && data.result.matches ? data.result.matches : false), (data.result && data.result.status ? data.result.status : false), err);
 			});
 		},
-		getLeagueListing: function(callback) {
-			this._api._call('/IDOTA2Match_570/GetLeagueListing/v0001/', options, function(data, err) {
-				if (callback) callback(data.result.leagues);
+		getScheduledLeagueGames: function(options, callback) { // callback(games, err)
+			// date_min, date_max
+			this._api._call('/IDOTA2Mathc_570/GetScheduledLeagueGames/v1/', options, function(data, err) {
+				if (callback) callback(data.result || false, err);
 			});
 		},
-		getHeroes: function(callback) {
+		getTeamInfoByTeamID: function(options, callback) { // callback(teams, status, err)
+			// start_at_team_id, teams_requested
+			this._api._call('/IDOTA2Match_570/GetTeamInfoByTeamID/v001/', options, function(data, err) {
+				if (callback) callback((data.result && data.result.teams ? data.result.teams : false), (data.result && data.result.status ? data.result.status : false), err);
+			});
+		},
+		// IDOTA2
+		getRarities: function(callback) { // callback(rarities, count, err)
+			this._api._call('/IEconDOTA2_570/GetRarities/v1', function(data, err) {
+				if (callback) callback((data.result && data.result.rarities ? data.result.rarities : false), (data.result && data.result.count ? data.result.count : false), err);
+			});
+		},
+		getHeroes: function(callback) { // callback(heroes, err)
 			delete this.heroes;
 			this.heroes = {};
 			var self = this;
@@ -158,10 +189,14 @@ module.exports = {
 						self.heroes[hero.id].slug = slug(hero.localized_name).toLowerCase();
 					});
 				}
-				if (callback) callback((data.result ? data.result.heroes : null), err);
+				if (callback) callback((data.result && data.result.heroes ? data.result.heroes : null), err);
 			});
 		},
-		getItems: function(callback) { // callback(err)
+		getTicketSaleStatus: function(callback) { // TODO
+			if (callback) callback();
+		},
+		// Custom
+		getItems: function(callback) { // callback(items, err)
 			var self = this;
 			delete this.items;
 			this.items = {};
@@ -175,33 +210,21 @@ module.exports = {
 						self.items[parseInt(key)].slug = slug(self.items[parseInt(key)].localized_name).toLowerCase();
 					});
 				}
-				callback(err);
-			});
-		},
-		getMatchDetails: function(match_id, callback) {
-			this._api._call('/IDOTA2Match_570/GetMatchDetails/V001/', { match_id: match_id }, function(data, err) {
-				if (callback) callback(data.result, err);
-			});
-		},
-		getTeamInfoByTeamID: function(options, callback) {
-			// start_at_team_id, teams_requested
-			this._api._call('/IDOTA2Match_570/GetTeamInfoByTeamID/v001/', options, function(data, err) {
-				if (callback) callback(data.result.teams, data.result.status);
-			});
-		},
-		getLiveLeagueGames: function(callback) {
-			this._api._call('/IDOTA2Match_570/GetLiveLeagueGames/v0001/', options, function(data, err) {
-				if (callback) callback(data.result.games);
+				callback(self.items, err);
 			});
 		}
+
 	},
-	getPlayerSummaries: function(players, callback) {
+	tf2: {
+		// TODO
+	},
+	getPlayerSummaries: function(players, callback) { // callback(players, err)
 		var self = this;
 		var steamids = '';
 		for (var i = 0; i < players.length; i++) {
 			steamids += (steamids != '' ? ',' : '') + players[i];
 		}
-		this._call('/ISteamUser/GetPlayerSummaries/v0002/', { steamids: steamids }, function(data) {
+		this._call('/ISteamUser/GetPlayerSummaries/v0002/', { steamids: steamids }, function(data, err) {
 			// we have to sort the results to make them the same order that we requested them in because the Steam API is a piece of shit
 			var sorted = [];
 			for (var i = 0; i < players.length; i++) {
@@ -212,12 +235,13 @@ module.exports = {
 					}
 				}
 			}
-			if (callback) callback(sorted);
+			if (callback) callback(sorted, err);
 		});
 	},
 	getUGCFileDetails: function(ugcid, appid, callback) {
-		this._call('/ISteamRemoteStorage/GetUGCFileDetails/v1/', { ugcid: ugcid, appid: appid }, function (data) {
-			callback(data);
+		this._call('/ISteamRemoteStorage/GetUGCFileDetails/v1/', { ugcid: ugcid, appid: appid }, function (data, err) {
+			// TODO
+			callback(data, err);
 		});
 	},
 	appID: {
@@ -226,7 +250,7 @@ module.exports = {
 		DayOfDefeat: 30,
 		DeathmatchClassic: 40,
 		OpposingForce: 50,
-		Ricochet: 60, //lol
+		Ricochet: 60, // lol
 		HalfLife: 70,
 		ConditionZero: 80,
 		ConditionZeroDeletedScenes: 100,
@@ -247,6 +271,9 @@ module.exports = {
 		Dota2: 570,
 		Portal2: 620,
 		AlienSwarm: 630
+	},
+	getAppByID: function(id) {
+		// TODO
 	},
 	convertIDTo64Bit: function(id) {
 		// convert a 32-bit Steam ID into a 64-bit one
