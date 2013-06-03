@@ -7,7 +7,7 @@ block content
 	mixin prev_next
 	if player.matches && player.matches.length > 0
 		if player.matches
-			mixin match_list(player.matches)
+			mixin match_list(player.matches, player)
 	mixin prev_next
 
 mixin prev_next

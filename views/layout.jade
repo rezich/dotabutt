@@ -20,7 +20,7 @@ mixin towermap2(match)
 	td.towermap-small(rowspan='2')
 		mixin towermap_inner(match)
 
-mixin match_list(matches)
+mixin match_list(matches, player)
 	table.fullwidth.matchlist
 		thead
 			tr
@@ -33,9 +33,23 @@ mixin match_list(matches)
 			each match in matches
 				tr
 					if match.radiant_win
-						td.valign-bottom.halign-right.padding-right: a.big-text(href='/matches/#{match.match_id}') Radiant Victory
+						td.valign-bottom.halign-right.padding-right: a.big-text(href='/matches/#{match.match_id}')
+							if player
+								if match.players[0].account_id == player.account_id || match.players[1].account_id == player.account_id || match.players[2].account_id == player.account_id || match.players[3].account_id == player.account_id || match.players[4].account_id == player.account_id
+									| Radiant Victory
+								else
+									| Dire Defeat
+							else
+								| Radiant Victory
 					else
-						td.valign-bottom.halign-right.padding-right: a.big-text(href='/matches/#{match.match_id}') Dire Victory
+						td.valign-bottom.halign-right.padding-right: a.big-text(href='/matches/#{match.match_id}')
+							if player
+								if match.players[5].account_id == player.account_id || match.players[6].account_id == player.account_id || match.players[7].account_id == player.account_id || match.players[8].account_id == player.account_id || match.players[9].account_id == player.account_id
+									| Dire Victory
+								else
+									| Radiant Defeat
+							else
+								| Dire Victory
 					td
 						each player in match.players
 							if player.player_slot < 127

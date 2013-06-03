@@ -2,6 +2,14 @@ extends layout
 
 block content
 	h1 Heroes
+	.centered
+		a(href='#') Names
+		|  | 
+		a(href='#') Names + Icons
+		|  | 
+		a(href='#') Icons
+	.centered
+		a(href='#') Show unreleased
 	ul.columns
 		each hero,id in heroes
 			li: a(href='/heroes/#{hero.slug}', title='#{hero.localized_name}')

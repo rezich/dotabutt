@@ -2,6 +2,16 @@ extends layout
 
 block content
 	h1 Items
+	.centered
+		a(href='#') Names
+		|  | 
+		a(href='#') Names + Icons
+		|  | 
+		a(href='#') Icons
+	.centered
+		a(href='#') Show recipes
+		|  | 
+		a(href='#') Show duplicates
 	ul.columns
 		each item,id in items
 			li: a(href='/items/#{item.slug}', title='#{item.localized_name}')
