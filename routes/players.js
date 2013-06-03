@@ -53,7 +53,7 @@ exports.matches = function(req, res) {
 			butt.getPlayerMatches(res.locals.player.account_id, 10, skip, function(matches) { res.locals.player.matches = matches; callback(); });
 		},
 		function(callback) {
-			if (true) res.locals.next = res.locals.page + 1;
+			if (res.locals.player.matches.count > res.locals.page * 10) res.locals.next = res.locals.page + 1;
 			butt.getPlayerMatchCount(res.locals.player.account_id, function(count) { res.locals.player.matches.count = count; callback(); });
 		}
 	],

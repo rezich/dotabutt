@@ -2,13 +2,19 @@ extends layout
 
 block content
 	img.player-big(src='#{player.avatarmedium}')
-	h1 #{player.personaname} - Matches
+	h1 #{player.personaname} - Matches - Page #{page}
+	mixin prev_next
 	if player.matches && player.matches.length > 0
 		if player.matches
 			mixin match_list(player.matches)
+	mixin prev_next
+
+mixin prev_next
 	if next || previous
-		ul
+		p
 			if previous
-				li: a(href='/players/#{player.account_id}/matches/#{previous}') Later matches
+				a(href='/players/#{player.account_id}/matches/#{previous}') Later matches
 			if next
-				li: a(href='/players/#{player.account_id}/matches/#{next}') Earlier matches
+				if previous
+					| | 
+				a(href='/players/#{player.account_id}/matches/#{next}') Earlier matches
