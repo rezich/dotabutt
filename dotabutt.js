@@ -459,54 +459,72 @@ module.exports = {
 		}
 		this.backfillReady = false;
 		var self = this;
-		steamapi.dota2.getMatchHistoryBySequenceNum({ start_at_match_seq_num: this.lastBackfillMatch }, function(matches, status, err) {
-			if (err || status != 1) {
-				console.log('BACKFILL ERROR: Error getting data from API. REMAINING AT seq# %s', self.lastBackfillMatch);
-				self.backfillReady = true;
-				return;
-			}
-			self.lastTime = matches[0].start_time;
-			var players = [];
-			for (var i = 0; i < Object.keys(matches); i++) {
-				for (var j = 0; j < matches[Object.keys(matches)[i]].players.length; j++) {
-					var found = false;
-					for (var k = 0; k < players.length; k++) {
-						if (players[k].account_id == matches[Object.keys(matches)[i]].players[j].account_id) {
-							found = true;
-							break;
+		var players = [];
+		var matches = [];
+		async.series([
+			function(callback) { steamapi.dota2.getMatchHistoryBySequenceNum({ start_at_match_seq_num: self.lastBackfillMatch }, function(_matches, status, err) {
+				if (err || status != 1) {
+					console.log('BACKFILL ERROR: Error getting data from API. REMAINING AT seq# %s', self.lastBackfillMatch);
+					return callback(err || status);
+				}
+				matches = _matches;
+				self.lastTime = matches[0].start_time;
+				for (var i = 0; i < Object.keys(matches); i++) {
+					for (var j = 0; j < matches[Object.keys(matches)[i]].players.length; j++) {
+						var found = false;
+						for (var k = 0; k < players.length; k++) {
+							if (players[k].account_id == matches[Object.keys(matches)[i]].players[j].account_id) {
+								found = true;
+								break;
+							}
 						}
+						if (!found) players.push(matches[Object.keys(matches)[i]].players[j].account_id);
 					}
-					if (!found) players.push(matches[Object.keys(matches)[i]].players[j].account_id);
 				}
-			}
-			self.checkMatches(Object.keys(matches), function(existingMatches, err) {
-				if (err) {
-					console.log('BACKFILL ERROR: Error checking db for matches. REMAINING AT seq# %s', self.lastBackfillMatch);
-					self.backfillReady = true;
-					return;
-				}
+				callback();
+			}); },
+			function(callback) { self.checkMatches(Object.keys(matches), function(existingMatches, err) {
+				if (err) return callback(err);
 				for (var i = 0; i < Object.keys(existingMatches); i++) {
 					delete matches[Object.keys(existingMatches)[i]];
 				}
-				self.insertMatch(matches, function(saved, err) {
-					self.checkPlayers(players, function(existingPlayers, err) {
-						for (var i = 0; i < Object.keys(existingPlayers); i++) {
-							players.splice(players.indexOf(Object.keys(existingPlayers)[i]), 1);
-						}
-						self.getPlayers(players, function(inserted, err) {
-							self.lastBackfillMatch = matches[matches.length - 1].match_seq_num + 1;
-							self.backfillReady = true;
-							if (self.lastBackfillMatch - self.config.backfill > self.backfillWriteThreshold) {
-								self.config.backfill = self.lastBackfillMatch;
-								self.saveConfig(function(saved, err) {
-									// ???
-									console.log('Backfill saved up to seq# ' + self.config.backfill);
-								});
-							}
-						});
-					});
-				});
+				callback();
+			}); },
+			function(callback) { self.insertMatch(matches, function(saved, err) {
+				if (err) return callback(err);
+				callback();
+			}); },
+			function(callback) { self.checkPlayers(players, function(existingPlayers, err) {
+				if (err) return callback(err);
+				for (var i = 0; i < Object.keys(existingPlayers); i++) {
+					players.splice(players.indexOf(Object.keys(existingPlayers)[i]), 1);
+				}
+				callback();
+			}); },
+			function(callback) { self.getPlayers(players, function(inserted, err) {
+				if (err) return callback(err);
+				callback();
+			}); }
+		],
+		function(err) {
+			if (err) {
+				self.backfillReady = true;
+				console.log('BACKFILL ERROR: REMAINING AT seq# %s', self.lastBackfillMatch);
+				return;
+			}
+			var prevBackfill = self.lastBackfillMatch;
+			self.lastBackfillMatch = matches[matches.length - 1].match_seq_num + 1;
+			self.backfillReady = true;
+			if (self.lastBackfillMatch - self.config.backfill > self.backfillWriteThreshold) {
+				self.config.backfill = self.lastBackfillMatch;
+			}
+			self.saveConfig(function(saved, err) {
+				if (err) {
+					self.lastBackfillMatch = prevBackfill;
+					console.log('ERROR SAVING BACKFILL');
+				}
 			});
+			console.log('Backfill saved up to seq# ' + self.config.backfill);
 		});
 	},
 	saveConfig: function(callback) {
