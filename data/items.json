@@ -1449,14 +1449,14 @@
 		"localized_name": "Recipe: Necronomicon (2)",
 		"cost": 0,
 		"recipe": 1,
-		"duplicate": 191
+		"duplicate": 105
 	},
 	"192": {
 		"name": "recipe_necronomicon_3",
 		"localized_name": "Recipe: Necronomicon (3)",
 		"cost": 0,
 		"recipe": 1,
-		"duplicate": 191
+		"duplicate": 105
 	},
 	"106": {
 		"name": "necronomicon",
