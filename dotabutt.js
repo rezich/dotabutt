@@ -16,8 +16,10 @@ module.exports = {
 	backfillReady: true,
 	lastTime: 0,
 	_backfillInterval: false,
+	backfillEnabled: true,
 	startupFailed: false,
 	startupTime: 0,
+	verifiedPlayers: [],
 	init: function() {
 		var self = this;
 		async.series([
@@ -30,6 +32,10 @@ module.exports = {
 				callback();
 			}); },
 			function(callback) { steamapi.dota2.getItems(function(items, err) {
+				if (err) callback(err);
+				callback();
+			}); },
+			function(callback) { self.getVerifiedPlayers(function(players, err) {
 				if (err) callback(err);
 				callback();
 			}); },
@@ -47,7 +53,7 @@ module.exports = {
 			console.log('Starting backfill from seq# ' + self.config.backfill.toString());
 			self.startupTime = moment();
 			self.ready = true;
-			self.startBackfill();
+			if (self.backfillEnabled) self.startBackfill();
 		});
 		this.backfillTimeout = process.env.BACKFILL_TIMEOUT || 500;
 		this.db = mongojs(
@@ -337,7 +343,6 @@ module.exports = {
 				if (!tried.long_string) {
 					if (!tried.personaname) {
 						butt.db.players.find({ personaname: { $regex: regex } }, function(err, db_players) {
-							if (err) results.err.push(err);
 							if (!err) {
 								for (var i = 0; i < db_players.length; i++) {
 									if (!results.players) results.players = {};
@@ -349,13 +354,12 @@ module.exports = {
 								again(query, callback, butt, tried, results);
 							}
 							else {
-								// TODO: error handling?
+								results.err.push(err);
 							}
 						});
 					}
 					else if (!tried.realname) {
 						butt.db.players.find({ realname: { $regex: regex } }, function(err, db_players) {
-							if (err) results.err.push(err);
 							if (!err) {
 								for (var i = 0; i < db_players.length; i++) {
 									if (!results.players) results.players = {};
@@ -368,10 +372,42 @@ module.exports = {
 								again(query, callback, butt, tried, results);
 							}
 							else {
-								// TODO: error handling?
+								results.err.push(err);
 							}
 						});
 					}
+					/*else if (!tried.verifiedname) {
+						var found = false;
+						var foundName = '';
+						console.log(butt.verifiedPlayers);
+						for (var i = 0; i < butt.verifiedPlayers.length; i++) {
+							for (var j = 0; j < butt.verifiedPlayers[i].names.length; j++) {
+								console.log(query + ' | ' + butt.verifiedPlayers[i].names[j]);
+								if (query.toLowerCase() == butt.verifiedPlayers[i].names[j].toLowerCase()) {
+									found = butt.verifiedPlayers[i].id;
+									foundName = butt.verifiedPlayers[i].names[j];
+								}
+								if (found) break;
+							}
+							if (found) break;
+						}
+						if (found) {
+							butt.db.players.find({ id: found }, function(err, db_players) {
+								console.log(db_players.length);
+								if (!err && db_players.length == 1) {
+									db_players[0]._searchedBy = 'verified player: ' + foundName;
+									results.players[db_players[0].account_id] = db_players[0];
+									results.count++;
+									results.last = '/players/' + db_players[0].account_id;
+								}
+								else {
+									results.err.push(err);
+								}
+								tried.verifiedname = true;
+								again(query, callback, butt, tried, results);
+							});
+						}
+					}*/
 					else {
 						tried.long_string = true;
 						again(query, callback, butt, tried, results);
@@ -514,17 +550,18 @@ module.exports = {
 			}
 			var prevBackfill = self.lastBackfillMatch;
 			self.lastBackfillMatch = matches[matches.length - 1].match_seq_num + 1;
-			self.backfillReady = true;
 			if (self.lastBackfillMatch - self.config.backfill > self.backfillWriteThreshold) {
 				self.config.backfill = self.lastBackfillMatch;
+				self.saveConfig(function(saved, err) {
+					if (err) {
+						self.lastBackfillMatch = prevBackfill;
+						console.log('ERROR SAVING BACKFILL');
+					}
+					else console.log('Backfill saved up to seq# ' + self.config.backfill);
+					self.backfillReady = true;
+				});
 			}
-			self.saveConfig(function(saved, err) {
-				if (err) {
-					self.lastBackfillMatch = prevBackfill;
-					console.log('ERROR SAVING BACKFILL');
-				}
-			});
-			console.log('Backfill saved up to seq# ' + self.config.backfill);
+			else self.backfillReady = true;
 		});
 	},
 	saveConfig: function(callback) {
@@ -544,6 +581,22 @@ module.exports = {
 					if (callback) callback(err);
 				});
 			}
+		});
+	},
+	getVerifiedPlayers: function(callback) {
+		var self = this;
+		delete this.verifiedPlayers;
+		this.verifiedPlayers = [];
+		fs.readFile('data/verified_players.json', function(err, data) {
+			if (err) console.log('!!! VERIFIED PLAYERS FILE WAS MISSING OR CORRUPT !!!')
+			else {
+				console.log('Loaded verified players successfully.');
+				var parsedItems = JSON.parse(data);
+				for (i = 0; i < parsedItems.length; i++) {
+					self.verifiedPlayers.push(parsedItems[i]);
+				}
+			}
+			if (callback) callback(self.items, err);
 		});
 	}
 }
