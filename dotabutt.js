@@ -267,7 +267,7 @@ module.exports = {
 		var again = function(query, callback, butt, tried, results) {
 			var regex = new RegExp(query, 'i');
 			if (!tried) tried = { times: 0 };
-			if (!results) results = { count: 0, err: [] };
+			if (!results) results = { err: [] };
 			if (results.err.length > 0) {
 				callback(results);
 				return;
@@ -282,7 +282,6 @@ module.exports = {
 							if (!err) {
 								if (!results.matches) results.matches = {};
 								results.matches[match.match_id] = match;
-								results.count++;
 								results.last = '/matches/' + match.match_id;
 							}
 							tried.match = true;
@@ -296,7 +295,6 @@ module.exports = {
 								if (!results.players) results.players = {};
 								player._searchedBy = 'account ID';
 								results.players[player.account_id] = player;
-								results.count++;
 								results.last = '/players/' + player.account_id;
 							}
 							tried.account_id = true;
@@ -309,7 +307,6 @@ module.exports = {
 							if (!results.items) results.items = {};
 							items[query]._searchedBy = 'item ID';
 							results.items[query] = items[query];
-							results.count++;
 							results.last = '/items/' + items[query].slug;
 						}
 						tried.item_id = true;
@@ -321,7 +318,6 @@ module.exports = {
 							if (!results.heroes) results.heroes = {};
 							heroes[query]._searchedBy = 'hero ID';
 							results.heroes[query] = heroes[query];
-							results.count++;
 							results.last = '/heroes/' + heroes[query].slug;
 						}
 						tried.hero_id = true;
@@ -347,7 +343,6 @@ module.exports = {
 								for (var i = 0; i < db_players.length; i++) {
 									if (!results.players) results.players = {};
 									results.players[db_players[i].account_id] = db_players[i];
-									results.count++;
 									results.last = '/players/' + db_players[i].account_id;
 								}
 								tried.personaname = true;
@@ -365,7 +360,6 @@ module.exports = {
 									if (!results.players) results.players = {};
 									db_players[i]._searchedBy = 'real name: ' + db_players[i].realname;
 									results.players[db_players[i].account_id] = db_players[i];
-									results.count++;
 									results.last = '/players/' + db_players[i].account_id;
 								}
 								tried.realname = true;
@@ -376,13 +370,11 @@ module.exports = {
 							}
 						});
 					}
-					/*else if (!tried.verifiedname) {
+					else if (!tried.verifiedname) {
 						var found = false;
 						var foundName = '';
-						console.log(butt.verifiedPlayers);
 						for (var i = 0; i < butt.verifiedPlayers.length; i++) {
 							for (var j = 0; j < butt.verifiedPlayers[i].names.length; j++) {
-								console.log(query + ' | ' + butt.verifiedPlayers[i].names[j]);
 								if (query.toLowerCase() == butt.verifiedPlayers[i].names[j].toLowerCase()) {
 									found = butt.verifiedPlayers[i].id;
 									foundName = butt.verifiedPlayers[i].names[j];
@@ -392,12 +384,11 @@ module.exports = {
 							if (found) break;
 						}
 						if (found) {
-							butt.db.players.find({ id: found }, function(err, db_players) {
-								console.log(db_players.length);
+							butt.db.players.find({ account_id: found }, function(err, db_players) {
 								if (!err && db_players.length == 1) {
 									db_players[0]._searchedBy = 'verified player: ' + foundName;
+									if (!results.players) results.players = {};
 									results.players[db_players[0].account_id] = db_players[0];
-									results.count++;
 									results.last = '/players/' + db_players[0].account_id;
 								}
 								else {
@@ -407,7 +398,7 @@ module.exports = {
 								again(query, callback, butt, tried, results);
 							});
 						}
-					}*/
+					}
 					else {
 						tried.long_string = true;
 						again(query, callback, butt, tried, results);
@@ -422,7 +413,6 @@ module.exports = {
 								if (!results.items) results.items = {};
 								if (!results.items[keys[i]]) {
 									results.items[keys[i]] = items[keys[i]];
-									results.count++;
 									results.last = '/items/' + items[keys[i]].slug;
 								}
 							}
@@ -442,7 +432,6 @@ module.exports = {
 										if (!results.items[keys[i]]) {
 											results.items[keys[i]] = items[keys[i]];
 											results.items[keys[i]]._searchedBy = 'item alias';
-											results.count++;
 											results.last = '/items/' + items[keys[i]].slug;
 										}
 									}
@@ -460,7 +449,6 @@ module.exports = {
 								if (!results.heroes) results.heroes = {};
 								if (!results.heroes[keys[i]]) {
 									results.heroes[keys[i]] = heroes[keys[i]];
-									results.count++;
 									results.last = '/heroes/' + heroes[keys[i]].slug;
 								}
 							}
@@ -479,7 +467,14 @@ module.exports = {
 				}
 			}
 			else {
-				if (results.err.length == 0) delete results.err;
+				if (results.err.length == 0) {
+					var count = 0;
+					delete results.err;
+					Object.keys(results).forEach(function(key) {
+						if (typeof results[key] === 'object') count += Object.keys(results[key]).length;
+					});
+					results.count = count;
+				}
 				callback(results);
 			}
 		};
