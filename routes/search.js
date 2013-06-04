@@ -3,8 +3,8 @@ exports.index = function(req, res, next) {
 		var butt = res.locals.butt;
 		var query = decodeURIComponent(req.query.q);
 		res.locals.query = query;
-		butt.search(query, function(results, err) {
-			if (err) return next(err);
+		butt.search(query, function(results) {
+			if (results.err) return next(results.err);
 			if (results.count == 1) {
 				res.redirect(results.last);
 			}

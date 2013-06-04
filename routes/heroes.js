@@ -10,6 +10,8 @@ exports.view = function(req, res) {
 		if (heroes[id].slug == req.params.slug) {
 			res.locals.hero = heroes[id];
 			res.render('hero', { title: 'Hero - ' + res.locals.hero.localized_name });
+			return;
 		}
 	});
+	res.redirect('/heroes/');
 };

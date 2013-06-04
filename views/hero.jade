@@ -3,3 +3,4 @@ extends layout
 block content
 	img.hero-big(src='http://media.steampowered.com/apps/dota2/images/heroes/#{hero.short_name}_lg.png', alt='#{hero.localized_name}')
 	h1= hero.localized_name
+	p: a(href='http://steamcommunity.com/app/570/guides/?searchText=#{encodeURIComponent(hero.localized_name)}&browsefilter=trend&browsesort=creationorder&requiredtags%5B%5D=Hero+Build') Steam Community build guides

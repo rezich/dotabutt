@@ -443,11 +443,11 @@ module.exports = {
 				}
 			}
 			else {
+				if (results.err.length == 0) delete results.err;
 				callback(results);
 			}
 		};
-		if (results.err.length > 0) callback(results)
-		else again(query, callback, this);
+		again(query, callback, this);
 	},
 	startBackfill: function() {
 		var self = this;

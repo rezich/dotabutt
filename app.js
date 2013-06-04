@@ -90,7 +90,7 @@ app.configure(function() {
 	app.use(express.session({ secret: 'asdfasdfasdfasdf' }));
 	app.use(passport.initialize());
 	app.use(passport.session());
-	app.use(express.static(path.join(__dirname, 'public')));
+	app.use(express.static(path.join(__dirname, 'public'), { maxAge: 31557600000 }));
 	app.use(buttMiddleware);
 	app.use(app.router);
 	/*app.use(stylus.middleware({
@@ -156,6 +156,7 @@ app.configure(function() {
 
 function errorMiddleware(err, req, res, next) {
 	res.status(500).render('500', { title: 'Internal server error', error: err });
+	console.error(err.stack);
 }
 
 function buttMiddleware(req, res, next) {
