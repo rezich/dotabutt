@@ -13,10 +13,10 @@ block content
 
 mixin prev_next
 	if next || previous
-		p
+		p.centered
 			if previous
-				a(href='/players/#{player.account_id}/matches/#{previous}') Later matches
+				a(href='/players/#{player.account_id}/matches/#{previous}') &lt; Later matches
 			if next
 				if previous
-					| | 
-				a(href='/players/#{player.account_id}/matches/#{next}') Earlier matches
+					|  | 
+				a(href='/players/#{player.account_id}/matches/#{next}') Earlier matches &gt;

@@ -17,6 +17,7 @@ module.exports = {
 	lastTime: 0,
 	_backfillInterval: false,
 	startupFailed: false,
+	startupTime: 0,
 	init: function() {
 		var self = this;
 		async.series([
@@ -44,6 +45,7 @@ module.exports = {
 			}
 			self.lastBackfillMatch = self.config.backfill;
 			console.log('Starting backfill from seq# ' + self.config.backfill.toString());
+			self.startupTime = moment();
 			self.ready = true;
 			self.startBackfill();
 		});
@@ -235,8 +237,8 @@ module.exports = {
 	getTeam: function(id, callback) { // callback(team, err)
 		steamapi.dota2.getTeamInfoByTeamID({ start_at_team_id: id, teams_requested: 1 }, function(teams, err) { callback(teams[0], err); });
 	},
-	getRecentMatches: function(number, callback) { // callback(matches, err)
-		this.db.matches.find().sort({ start_time: -1 }).limit(number, function(err, matches) {
+	getRecentMatches: function(number, startAt, callback) { // callback(matches, err)
+		this.db.matches.find().sort({ start_time: -1 }).limit(number).skip(startAt, function(err, matches) {
 			callback(matches, err);
 		});
 	},

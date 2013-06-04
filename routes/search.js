@@ -14,5 +14,5 @@ exports.index = function(req, res, next) {
 			}
 		});
 	}
-	else res.redirect(301, '/');
+	else res.redirect('/');
 }

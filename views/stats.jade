@@ -22,4 +22,18 @@ block content
 			td.halign-right.padding-right.width-50=players.count
 			th players in database
 	h2.centered Teams
-	p.centered aren't even implemented yet lol
+	table.width-100
+		tr
+			td.centered aren't even implemented yet lol
+	h2.centered Misc.
+	table.width-100
+		tr
+			td.halign-right.padding-right.width-50
+				if steamapi.down
+					| offline
+				else
+					| online
+			th Steam API status
+		tr
+			td.halign-right.padding-right.width-50=moment(butt.startupTime).fromNow(true)
+			th is how long it's been since our last restart

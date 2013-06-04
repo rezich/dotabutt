@@ -26,6 +26,10 @@ exports.index = function(req, res, next) {
 
 exports.view = function(req, res, next) {
 	var butt = res.locals.butt;
+	if (req.params.id && isNaN(req.params.id)) {
+		res.redirect('/players/');
+		return;
+	}
 	async.series([
 		function(callback) {
 			butt.getPlayer(req.params.id, function(player, err) {

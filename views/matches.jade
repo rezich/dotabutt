@@ -2,9 +2,23 @@ extends layout
 
 block content
 	h1 Matches
+		if page != 1
+			|  - page #{page}
 	p These are the ten most recent matches in Dotabutt's database. "Recent" as in when they took place, not when they were added to the database.
 	if matches && matches.length > 0
+		mixin prev_next
 		mixin match_list(matches)
+		mixin prev_next
 	else
 		p No matches!
 	.centered #{total_matches} matches on file | #{moment(behind).fromNow(true)} behind
+
+mixin prev_next
+	if next || previous
+		p.centered
+			if previous
+				a(href='/matches/page/#{previous}') &lt; Later matches
+			if next
+				if previous
+					|  | 
+				a(href='/matches/page/#{next}') Earlier matches &gt;

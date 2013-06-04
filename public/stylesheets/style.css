@@ -15,7 +15,7 @@ a:hover{text-decoration:underline}
 p{margin:0;cursor:text;margin-bottom:8px}
 p:last-child{margin-bottom:0}
 h1{font-size:30px;line-height:80%;color:#888;margin-bottom:8px}
-h2{font-size:22px}
+h2{font-size:22px;margin-top:8px}
 h3{font-size:18px}
 abbr{cursor:help}
 a img{cursor:pointer}

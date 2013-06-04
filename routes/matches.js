@@ -2,9 +2,15 @@ var async = require('async');
 
 exports.index = function(req, res, next) {
 	var butt = res.locals.butt;
+	if (req.params.page && isNaN(req.params.page)) {
+		res.redirect('/matches/');
+		return;
+	}
+	res.locals.page = parseInt(req.params.page) || 1;
 	async.series([
 		function(callback) {
-			butt.getRecentMatches(10, function(matches, err) {
+			if (res.locals.page < 1) return callback('invalid page number');
+			butt.getRecentMatches(10, (res.locals.page - 1) * 10, function(matches, err) {
 				if (err) return callback(err);
 				res.locals.matches = matches;
 				callback();
@@ -19,6 +25,9 @@ exports.index = function(req, res, next) {
 		}
 	], function(err) {
 		if (err) return next(err);
+		res.locals.previous = false;
+		if (res.locals.page > 1) res.locals.previous = res.locals.page - 1;
+		res.locals.next = res.locals.page + 1;
 		res.locals.behind = res.locals.moment(butt.lastTime.toString(), 'X');
 		res.locals.heroes = butt.heroes();
 		res.render('matches', { title: 'Matches' });
@@ -30,6 +39,11 @@ exports.view = function(req, res, next) {
 	var steamapi = res.locals.steamapi;
 	var lookup_ids = [];
 	var changed_players = [];
+	
+	if (isNaN(req.params.id)) {
+		res.redirect('/matches/');
+		return;
+	}
 	
 	async.series([
 		function(callback) {

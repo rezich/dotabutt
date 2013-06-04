@@ -23,9 +23,9 @@ block content
 				=(player.matches.count.toString() || 'no') + (player.matches && player.matches.length == 1 ? ' match' : ' matches') + ' on file'
 	if player.matches && player.matches.length > 0
 		h2 Recent matches
-		if player.matches.count > 10
-			p: a(href='/players/#{player.account_id}/matches/2') Earlier matches
+		if player.matches && player.matches.count > 10
+			p.centered: a(href='/players/#{player.account_id}/matches/2') Earlier matches &gt;
 		if player.matches
 			mixin match_list(player.matches, player)
 			if player.matches.count > 10
-				p: a(href='/players/#{player.account_id}/matches/2') Earlier matches
+				p.centered: a(href='/players/#{player.account_id}/matches/2') Earlier matches &gt;

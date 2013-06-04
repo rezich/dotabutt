@@ -78,7 +78,7 @@ app.configure('production', function(){
 });
 
 app.configure(function() {
-	app.use(buttMiddleware);
+	//app.use(buttMiddleware);
 	app.set('port', process.env.PORT || 80);
 	app.set('views', __dirname + '/views');
 	app.set('view engine', 'jade');
@@ -91,7 +91,7 @@ app.configure(function() {
 	app.use(passport.initialize());
 	app.use(passport.session());
 	app.use(express.static(path.join(__dirname, 'public')));
-	app.use(startupCheckMiddleware);
+	app.use(buttMiddleware);
 	app.use(app.router);
 	/*app.use(stylus.middleware({
 		src: __dirname + '/public',
@@ -104,11 +104,11 @@ app.configure(function() {
 	
 	app.get('/matches', routes.matches.index);
 	app.get('/matches/:id', routes.matches.view);
+	app.get('/matches/page/:page', routes.matches.index);
 	
 	app.get('/players', routes.players.index);
 	app.get('/players/:id', routes.players.view);
 	app.get('/players/:id/matches/:page', routes.players.matches);
-	app.get('/players/:id/matches', routes.players.matches);
 	
 	app.get('/heroes', routes.heroes.index);
 	app.get('/heroes/:slug', routes.heroes.view);
@@ -154,11 +154,6 @@ app.configure(function() {
 	app.get('*', routes.pages._404);
 });
 
-function startupCheckMiddleware(req, res, next) {
-	if (butt.startupFailed) return res.status(500).render('500', { title: 'Internal server error', error: 'Dotabutt failed to initialize properly.' });
-	next();
-}
-
 function errorMiddleware(err, req, res, next) {
 	res.status(500).render('500', { title: 'Internal server error', error: err });
 }
@@ -169,6 +164,7 @@ function buttMiddleware(req, res, next) {
 	res.locals.steamapi = steamapi;
 	res.locals.user = false;
 	if (req.user) res.locals.user = req.user;
+	if (butt.startupFailed) return res.status(500).render('500', { title: 'Internal server error', error: 'Dotabutt failed to initialize properly.' });
 	next();
 }
 
