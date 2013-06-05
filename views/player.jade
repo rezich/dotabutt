@@ -4,6 +4,8 @@ block content
 	img.player-big(src='#{player.avatarmedium}')
 	h1 #{player.personaname}
 	ul
+		if player.verified
+			li.verified #{verified.names[0]} - #{verified.description}
 		if player.locstatecode || player.loccountrycode
 			li
 				if player.locstatecode

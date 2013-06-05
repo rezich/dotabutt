@@ -398,6 +398,10 @@ module.exports = {
 								again(query, callback, butt, tried, results);
 							});
 						}
+						else {
+							tried.verifiedname = true;
+							again(query, callback, butt, tried, results);
+						}
 					}
 					else {
 						tried.long_string = true;

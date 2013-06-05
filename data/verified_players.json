@@ -1,14 +1,22 @@
 [
 	{
+		"id": 69379089,
+		"names": [ "Adam Rezich", "takua108" ],
+		"description": "Dotabutt creator"
+	},
+	{
 		"id": 8082545,
-		"names": [ "Brad Shoemaker" ]
+		"names": [ "Brad Shoemaker" ],
+		"description": "Giant Bomb's Official Anime and Dota Correspondent"
 	},
 	{
 		"id": 3899398,
-		"names": [ "Brad Muir" ]
+		"names": [ "Brad Muir" ],
+		"description": ":D"
 	},
 	{
 		"id": 5390881,
-		"names": ["Matt Bailey", "Cyborgmatt"]
+		"names": [ "Cyborgmatt", "Matt Bailey", "Matthew Bailey" ],
+		"description": "Dota 2's Master Patch Eviscerator"
 	}
 ]
