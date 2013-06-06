@@ -156,6 +156,8 @@ app.configure(function() {
 
 function errorMiddleware(err, req, res, next) {
 	res.status(500).render('500', { title: 'Internal server error', error: err });
+	console.log(err);
+	console.log(err.message);
 	console.error(err.stack);
 }
 

@@ -20,6 +20,13 @@ exports.index = function(req, res, next) {
 				res.locals.players.count = count;
 				callback();
 			});
+		},
+		function(callback) {
+			butt.getGlobalPlayerCount(function(count, err) {
+				if (err) return callback(err);
+				res.locals.players.global = count;
+				callback();
+			});
 		}
 	],
 	function(err) {

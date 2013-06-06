@@ -68,12 +68,29 @@ exports.view = function(req, res, next) {
 				}
 				callback();
 			});
-		}
+		}/*,
+		function(callback) {
+			if (!res.locals.match.radiant_logo) return callback();
+			butt.getTeamLogo(res.locals.match.radiant_logo, function(data, err) {
+				if (err) return callback(err);
+				res.locals.match.radiant_logo_url = data.url;
+				callback();
+			});
+		},
+		function(callback) {
+			if (!res.locals.match.dire_logo) return callback();
+			butt.getTeamLogo(res.locals.match.dire_logo, function(data, err) {
+				if (err) return callback(err);
+				res.locals.match.dire_logo_url = data.url;
+				callback();
+			});
+		}*/
 	],
 	function(err) {
 		if (err) return next(err);
 		res.locals.heroes = butt.heroes();
 		res.locals.items = butt.items();
+		//if (res.locals.match) res.locals.match.json = JSON.stringify(res.locals.match, null, '\t');
 		res.render('match', { title: 'Match #' + res.locals.match.match_id });
 	});
 };

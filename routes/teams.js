@@ -10,7 +10,9 @@ exports.view = function(req, res, next) {
 	async.series([
 		function(callback) {
 			butt.getTeam(req.params.id, function(team, err) {
+				console.log('getting team');
 				if (err) return callback(err);
+				console.log('got team');
 				res.locals.team = team;
 				lookup_ids = [
 					team.player_0_account_id,

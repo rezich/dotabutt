@@ -12,8 +12,9 @@ module.exports = {
 	config: { id: 0, backfill: 0 },
 	lastBackfillMatch: 0,
 	backfillWriteThreshold: 500,
-	backfillTimeout: 1,
+	backfillTimeout: 0,
 	backfillReady: true,
+	backfillNotReadyTimes: 0,
 	lastTime: 0,
 	_backfillInterval: false,
 	backfillEnabled: true,
@@ -243,6 +244,9 @@ module.exports = {
 	getTeam: function(id, callback) { // callback(team, err)
 		steamapi.dota2.getTeamInfoByTeamID({ start_at_team_id: id, teams_requested: 1 }, function(teams, err) { callback(teams[0], err); });
 	},
+	getTeamLogo: function(logo_id, callback) { // callback(data, err)
+		steamapi.getUGCFileDetails({ appid: steamapi.dota2.appID, ugcid: logo_id }, function(data, err) { callback(data, err); });
+	},
 	getRecentMatches: function(number, startAt, callback) { // callback(matches, err)
 		this.db.matches.find().sort({ start_time: -1 }).limit(number).skip(startAt, function(err, matches) {
 			callback(matches, err);
@@ -262,6 +266,9 @@ module.exports = {
 		this.db.players.find().count(function(err, count) {
 			callback(count, err);
 		});
+	},
+	getGlobalPlayerCount: function(callback) { // callback(count, err)
+		steamapi.getNumberOfCurrentPlayers(steamapi.dota2.appID, function(count, err) { callback(count, err); });
 	},
 	search: function(query, callback) { // callback(results) (results.err for errors)
 		var again = function(query, callback, butt, tried, results) {
@@ -490,8 +497,11 @@ module.exports = {
 	},
 	backfill: function() { // callback(saved, err)
 		if (!this.backfillReady) {
+			this.backfillNotReadyTimes++;
+			if (this.backfillNotReadyTimes > 10) console.log('!! BACKFILL TAKEN ' + (this.backfillNotReadyTimes * this.backfillTimeout / 1000).toString());
 			return;
 		}
+		this.backfillNotReadyTimes = 0;
 		this.backfillReady = false;
 		var self = this;
 		var players = [];
@@ -560,7 +570,7 @@ module.exports = {
 					self.backfillReady = true;
 				});
 			}
-			else self.backfillReady = true;
+			self.backfillReady = true;
 		});
 	},
 	saveConfig: function(callback) {

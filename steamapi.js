@@ -27,7 +27,7 @@ module.exports = {
 			if (now - this._last >= this._interval) {
 				this._last = now;
 				var req = this._requests.shift();
-				this._makeCall(req.call, req.callback);
+				this._makeCall(req.call, req.callback, req.expect404);
 				this._timeout = setTimeout(function() { self._checkRequests(); }, this._interval);
 			}
 			else {
@@ -41,13 +41,18 @@ module.exports = {
 	},
 	_call: function(call, options, callback) {
 		var params = '';
-			for (var opt in options) {
+		var expect404 = false;
+		for (var opt in options) {
+			if (opt == '_expect404') {
+				expect404 = true;
+				continue;
+			}
 			params += '&' + opt + '=' + options[opt].toString();
 		}
-		this._requests.push({ call: call + '?key=' + this._key + params, callback: callback });
+		this._requests.push({ call: call + '?key=' + this._key + params, callback: callback, expect404: expect404 });
 		if (!this._checking) this._checkRequests();
 	},
-	_makeCall: function(call, callback) {
+	_makeCall: function(call, callback, expect404) {
 		var self = this;
 		call = call.replace('API_KEY', this._key) + '&language=' + this._lang;
 		//console.log('Making API call: %s', call.replace(this._key, 'API_KEY'));
@@ -57,7 +62,7 @@ module.exports = {
 			path: call
 		}, function(response) {
 			var err = false;
-			if (response.statusCode != 200) {
+			if (response.statusCode != 200 && !(response.statusCode == 404 && expect404)) {
 				err = true;
 				self.down = true;
 			}
@@ -89,6 +94,7 @@ module.exports = {
 		});
 	},
 	dota2: {
+		appID: 570,
 		gameMode: {
 			allPick: 1,
 			captainsMode: 2,
@@ -177,7 +183,7 @@ module.exports = {
 		getTeamInfoByTeamID: function(options, callback) { // callback(teams, status, err)
 			// start_at_team_id, teams_requested
 			this._api._call('/IDOTA2Match_570/GetTeamInfoByTeamID/v001/', options, function(data, err) {
-				if (callback) callback((data.result && data.result.teams ? data.result.teams : false), (data.result && data.result.status ? data.result.status : false), err);
+				if (callback) callback((data.result && data.result.teams ? data.result.teams : false), err);
 			});
 		},
 		// IDOTA2
@@ -228,6 +234,7 @@ module.exports = {
 	tf2: {
 		// TODO
 	},
+	// ISteamUser
 	getPlayerSummaries: function(players, callback) { // callback(players, err)
 		var self = this;
 		var steamids = '';
@@ -248,13 +255,24 @@ module.exports = {
 			if (callback) callback(sorted, err);
 		});
 	},
-	getUGCFileDetails: function(ugcid, appid, callback) {
-		this._call('/ISteamRemoteStorage/GetUGCFileDetails/v1/', { ugcid: ugcid, appid: appid }, function (data, err) {
-			// TODO
-			callback(data, err);
+	// ISteamUserStats
+	getNumberOfCurrentPlayers: function(appid, callback) { // callback(count, err);
+		this._call('/ISteamUserStats/GetNumberOfCurrentPlayers/v1/', { appid: appid }, function(data, err) {
+			if (data.response && data.response.result == 1 && !err) {
+				callback(data.response.player_count, false);
+			}
+			else if (callback) callback(false, err || data.response.result);
 		});
 	},
-	appID: {
+	getUGCFileDetails: function(options, callback) { // callback(data, err)
+		options._expect404 = true;
+		this._call('/ISteamRemoteStorage/GetUGCFileDetails/v1/', options, function (data, err) {
+			if (data.status.code == 9) return callback(false);
+			if (err) console.log('ERROR GETTING FILE');
+			callback(data.data, err);
+		});
+	},
+	appID: { // TODO: move to individual objects
 		CounterStrike: 10,
 		TeamFortressClassic: 20,
 		DayOfDefeat: 30,
