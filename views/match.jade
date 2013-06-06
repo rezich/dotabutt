@@ -67,10 +67,6 @@ block content
 							mixin format_duration(match)
 						p: a(href='dota2://matchid=#{match.match_id}') Watch replay
 					mixin towermap(match)
-		if match.radiant_logo_url
-			div=match.radiant_logo_url
-		if match.dire_logo_url
-			div=match.dire_logo_url
 		h2
 			if match.radiant_name
 				| #{match.radiant_name}
