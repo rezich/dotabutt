@@ -21,6 +21,7 @@
 		"passport": "*",
 		"passport-steam": "*",
 		"slug": "*",
-		"async": "*"
+		"async": "*",
+		"i18next": "*"
 	}
 }

@@ -17,7 +17,7 @@ module.exports = {
 	backfillNotReadyTimes: 0,
 	lastTime: 0,
 	_backfillInterval: false,
-	backfillEnabled: true,
+	backfillEnabled: false,
 	startupFailed: false,
 	startupTime: 0,
 	verifiedPlayers: [],

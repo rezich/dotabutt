@@ -8,10 +8,15 @@ fs = require('fs'),
 moment = require('moment'),
 slug = require('slug'),
 async = require('async'),
+i18n = require('i18next'),
 passport = require('passport'),
 steamstrat = require('passport-steam').Strategy,
 steamapi = require('./steamapi.js'),
 butt = require('./dotabutt.js');
+
+i18n.init({
+    debug: true
+});
 
 butt.init();
 
@@ -79,6 +84,7 @@ app.configure('production', function(){
 
 app.configure(function() {
 	//app.use(buttMiddleware);
+	app.use(i18n.handle);
 	app.set('port', process.env.PORT || 80);
 	app.set('views', __dirname + '/views');
 	app.set('view engine', 'jade');
@@ -154,6 +160,8 @@ app.configure(function() {
 	
 	app.get('*', routes.pages._404);
 });
+
+i18n.registerAppHelper(app);
 
 function huskarMiddleware(req, res, next) {
 	if (req.url == '/images/huskar_powerslide.gif') return res.redirect('http://rezich.com/huskar_powerslide.gif');

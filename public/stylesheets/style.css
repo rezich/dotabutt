@@ -136,8 +136,8 @@ ul#nav-med li a{font-size:10px}
 #title a{padding-top:24px;font-size:18px}
 }@media (max-width: 240px){#title-container{width:58px}
 #title a{padding-top:26px;font-size:14px}
-}ul#bottomlinks{margin-top:4px}
-ul#bottomlinks > li{display:inline;margin:0 6px}
+}#footer > *{margin-top:4px}
+#footer > ul > li{display:inline;margin:0 6px}
 th{color:#bbb}
 table.padded td,table.padded th{padding:0 4px}
 td.playername{width:150px}

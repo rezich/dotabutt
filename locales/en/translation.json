@@ -1,0 +1,21 @@
+{
+	"layout": {
+		"slogan": "classy Dota 2 statistics",
+		"nav": {
+			"heroes": "Heroes",
+			"items": "Items",
+			"matches": "Matches",
+			"players": "Players",
+			"teams": "Teams",
+			"about": "About",
+			"privacy": "Privacy",
+			"faq": "FAQ",
+			"donate": "Donate",
+			"twitter": "Twitter",
+			"github": "GitHub",
+			"stats": "Stats"
+		},
+		"alpha_disclaimer_1": "This website is currently in super early alpha or whatever.",
+		"alpha_disclaimer_2": "Like half of the stuff on it doesn't work, but hey, chill out, we're getting there."
+	}
+}

@@ -171,21 +171,21 @@ html
 					#title-container
 						#title
 							a(href='/') Dotabutt
-						#tagline classy Dota 2 statistics
+						#tagline= t('layout.slogan')
 					#nav-container-large
 						ul#nav-large
-							li: a(href='/heroes/') Heroes
-							li: a(href='/items/') Items
-							li: a(href='/matches/') Matches
-							li: a(href='/players/') Players
-							li: a(href='/teams/') Teams
+							li: a(href='/heroes/')= t('layout.nav.heroes')
+							li: a(href='/items/')= t('layout.nav.items')
+							li: a(href='/matches/')= t('layout.nav.matches')
+							li: a(href='/players/')= t('layout.nav.players')
+							li: a(href='/teams/')= t('layout.nav.teams')
 			#nav-container-med
 				ul#nav-med
-					li: a(href='/heroes/') Heroes
-					li: a(href='/items/') Items
-					li: a(href='/matches/') Matches
-					li: a(href='/players/') Players
-					li: a(href='/teams/') Teams
+					li: a(href='/heroes/')= t('layout.nav.heroes')
+					li: a(href='/items/')= t('layout.nav.items')
+					li: a(href='/matches/')= t('layout.nav.matches')
+					li: a(href='/players/')= t('layout.nav.players')
+					li: a(href='/teams/')= t('layout.nav.teams')
 			#main-container
 				#main
 					#content
@@ -197,11 +197,8 @@ html
 						block content
 			#footer-container
 				#footer
-					div
-						| This website is currently in 
-						em super early alpha 
-						| or whatever.
-					div Like half of the stuff on it doesn't work, but hey, chill out, we're getting there.
+					div= t('layout.alpha_disclaimer_1')
+					div= t('layout.alpha_disclaimer_2')
 					div Copyright 2013 
 						a(href='http://rezich.com') Adam Rezich
 						| . 
@@ -217,3 +214,6 @@ html
 						li: a(href='http://twitter.com/dotabutt') Twitter
 						li: a(href='https://github.com/adamrezich/dotabutt') GitHub
 						li: a(href='/stats/') Stats
+					ul#languages
+						li: a(href='?setLng=en')= t('languages.english')
+						li: a(href='?setLng=ko')= t('languages.korean')
