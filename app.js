@@ -90,6 +90,7 @@ app.configure(function() {
 	app.use(express.session({ secret: 'asdfasdfasdfasdf' }));
 	app.use(passport.initialize());
 	app.use(passport.session());
+	app.use(huskarMiddleware);
 	app.use(express.static(path.join(__dirname, 'public'), { maxAge: 31557600000 }));
 	app.use(buttMiddleware);
 	app.use(app.router);
@@ -153,6 +154,11 @@ app.configure(function() {
 	
 	app.get('*', routes.pages._404);
 });
+
+function huskarMiddleware(req, res, next) {
+	if (req.url == '/images/huskar_powerslide.gif') return res.redirect('http://rezich.com/huskar_powerslide.gif');
+	next();
+}
 
 function errorMiddleware(err, req, res, next) {
 	res.status(500).render('500', { title: 'Internal server error', error: err });

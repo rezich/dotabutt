@@ -360,7 +360,7 @@ module.exports = {
 							}
 						});
 					}
-					else if (!tried.realname) {
+					/*else if (!tried.realname) {
 						butt.db.players.find({ realname: { $regex: regex } }, function(err, db_players) {
 							if (!err) {
 								for (var i = 0; i < db_players.length; i++) {
@@ -376,7 +376,7 @@ module.exports = {
 								results.err.push(err);
 							}
 						});
-					}
+					}*/
 					else if (!tried.verifiedname) {
 						var found = false;
 						var foundName = '';
@@ -486,6 +486,8 @@ module.exports = {
 					});
 					results.count = count;
 				}
+				console.log('TRIED:');
+				console.log(tried);
 				callback(results);
 			}
 		};
@@ -508,6 +510,7 @@ module.exports = {
 		var matches = [];
 		async.series([
 			function(callback) { steamapi.dota2.getMatchHistoryBySequenceNum({ start_at_match_seq_num: self.lastBackfillMatch }, function(_matches, status, err) {
+				console.log('>GetMatchHistoryBySequenceNum');
 				if (err || status != 1) {
 					console.log('BACKFILL ERROR: Error getting data from API. REMAINING AT seq# %s', self.lastBackfillMatch);
 					return callback(err || status);
@@ -529,6 +532,7 @@ module.exports = {
 				callback();
 			}); },
 			function(callback) { self.checkMatches(Object.keys(matches), function(existingMatches, err) {
+				console.log('>CheckMatches');
 				if (err) return callback(err);
 				for (var i = 0; i < Object.keys(existingMatches); i++) {
 					delete matches[Object.keys(existingMatches)[i]];
@@ -536,9 +540,10 @@ module.exports = {
 				callback();
 			}); },
 			function(callback) { self.insertMatch(matches, function(saved, err) {
+				console.log('>InsertMatch');
 				if (err) return callback(err);
 				callback();
-			}); },
+			}); }/* ,
 			function(callback) { self.checkPlayers(players, function(existingPlayers, err) {
 				if (err) return callback(err);
 				for (var i = 0; i < Object.keys(existingPlayers); i++) {
@@ -549,7 +554,7 @@ module.exports = {
 			function(callback) { self.getPlayers(players, function(inserted, err) {
 				if (err) return callback(err);
 				callback();
-			}); }
+			}); }*/
 		],
 		function(err) {
 			if (err) {
@@ -560,6 +565,7 @@ module.exports = {
 			var prevBackfill = self.lastBackfillMatch;
 			self.lastBackfillMatch = matches[matches.length - 1].match_seq_num + 1;
 			if (self.lastBackfillMatch - self.config.backfill > self.backfillWriteThreshold) {
+				console.log('>SaveConfig');
 				self.config.backfill = self.lastBackfillMatch;
 				self.saveConfig(function(saved, err) {
 					if (err) {

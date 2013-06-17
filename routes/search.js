@@ -10,7 +10,7 @@ exports.index = function(req, res, next) {
 			}
 			else {
 				res.locals.results = results;
-				res.render('search', { title: 'search - ' + req.params.q });
+				res.render('search', { title: 'search - ' + query });
 			}
 		});
 	}

@@ -27,7 +27,7 @@ module.exports = {
 			if (now - this._last >= this._interval) {
 				this._last = now;
 				var req = this._requests.shift();
-				this._makeCall(req.call, req.callback, req.expect404);
+				this._makeCall(req.call, req.callback, req.expect404, req.expect500, req.expect401);
 				this._timeout = setTimeout(function() { self._checkRequests(); }, this._interval);
 			}
 			else {
@@ -41,18 +41,28 @@ module.exports = {
 	},
 	_call: function(call, options, callback) {
 		var params = '';
+		var expect401 = false;
 		var expect404 = false;
+		var expect500 = false;
 		for (var opt in options) {
 			if (opt == '_expect404') {
 				expect404 = true;
 				continue;
 			}
+			if (opt == '_expect500') {
+				expect500 = true;
+				continue;
+			}
+			if (opt == '_expect401') {
+				expect401 = true;
+				continue;
+			}
 			params += '&' + opt + '=' + options[opt].toString();
 		}
-		this._requests.push({ call: call + '?key=' + this._key + params, callback: callback, expect404: expect404 });
+		this._requests.push({ call: call + '?key=' + this._key + params, callback: callback, expect404: expect404, expect500: expect500, expect401: expect401 });
 		if (!this._checking) this._checkRequests();
 	},
-	_makeCall: function(call, callback, expect404) {
+	_makeCall: function(call, callback, expect404, expect500, expect401) {
 		var self = this;
 		call = call.replace('API_KEY', this._key) + '&language=' + this._lang;
 		//console.log('Making API call: %s', call.replace(this._key, 'API_KEY'));
@@ -62,7 +72,8 @@ module.exports = {
 			path: call
 		}, function(response) {
 			var err = false;
-			if (response.statusCode != 200 && !(response.statusCode == 404 && expect404)) {
+			console.log(response.statusCode);
+			if (response.statusCode != 200 && !(response.statusCode == 404 && expect404) && !(response.statusCode == 500 && expect500) && !(response.statusCode == 401 && expect401)) {
 				err = true;
 				self.down = true;
 			}
@@ -158,7 +169,7 @@ module.exports = {
 			});
 		},
 		getMatchDetails: function(match_id, callback) { // callback(matchDetails, err)
-			this._api._call('/IDOTA2Match_570/GetMatchDetails/V001/', { match_id: match_id }, function(data, err) {
+			this._api._call('/IDOTA2Match_570/GetMatchDetails/V001/', { match_id: match_id, _expect401: true }, function(data, err) {
 				if (callback) callback(data.result || false, err);
 			});
 		},

@@ -6,7 +6,8 @@ you gotta either make a file called api_key in your app directory and put your S
 
 database setup:
 
-	db.matches.ensureIndex( { match_id: 1 })
-	db.matches.ensureIndex( { start_time: -1 })
-	db.matches.ensureIndex( { 'players.account_id': 1 })
-	db.players.ensureIndex( { account_id: 1 })
+	db.matches.ensureIndex( { match_id: 1 } )
+	db.matches.ensureIndex( { start_time: -1 } )
+	db.matches.ensureIndex( { 'players.account_id': 1 } )
+	db.players.ensureIndex( { account_id: 1 } )
+	db.players.ensureIndex( { personaname: 1 } )

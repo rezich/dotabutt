@@ -7,7 +7,7 @@ a img{border:none}
 *{cursor:default}
 em{font-style:italic}
 strong{font-weight:bold}
-body{font-family:'Droid Sans',sans-serif;font-size:11pt;background:url("/images/grid_noise.png") #eaeaea;margin:0;padding:0;}
+body{font-family:'Roboto',sans-serif;font-size:11pt;background:url("/images/grid_noise.png") #eaeaea;margin:0;padding:0;}
 input{cursor:text}
 a{color:#00b7ff;cursor:pointer;text-decoration:none}
 a *{cursor:pointer}
@@ -82,12 +82,12 @@ form.search input[type="submit"]{display:none}
 #nav-container-large{text-align:center;width:100%;display:none}
 ul#nav-large{margin:0 auto;padding:0;width:464px}
 ul#nav-large li{display:inline;list-style:none outside none}
-ul#nav-large li a{text-decoration:none;color:#666;font-size:16pt;height:68px;line-height:68px;display:block;float:left;width:89px;text-align:center}
+ul#nav-large li a{text-decoration:none;color:#666;font-size:15pt;height:68px;line-height:68px;display:block;float:left;width:89px;text-align:center}
 ul#nav-large li a:hover{color:#00b7ff}
 #nav-container-med{display:block;height:36px;margin:0;padding:0;background:#e3e3e3}
 ul#nav-med{margin:0;padding:0;text-align:center;height:36px;position:absolute;width:100%}
 ul#nav-med li{list-style:none outside none;display:block;float:left;height:100%;width:20%;position:relative}
-ul#nav-med li a{text-decoration:none;font-size:24px;height:36px;color:#888;display:block;padding:6px 0 2px 0;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box}
+ul#nav-med li a{text-decoration:none;font-size:19pt;height:36px;color:#888;display:block;padding:6px 0 2px 0;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box}
 ul#nav-med li a:hover{background:#00b7ff;color:#fff}
 #user-container{float:right;width:68px}
 img#avatar{border:2px solid #999;float:right}
