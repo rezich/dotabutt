@@ -1,21 +1,105 @@
 {
 	"layout": {
 		"slogan": "classy Dota 2 statistics",
-		"nav": {
-			"heroes": "Heroes",
-			"items": "Items",
-			"matches": "Matches",
-			"players": "Players",
-			"teams": "Teams",
-			"about": "About",
-			"privacy": "Privacy",
-			"faq": "FAQ",
-			"donate": "Donate",
-			"twitter": "Twitter",
-			"github": "GitHub",
-			"stats": "Stats"
+		"alpha_disclaimer": "Dotabutt is in very early alpha. Everything might not work correctly, but we're getting there."
+	},
+	"nav": {
+		"heroes": "Heroes",
+		"items": "Items",
+		"matches": "Matches",
+		"players": "Players",
+		"teams": "Teams",
+		"about": "About",
+		"privacy": "Privacy",
+		"faq": "FAQ",
+		"donate": "Donate",
+		"stats": "Stats",
+		"settings": "Settings",
+		"sign_out": "Sign Out",
+		"page": "page"
+	},
+	"match": {
+		"heroes": "Heroes",
+		"duration": "Duration",
+		"time": "Time",
+		"map": "Map",
+		"radiant_victory": "Radiant Victory",
+		"radiant_defeat": "Radiant Defeat",
+		"dire_victory": "Dire Victory",
+		"dire_defeat": "Dire Defeat",
+		"victory": "Victory",
+		"defeat": "Defeat",
+		"watch_replay": "Watch replay",
+		"player": "Player",
+		"hero": "Hero",
+		"level": "Level",
+		"k": "K",
+		"d": "D",
+		"a": "A",
+		"kills": "Kills",
+		"deaths": "Deaths",
+		"assists": "Assists",
+		"gold": "Gold",
+		"lh": "LH",
+		"dn": "DN",
+		"gpm": "GPM",
+		"xpm": "XPM",
+		"last_hits": "Last hits",
+		"denies": "Denies",
+		"gold_per_minute": "Gold per minute",
+		"items": "Items",
+		"invalid_id": "Invalid match ID!"
+	},
+	"dota": {
+		"radiant": "Radiant",
+		"dire": "Dire"
+	},
+	"error": {
+		"_500": {
+			"title": "Internal server error",
+			"description": "Something legitimately bad happened.",
+			"detail": "Error detail"
 		},
-		"alpha_disclaimer_1": "This website is currently in super early alpha or whatever.",
-		"alpha_disclaimer_2": "Like half of the stuff on it doesn't work, but hey, chill out, we're getting there."
+		"assurance": "(We've logged the error and are working on fixing any problems that may have occurred along the way of you getting here.)",
+		"api_down_1": "Dotabutt is currently unable to connect to the Steam API.",
+		"api_down_2": "This either means that Steam is down, Valve is pushing an API update, or something else weird is happening.",
+		"api_down_3": "It should be back up shortly."
+	},
+	"search": {
+		"hint": "Search for Dota stuff...",
+		"first_time_1": "First time here?",
+		"first_time_2": "Check out the FAQ.",
+		"submit": "Search"
+	},
+	"matches": {
+		"title": "Matches",
+		"description": "These are the ten most recent matches in Dotabutt's database. \"Recent\" as in when they took place, not when they were added to the database.",
+		"earlier": "Earlier matches",
+		"later": "Later matches"
+	},
+	"stats": {
+		"matches": {
+			"title": "Matches",
+			"count": "matches in database",
+			"latest": "is when the latest scraped match took place",
+			"behind": "is about how far behind we are on scraping matches",
+			"size": "is about how much space the matches take up"
+		},
+		"players": {
+			"title": "Players",
+			"count": "players in database"
+		},
+		"teams": {
+			"title": "Teams",
+			"placeholder": "aren't even implemented yet"
+		},
+		"api": {
+			"status": "Steam API status",
+			"online": "online",
+			"offline": "offline"
+		},
+		"misc": "Misc.",
+		"since_restart": "is how long it's been since our last restart",
+		"global_players": "people playing Dota 2 globally right now"
 	}
 }

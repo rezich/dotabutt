@@ -1,9 +1,9 @@
 extends layout
 
 block content
-	h1 Internal server error
-	p Something legitimately bad happened.
-	p (We've logged the error and are working on fixing any problems that may have occurred along the way of you getting here.)
+	h1= t('error._500.title')
+	p= t('error._500.description')
+	p= t('error.assurance')
 	if error
-		h2 Error detail
+		h2= t('error._500.detail')
 		p=error

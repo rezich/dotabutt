@@ -6,17 +6,8 @@ block content
 	#home
 		#search-container
 			form.search(action='search/')
-				input#search(name='q',placeholder='Search for Dota stuff...')
-				input(type='submit',value='Submit')
+				input#search(name='q',placeholder=t('search.hint'))
+				input(type='submit',value=t('search.submit'))
 	.centered
-		| First time here? Check out 
-		a(href='/faq/') the FAQ
-		| .
-	.centered
-		| Don't know what to check out? Here's 
-		a(href='/matches/100728043') a cool match
-		| , 
-		a(href='/players/69379089') a cool dude
-		| , and 
-		a(href='/teams/365331') a cool team
-		| .
+		= t('search.first_time_1') + ' '
+		a(href='/faq/')= t('search.first_time_2')

@@ -1,4 +1,8 @@
 {
+	"nav": {
+		"twitter": "Twitter",
+		"github": "GitHub"
+	},
 	"languages": {
 		"english": "English",
 		"korean": "한국말"

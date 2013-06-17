@@ -25,10 +25,10 @@ mixin match_list(matches, player)
 		thead
 			tr
 				th &nbsp;
-				th Heroes
-				th Duration
-				th Time
-				th Map
+				th= t('match.heroes')
+				th= t('match.duration')
+				th= t('match.time')
+				th= t('match.map')
 		tbody
 			each match in matches
 				tr
@@ -36,20 +36,20 @@ mixin match_list(matches, player)
 						td.valign-bottom.halign-right.padding-right: a.big-text(href='/matches/#{match.match_id}')
 							if player
 								if (match.players[0] && match.players[0].account_id == player.account_id) || (match.players[1] && match.players[1].account_id == player.account_id) || (match.players[2] && match.players[2].account_id == player.account_id) || (match.players[3] && match.players[3].account_id == player.account_id) || (match.players[4] && match.players[4].account_id == player.account_id)
-									| Radiant Victory
+									= t('match.radiant_victory')
 								else
-									| Dire Defeat
+									= t('match.dire_defeat')
 							else
-								| Radiant Victory
+								= t('match.radiant_victory')
 					else
 						td.valign-bottom.halign-right.padding-right: a.big-text(href='/matches/#{match.match_id}')
 							if player
 								if (match.players[5] && match.players[5].account_id == player.account_id) || (match.players[6] && match.players[6].account_id == player.account_id) || (match.players[7] && match.players[7].account_id == player.account_id) || (match.players[8] && match.players[8] == player.account_id) || (match.players[9] && match.players[9].account_id == player.account_id)
-									| Dire Victory
+									= t('match.dire_victory')
 								else
-									| Radiant Defeat
+									= t('match.radiant_defeat')
 							else
-								| Dire Victory
+								= t('match.dire_victory')
 					td
 						each player in match.players
 							if player.player_slot < 127
@@ -163,9 +163,9 @@ html
 								#user-name: a(href='/players/' + user.player.account_id) 
 									=user.player.personaname
 								#user-controls
-									a(href='/settings/') Settings
+									a(href='/settings/')= t('nav.settings')
 									|  | 
-									a(href='/logout/') Sign Out
+									a(href='/logout/')= t('nav.sign_out')
 						else
 							a#authbutton(href='/auth/')
 					#title-container
@@ -174,31 +174,30 @@ html
 						#tagline= t('layout.slogan')
 					#nav-container-large
 						ul#nav-large
-							li: a(href='/heroes/')= t('layout.nav.heroes')
-							li: a(href='/items/')= t('layout.nav.items')
-							li: a(href='/matches/')= t('layout.nav.matches')
-							li: a(href='/players/')= t('layout.nav.players')
-							li: a(href='/teams/')= t('layout.nav.teams')
+							li: a(href='/heroes/')= t('nav.heroes')
+							li: a(href='/items/')= t('nav.items')
+							li: a(href='/matches/')= t('nav.matches')
+							li: a(href='/players/')= t('nav.players')
+							li: a(href='/teams/')= t('nav.teams')
 			#nav-container-med
 				ul#nav-med
-					li: a(href='/heroes/')= t('layout.nav.heroes')
-					li: a(href='/items/')= t('layout.nav.items')
-					li: a(href='/matches/')= t('layout.nav.matches')
-					li: a(href='/players/')= t('layout.nav.players')
-					li: a(href='/teams/')= t('layout.nav.teams')
+					li: a(href='/heroes/')= t('nav.heroes')
+					li: a(href='/items/')= t('nav.items')
+					li: a(href='/matches/')= t('nav.matches')
+					li: a(href='/players/')= t('nav.players')
+					li: a(href='/teams/')= t('nav.teams')
 			#main-container
 				#main
 					#content
 						if steamapi.down
 							#apidown
-								div Dotabutt is currently unable to connect to the Steam API.
-								div This either means that Steam is down, Valve is pushing an API update, or something else weird is happening.
-								div It should be back up shortly.
+								div= t('error.api_down_1')
+								div= t('error.api_down_2')
+								div= t('error.api_down_3')
 						block content
 			#footer-container
 				#footer
-					div= t('layout.alpha_disclaimer_1')
-					div= t('layout.alpha_disclaimer_2')
+					div= t('layout.alpha_disclaimer')
 					div Copyright 2013 
 						a(href='http://rezich.com') Adam Rezich
 						| . 
@@ -207,13 +206,13 @@ html
 						a(href='http://www.valvesoftware.com/') Valve Corporation
 						| .
 					ul#bottomlinks
-						li: a(href='/about/') About
-						li: a(href='/privacy/') Privacy
-						li: a(href='/faq/') FAQ
-						li: a(href='/donate/') Donate
-						li: a(href='http://twitter.com/dotabutt') Twitter
-						li: a(href='https://github.com/adamrezich/dotabutt') GitHub
-						li: a(href='/stats/') Stats
+						li: a(href='/about/')= t('nav.about')
+						li: a(href='/privacy/')= t('nav.privacy')
+						li: a(href='/faq/')= t('nav.faq')
+						li: a(href='/donate/')= t('nav.donate')
+						li: a(href='http://twitter.com/dotabutt')= t('nav.twitter')
+						li: a(href='https://github.com/adamrezich/dotabutt')= t('nav.github')
+						li: a(href='/stats/')= t('nav.stats')
 					ul#languages
 						li: a(href='?setLng=en')= t('languages.english')
 						li: a(href='?setLng=ko')= t('languages.korean')

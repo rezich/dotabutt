@@ -2,32 +2,32 @@ extends layout
 
 block content
 	h1 Stats
-	h2.centered Matches
+	h2.centered= t('stats.matches.title')
 	table.width-100
-		mixin statrow(matches.count, 'matches in database')
-		mixin statrow(matches.latest, 'is when the latest scraped match took place')
-		mixin statrow(matches.behind, 'is about how far behind we are on scraping matches')
-		mixin statrow(matches.size+'GB', 'is about how much space the matches take up')
-	h2.centered Players
+		mixin statrow(matches.count, t('stats.matches.count'))
+		mixin statrow(matches.latest, t('stats.matches.latest'))
+		mixin statrow(matches.behind, t('stats.matches.behind'))
+		mixin statrow(matches.size+'GB', t('stats.matches.size'))
+	h2.centered= t('stats.players.title')
 	table.width-100
-		mixin statrow(players.count, 'players in database')
-	h2.centered Teams
+		mixin statrow(players.count, t('stats.players.count'))
+	h2.centered= t('stats.teams.title')
 	table.width-100
 		tr
-			td.centered aren't even implemented yet lol
-	h2.centered Misc.
+			td.centered= t('stats.teams.placeholder')
+	h2.centered= t('stats.misc')
 	table.width-100
 		tr
 			td.halign-right.padding-right.width-50
 				if steamapi.down
-					| offline
+					= t('stats.api.offline')
 				else
-					| online
-			th Steam API status
+					= t('stats.api.online')
+			th= t('stats.api.status')
 		tr
 			td.halign-right.padding-right.width-50=moment(butt.startupTime).fromNow(true)
-			th is how long it's been since our last restart
-		mixin statrow(players.global, 'people playing Dota 2 globally right now')
+			th= t('stats.since_restart')
+		mixin statrow(players.global, t('stats.global_players'))
 
 mixin statrow(stat, heading)
 	tr

@@ -3,18 +3,18 @@ extends layout
 mixin players_header(side)
 	thead
 		tr
-			th(colspan=2) Player
-			th(colspan=2) Hero
-			th Level
-			th: abbr(title='Kills') K
-			th: abbr(title='Deaths') D
-			th: abbr(title='Assists') A
-			th Gold
-			th: abbr(title='Last hits') LH
-			th: abbr(title='Denies') DN
-			th: abbr(title='Gold per minute') GPM
-			th: abbr(title='XP per minute') XPM
-			th Items
+			th(colspan=2)= t('match.player')
+			th(colspan=2)= t('match.hero')
+			th= t('match.level')
+			th: abbr(title=t('match.kills'))= t('match.k')
+			th: abbr(title=t('match.deaths'))= t('match.d')
+			th: abbr(title=t('match.assists'))= t('match.a')
+			th= t('match.gold')
+			th: abbr(title=t('match.last_hits'))= t('match.lh')
+			th: abbr(title=t('match.denies'))= t('match.dn')
+			th: abbr(title=t('match.gold_per_minute'))= t('match.gpm')
+			th: abbr(title=t('match.xp_per_minute'))= t('match.xpm')
+			th= t('items')
 
 mixin player_block(player)
 	tr
@@ -60,18 +60,18 @@ block content
 					td.matchinfo
 						h1 Match #{match.match_id}
 						if match.radiant_win
-							p Radiant victory
+							p= t('match.radiant_victory')
 						else
-							p Dire victory
+							p= t('match.dire_victory')
 						p
 							mixin format_duration(match)
-						p: a(href='dota2://matchid=#{match.match_id}') Watch replay
+						p: a(href='dota2://matchid=#{match.match_id}')= t('match.watch_replay')
 					mixin towermap(match)
 		h2
 			if match.radiant_name
-				| #{match.radiant_name}
+				= match.radiant_name
 			else
-				| Radiant
+				= t('dota.radiant')
 		table.fullwidth.padded
 			mixin players_header('Radiant')
 			tbody
@@ -80,9 +80,9 @@ block content
 						mixin player_block(player)
 		h2
 			if match.dire_name
-				| #{match.dire_name}
+				= match.dire_name
 			else
-				| Dire
+				= t('dota.dire')
 		table.fullwidth.padded
 			mixin players_header('Dire')
 			tbody
@@ -90,4 +90,4 @@ block content
 					if player.player_slot > 127
 						mixin player_block(player)
 	else
-		h1 Invalid match ID!
+		h1= t('match.invalid_id')
