@@ -5,7 +5,7 @@ block content
 	if players && players.length > 0
 		ul.columns
 			each player in players
-				li: a(href='/players/#{player.account_id}')
+				li: a(href='/players/#{player.account_id}/')
 					img(src='#{player.avatar}')
 					=player.personaname
 	else

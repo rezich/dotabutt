@@ -6,7 +6,7 @@ block content
 	if item.description
 		p: em #{item.description}
 	if item.duplicate
-		p: a(href='/items/#{duplicate.slug}') Duplicate of #{duplicate.localized_name}
+		p: a(href='/items/#{duplicate.slug}/') Duplicate of #{duplicate.localized_name}
 	if item.bonuses
 		h2 Bonuses
 		ul

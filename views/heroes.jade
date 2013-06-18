@@ -10,7 +10,7 @@ block content
 		a(href='#',id='heroes_showicons') Icons
 	ul.columns
 		each hero,id in heroes
-			li: a(href='/heroes/#{hero.slug}', title='#{hero.localized_name}')
+			li: a(href='/heroes/#{hero.slug}/', title='#{hero.localized_name}')
 				img.hero-list-icon-small(src='http://media.steampowered.com/apps/dota2/images/heroes/#{hero.short_name}_sb.png', alt='#{hero.localized_name}')
 				img.hero-list-icon-large(src='http://media.steampowered.com/apps/dota2/images/heroes/#{hero.short_name}_lg.png', alt='#{hero.localized_name}')
 				span.hero-list-name #{hero.localized_name}

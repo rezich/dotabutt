@@ -11,5 +11,5 @@ block content
 	ul
 		each player in team.players
 			li
-				a(href='/players/#{player.account_id}') #{player.personaname}
+				a(href='/players/#{player.account_id}/') #{player.personaname}
 				| #{team.admin_account_id == player.account_id ? ' Admin' : ''}

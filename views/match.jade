@@ -23,8 +23,8 @@ mixin player_block(player)
 			td.playername: em Anonymous
 		else
 			if player.summary
-				td.playericon: a(href='/players/#{player.account_id}'): img(src='#{player.summary.avatar}')
-				td.playername: a(href='/players/#{player.account_id}') #{player.summary.personaname}
+				td.playericon: a(href='/players/#{player.account_id}/'): img(src='#{player.summary.avatar}')
+				td.playername: a(href='/players/#{player.account_id}/') #{player.summary.personaname}
 			else
 				td.playericon &nbsp;
 				td.playername: em (Bot)

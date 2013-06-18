@@ -26,8 +26,8 @@ block content
 	if player.matches && player.matches.length > 0
 		h2 Recent matches
 		if player.matches && player.matches.count > 10
-			p.centered: a(href='/players/#{player.account_id}/matches/2') #{t('matches.earlier')} &gt;
+			p.centered: a(href='/players/#{player.account_id}/matches/2/') #{t('matches.earlier')} &gt;
 		if player.matches
 			mixin match_list(player.matches, player)
 			if player.matches.count > 10
-				p.centered: a(href='/players/#{player.account_id}/matches/2') #{t('matches.earlier')} &gt;
+				p.centered: a(href='/players/#{player.account_id}/matches/2/') #{t('matches.earlier')} &gt;

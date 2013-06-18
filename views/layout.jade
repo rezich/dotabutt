@@ -33,7 +33,7 @@ mixin match_list(matches, player)
 			each match in matches
 				tr
 					if match.radiant_win
-						td.valign-bottom.halign-right.padding-right: a.big-text(href='/matches/#{match.match_id}')
+						td.valign-bottom.halign-right.padding-right: a.big-text(href='/matches/#{match.match_id}/')
 							if player
 								if (match.players[0] && match.players[0].account_id == player.account_id) || (match.players[1] && match.players[1].account_id == player.account_id) || (match.players[2] && match.players[2].account_id == player.account_id) || (match.players[3] && match.players[3].account_id == player.account_id) || (match.players[4] && match.players[4].account_id == player.account_id)
 									= t('match.radiant_victory')
@@ -42,7 +42,7 @@ mixin match_list(matches, player)
 							else
 								= t('match.radiant_victory')
 					else
-						td.valign-bottom.halign-right.padding-right: a.big-text(href='/matches/#{match.match_id}')
+						td.valign-bottom.halign-right.padding-right: a.big-text(href='/matches/#{match.match_id}/')
 							if player
 								if (match.players[5] && match.players[5].account_id == player.account_id) || (match.players[6] && match.players[6].account_id == player.account_id) || (match.players[7] && match.players[7].account_id == player.account_id) || (match.players[8] && match.players[8] == player.account_id) || (match.players[9] && match.players[9].account_id == player.account_id)
 									= t('match.dire_victory')
@@ -60,7 +60,7 @@ mixin match_list(matches, player)
 						mixin format_when(match)
 					mixin towermap2(match)
 				tr
-					td.valign-top.halign-right.padding-right: a(href='/matches/#{match.match_id}') #{match.match_id}
+					td.valign-top.halign-right.padding-right: a(href='/matches/#{match.match_id}/') #{match.match_id}
 					td
 						each player in match.players
 							if player.player_slot > 127

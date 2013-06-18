@@ -17,7 +17,7 @@ block content
 			- var klass = 'item'
 			- if (item.recipe) klass += ' recipe';
 			- if (item.duplicate) klass += ' duplicate';
-			li(class=klass): a(href='/items/#{item.slug}', title='#{item.localized_name}')
+			li(class=klass): a(href='/items/#{item.slug}/', title='#{item.localized_name}')
 				img.item-list-icon-small(src='http://media.steampowered.com/apps/dota2/images/items/#{item.name}_eg.png', alt='#{item.localized_name}') 
 				img.item-list-icon-large(src='http://media.steampowered.com/apps/dota2/images/items/#{item.name}_lg.png', alt='#{item.localized_name}') 
 				span.item-list-name #{item.localized_name}
