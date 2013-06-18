@@ -10,12 +10,9 @@ module.exports = {
 	_timeout: null,
 	_last: new Date(),
 	_checking: false,
-	_lang: 'en_us',
 	down: false,
-	init: function(key, lang) {
+	init: function(key) {
 		this._key = key;
-		if (lang) this._lang = lang;
-		
 		this.dota2._api = this;
 	},
 	_checkRequests: function() {
@@ -41,30 +38,33 @@ module.exports = {
 	},
 	_call: function(call, options, callback) {
 		var params = '';
-		var expect401 = false;
-		var expect404 = false;
-		var expect500 = false;
+		var _options = {};
 		for (var opt in options) {
 			if (opt == '_expect404') {
-				expect404 = true;
+				_options.expect404 = true;
 				continue;
 			}
 			if (opt == '_expect500') {
-				expect500 = true;
+				_options.expect500 = true;
 				continue;
 			}
 			if (opt == '_expect401') {
-				expect401 = true;
+				_options.expect401 = true;
 				continue;
+			}
+			if (opt == 'language') {
+				_options.language = opt;
 			}
 			params += '&' + opt + '=' + options[opt].toString();
 		}
-		this._requests.push({ call: call + '?key=' + this._key + params, callback: callback, expect404: expect404, expect500: expect500, expect401: expect401 });
+		this._requests.push({ call: call + '?key=' + this._key + params, callback: callback, options: _options });
 		if (!this._checking) this._checkRequests();
 	},
-	_makeCall: function(call, callback, expect404, expect500, expect401) {
+	_makeCall: function(call, options, callback) {
 		var self = this;
-		call = call.replace('API_KEY', this._key) + '&language=' + this._lang;
+		var lang = 'en';
+		if (options.lang) lang = options.lang;
+		call = call.replace('API_KEY', this._key) + '&language=' + lang;
 		//console.log('Making API call: %s', call.replace(this._key, 'API_KEY'));
 		http.get({
 			host: 'api.steampowered.com',
@@ -73,7 +73,7 @@ module.exports = {
 		}, function(response) {
 			var err = false;
 			console.log(response.statusCode);
-			if (response.statusCode != 200 && !(response.statusCode == 404 && expect404) && !(response.statusCode == 500 && expect500) && !(response.statusCode == 401 && expect401)) {
+			if (response.statusCode != 200 && !(response.statusCode == 404 && options.expect404) && !(response.statusCode == 500 && options.expect500) && !(response.statusCode == 401 && options.expect401)) {
 				err = true;
 				self.down = true;
 			}
@@ -158,12 +158,12 @@ module.exports = {
 		heroes: {},
 		items: {},
 		// IDOTA2Match
-		getLeagueListing: function(callback) { // callback(leagues, err)
+		getLeagueListing: function(options, callback) { // callback(leagues, err)
 			this._api._call('/IDOTA2Match_570/GetLeagueListing/v0001/', options, function(data, err) {
 				if (callback) callback((data.result && data.result.leagues ? data.result.leagues : false), err);
 			});
 		},
-		getLiveLeagueGames: function(callback) { // callback(games, err)
+		getLiveLeagueGames: function(options, callback) { // callback(games, err)
 			this._api._call('/IDOTA2Match_570/GetLiveLeagueGames/v0001/', options, function(data, err) {
 				if (callback) callback((data.result && data.result.games ? data.result.games : false), err);
 			});
@@ -198,16 +198,16 @@ module.exports = {
 			});
 		},
 		// IDOTA2
-		getRarities: function(callback) { // callback(rarities, count, err)
-			this._api._call('/IEconDOTA2_570/GetRarities/v1', function(data, err) {
+		getRarities: function(options, callback) { // callback(rarities, count, err)
+			this._api._call('/IEconDOTA2_570/GetRarities/v1', options, function(data, err) {
 				if (callback) callback((data.result && data.result.rarities ? data.result.rarities : false), (data.result && data.result.count ? data.result.count : false), err);
 			});
 		},
-		getHeroes: function(callback) { // callback(heroes, err)
+		getHeroes: function(options, callback) { // callback(heroes, err)
 			delete this.heroes;
 			this.heroes = {};
 			var self = this;
-			this._api._call('/IEconDOTA2_570/GetHeroes/v0001/', {}, function(data, err) {
+			this._api._call('/IEconDOTA2_570/GetHeroes/v0001/', options, function(data, err) {
 				if (err) console.log("ERROR GETTING HEROES!");
 				else {
 					data.result.heroes.forEach(function(hero) {
@@ -219,7 +219,7 @@ module.exports = {
 				if (callback) callback((data.result && data.result.heroes ? data.result.heroes : null), err);
 			});
 		},
-		getTicketSaleStatus: function(callback) { // TODO
+		getTicketSaleStatus: function(options, callback) { // TODO
 			if (callback) callback();
 		},
 		// Custom
