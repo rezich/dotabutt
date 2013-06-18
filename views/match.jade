@@ -30,7 +30,8 @@ mixin player_block(player)
 				td.playername: em (Bot)
 		td.heroicon
 			mixin hero_image_small(heroes[player.hero_id])
-		td.heroname= heroes[player.hero_id].localized_name
+		if heroes[player.hero_id]
+			td.heroname= heroes[player.hero_id].localized_name
 		td= player.level
 		td= player.kills
 		td= player.deaths

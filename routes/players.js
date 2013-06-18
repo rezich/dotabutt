@@ -55,7 +55,7 @@ exports.view = function(req, res, next) {
 	],
 	function(err) {
 		if (err) return next(err);
-		res.locals.heroes = butt.heroes();
+		res.locals.heroes = butt.heroes(req.locale);
 		res.render('player', { title: res.locals.player.personaname });
 	});
 }
@@ -96,7 +96,7 @@ exports.matches = function(req, res, next) {
 	],
 	function(err) {
 		if (err) return next(err);
-		res.locals.heroes = butt.heroes();
+		res.locals.heroes = butt.heroes(req.locale);
 		res.render('player_matches', { title: res.locals.player.personaname });
 	});
 }

@@ -3,6 +3,7 @@ var fs = require('fs');
 var mongojs = require('mongojs');
 var moment = require('moment');
 var async = require('async');
+var slug = require('slug');
 
 module.exports = {
 	_player_update_interval: 60 * 60,
@@ -28,12 +29,33 @@ module.exports = {
 				steamapi.init(key);
 				callback();
 			}); },
-			function(callback) { steamapi.dota2.getHeroes(function(heroes, err) {
+			function(callback) { steamapi.dota2.getHeroes({ language: 'en' }, function(heroes, err) {
 				if (err) callback(err);
+				Object.keys(heroes).forEach(function(key) {
+					heroes[key].slug = slug(heroes[key].localized_name).toLowerCase();
+				});
+				self._heroes['en'] = heroes;
 				callback();
 			}); },
-			function(callback) { steamapi.dota2.getItems(function(items, err) {
+			function(callback) { steamapi.dota2.getHeroes({ language: 'ko' }, function(heroes, err) {
 				if (err) callback(err);
+				Object.keys(heroes).forEach(function(key) {
+					heroes[key].slug = self._heroes['en'][key].slug;
+				});
+				self._heroes['ko'] = heroes;
+				callback();
+			}); },
+			function(callback) { steamapi.dota2.getItems({ language: 'en' }, function(items, err) {
+				if (err) callback(err);
+				Object.keys(items).forEach(function(key) { items[key].slug = slug(items[key].localized_name).toLowerCase(); });
+				self._items['en'] = items;
+				callback();
+			}); },
+			function(callback) { steamapi.dota2.getItems({ language: 'ko' }, function(items, err) {
+				if (err) callback(err);
+				//for (var i = 0; i < items.length; i++) items[i].slug = self._items['en'][i].slug;
+				//Object.keys(items).forEach(function(key) {
+				self._items['ko'] = items;
 				callback();
 			}); },
 			function(callback) { self.getVerifiedPlayers(function(players, err) {
@@ -86,12 +108,16 @@ module.exports = {
 			});
 		}
 	},
-	heroes: function() {
-		return steamapi.dota2.heroes;
+	heroes: function(locale) {
+		if (this._heroes[locale]) return this._heroes[locale];
+		else return this._heroes[0];
 	},
-	items: function() {
-		return steamapi.dota2.items;
+	_heroes: {},
+	items: function(locale) {
+		if (this._items[locale]) return this._items[locale];
+		else return this._items[0];
 	},
+	_items: {},
 	saveMatch: function(match, callback) { // callback(saved, err)
 		this.db.matches.save(match, function(err, saved) {
 			if (err) console.log('Error saving match! ' + err);

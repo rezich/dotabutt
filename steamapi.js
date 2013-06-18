@@ -1,7 +1,6 @@
 var http = require('http'),
 bignum = require('bignum'),
-fs = require('fs'),
-slug = require('slug');
+fs = require('fs');
 
 module.exports = {
 	_key: '',
@@ -24,7 +23,7 @@ module.exports = {
 			if (now - this._last >= this._interval) {
 				this._last = now;
 				var req = this._requests.shift();
-				this._makeCall(req.call, req.callback, req.expect404, req.expect500, req.expect401);
+				this._makeCall(req.call, req.options, req.callback);
 				this._timeout = setTimeout(function() { self._checkRequests(); }, this._interval);
 			}
 			else {
@@ -53,7 +52,8 @@ module.exports = {
 				continue;
 			}
 			if (opt == 'language') {
-				_options.language = opt;
+				_options.language = options[opt];
+				continue;
 			}
 			params += '&' + opt + '=' + options[opt].toString();
 		}
@@ -63,9 +63,9 @@ module.exports = {
 	_makeCall: function(call, options, callback) {
 		var self = this;
 		var lang = 'en';
-		if (options.lang) lang = options.lang;
+		if (options.language) lang = options.language;
 		call = call.replace('API_KEY', this._key) + '&language=' + lang;
-		//console.log('Making API call: %s', call.replace(this._key, 'API_KEY'));
+		console.log('Making API call: %s', call.replace(this._key, 'API_KEY'));
 		http.get({
 			host: 'api.steampowered.com',
 			port: 80,
@@ -155,8 +155,6 @@ module.exports = {
 				ranged: 2
 			}
 		},
-		heroes: {},
-		items: {},
 		// IDOTA2Match
 		getLeagueListing: function(options, callback) { // callback(leagues, err)
 			this._api._call('/IDOTA2Match_570/GetLeagueListing/v0001/', options, function(data, err) {
@@ -204,40 +202,37 @@ module.exports = {
 			});
 		},
 		getHeroes: function(options, callback) { // callback(heroes, err)
-			delete this.heroes;
-			this.heroes = {};
 			var self = this;
+			var heroes = {};
 			this._api._call('/IEconDOTA2_570/GetHeroes/v0001/', options, function(data, err) {
 				if (err) console.log("ERROR GETTING HEROES!");
 				else {
 					data.result.heroes.forEach(function(hero) {
 						hero.short_name = hero.name.replace('npc_dota_hero_', '');
-						self.heroes[hero.id] = hero;
-						self.heroes[hero.id].slug = slug(hero.localized_name).toLowerCase();
+						heroes[hero.id] = hero;
 					});
 				}
-				if (callback) callback((data.result && data.result.heroes ? data.result.heroes : null), err);
+				if (callback) callback((data.result && data.result.heroes ? heroes : null), err);
 			});
 		},
 		getTicketSaleStatus: function(options, callback) { // TODO
 			if (callback) callback();
 		},
 		// Custom
-		getItems: function(callback) { // callback(items, err)
+		getItems: function(options, callback) { // callback(items, err)
 			var self = this;
-			delete this.items;
-			this.items = {};
+			var items = {};
 			fs.readFile('data/items.json', function(err, data) {
 				if (err) console.log('!!! ITEM FILE WAS MISSING OR CORRUPT !!!')
 				else {
 					console.log('Loaded items successfully.');
 					var parsedItems = JSON.parse(data);
 					Object.keys(parsedItems).forEach(function(key) {
-						self.items[parseInt(key)] = parsedItems[key];
-						self.items[parseInt(key)].slug = slug(self.items[parseInt(key)].localized_name).toLowerCase();
+						items[parseInt(key)] = parsedItems[key];
+						//items[parseInt(key)].slug = slug(items[parseInt(key)].localized_name).toLowerCase();
 					});
 				}
-				callback(self.items, err);
+				if (callback) callback(items, err);
 			});
 		}
 

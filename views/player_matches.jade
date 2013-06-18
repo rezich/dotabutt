@@ -15,8 +15,8 @@ mixin prev_next
 	if next || previous
 		p.centered
 			if previous
-				a(href='/players/#{player.account_id}/matches/#{previous}') &lt; Later matches
+				a(href='/players/#{player.account_id}/matches/#{previous}') &lt; #{t('matches.later')}
 			if next
 				if previous
 					|  | 
-				a(href='/players/#{player.account_id}/matches/#{next}') Earlier matches &gt;
+				a(href='/players/#{player.account_id}/matches/#{next}') #{t('matches.earlier')} &gt;

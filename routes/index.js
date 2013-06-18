@@ -1,3 +1,3 @@
 exports.index = function(req, res) {
-	res.render('index', { title: 'classy Dota 2 statistics' });
+	res.render('index', { title: req.i18n.t('layout.slogan') });
 };

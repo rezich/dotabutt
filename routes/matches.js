@@ -29,7 +29,7 @@ exports.index = function(req, res, next) {
 		if (res.locals.page > 1) res.locals.previous = res.locals.page - 1;
 		res.locals.next = res.locals.page + 1;
 		res.locals.behind = res.locals.moment(butt.lastTime.toString(), 'X');
-		res.locals.heroes = butt.heroes();
+		res.locals.heroes = butt.heroes(req.locale);
 		res.render('matches', { title: 'Matches' });
 	});
 };
@@ -88,8 +88,8 @@ exports.view = function(req, res, next) {
 	],
 	function(err) {
 		if (err) return next(err);
-		res.locals.heroes = butt.heroes();
-		res.locals.items = butt.items();
+		res.locals.heroes = butt.heroes(req.locale);
+		res.locals.items = butt.items(req.locale);
 		//if (res.locals.match) res.locals.match.json = JSON.stringify(res.locals.match, null, '\t');
 		res.render('match', { title: 'Match #' + res.locals.match.match_id });
 	});
